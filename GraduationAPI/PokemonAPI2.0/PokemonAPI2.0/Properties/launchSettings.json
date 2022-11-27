@@ -4,17 +4,17 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:14897",
-      "sslPort": 44394
+      "applicationUrl": "http://localhost:40789",
+      "sslPort": 44337
     }
   },
   "profiles": {
-    "PokemonWEB": {
+    "PokemonAPI2._0": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7183;http://localhost:5264",
+      "applicationUrl": "https://localhost:7018;http://localhost:5259",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

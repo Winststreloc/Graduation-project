@@ -16,7 +16,7 @@ public class PokemonRepository : IPokemonRepository
 
     public Pokemon GetPokemon(int pokedexId)
     {
-        return _context.Pokemon.Where(p => p.PokedexId == pokedexId).FirstOrDefault();
+        return _context.Pokemon.FirstOrDefault(p => p.PokedexId == pokedexId);
     }
 
     public void CaluclateDamage(Pokemon selfPokemon, Ability ability, Pokemon opponentPokemon)
@@ -50,10 +50,10 @@ public class PokemonRepository : IPokemonRepository
         throw new NotImplementedException();
     }
 
-    public void CreatePokemon(Guid ownerId, Guid categoryId, Pokemon pokemon)
+    public void CreatePokemon(string ownerId, string categoryId, Pokemon pokemon)
     {
-        var pokemonOwnerEntity = _context.Owners.Where(p => p.Id == ownerId).FirstOrDefault();
-        var category = _context.Categories.Where(p => p.Id == categoryId).FirstOrDefault();
+        var pokemonOwnerEntity = _context.Owners.FirstOrDefault(o => o.FirstName == ownerId);
+        var category = _context.Categories.FirstOrDefault(o => o.Name == categoryId);
 
         var pokemonOwner = new PokemonOwner
         {
@@ -84,5 +84,11 @@ public class PokemonRepository : IPokemonRepository
     public void Save()
     {
         _context.SaveChanges();
+    }
+
+    public void Temp()
+    {
+        int? a = null;
+        string name = a == null ? "artur" : "vasya";
     }
 }
