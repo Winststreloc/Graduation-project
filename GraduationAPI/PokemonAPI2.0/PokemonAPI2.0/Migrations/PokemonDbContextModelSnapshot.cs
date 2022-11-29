@@ -8,7 +8,7 @@ using PokemonWEB.Data;
 
 #nullable disable
 
-namespace PokemonWEB.Migrations
+namespace PokemonAPI2._0.Migrations
 {
     [DbContext(typeof(PokemonDbContext))]
     partial class PokemonDbContextModelSnapshot : ModelSnapshot
@@ -55,7 +55,7 @@ namespace PokemonWEB.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ability");
+                    b.ToTable("Abilities");
                 });
 
             modelBuilder.Entity("PokemonWEB.Models.Category", b =>

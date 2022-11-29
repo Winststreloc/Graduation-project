@@ -9,11 +9,11 @@ using PokemonWEB.Data;
 
 #nullable disable
 
-namespace PokemonWEB.Migrations
+namespace PokemonAPI2._0.Migrations
 {
     [DbContext(typeof(PokemonDbContext))]
-    [Migration("20221119221647_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221129174711_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -57,7 +57,7 @@ namespace PokemonWEB.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ability");
+                    b.ToTable("Abilities");
                 });
 
             modelBuilder.Entity("PokemonWEB.Models.Category", b =>

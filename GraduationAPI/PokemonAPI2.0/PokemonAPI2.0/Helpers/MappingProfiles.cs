@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using AutoMapper;
+﻿using AutoMapper;
 using PokemonWEB.Dto;
 using PokemonWEB.Models;
 
@@ -10,5 +9,6 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
         CreateMap<Pokemon, PokemonDto>();
+        CreateMap<PokemonDto, Pokemon>();
     }
 }

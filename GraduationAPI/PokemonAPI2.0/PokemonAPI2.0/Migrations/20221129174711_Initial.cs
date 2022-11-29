@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace PokemonWEB.Migrations
+namespace PokemonAPI2._0.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Ability",
+                name: "Abilities",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -20,7 +20,7 @@ namespace PokemonWEB.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ability", x => x.Id);
+                    table.PrimaryKey("PK_Abilities", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,9 +77,9 @@ namespace PokemonWEB.Migrations
                 {
                     table.PrimaryKey("PK_PokemonAbilities", x => new { x.PokemonId, x.AbilityId });
                     table.ForeignKey(
-                        name: "FK_PokemonAbilities_Ability_AbilityId",
+                        name: "FK_PokemonAbilities_Abilities_AbilityId",
                         column: x => x.AbilityId,
-                        principalTable: "Ability",
+                        principalTable: "Abilities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -166,7 +166,7 @@ namespace PokemonWEB.Migrations
                 name: "PokemonOwners");
 
             migrationBuilder.DropTable(
-                name: "Ability");
+                name: "Abilities");
 
             migrationBuilder.DropTable(
                 name: "Categories");

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PokemonAPI;
 using PokemonWEB.Models;
+using PokemonWEB.Models.Action;
 
 namespace PokemonWEB.Data;
 
@@ -8,11 +9,16 @@ public class PokemonDbContext : DbContext
 {
     public PokemonDbContext(DbContextOptions<PokemonDbContext> options) : base(options)
     {
-        Database.EnsureCreated();
+
     }
+    
+    
+    public DbSet<Ability> Abilities { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Owner> Owners { get; set; }
     public DbSet<Pokemon> Pokemon { get; set; }
+    public DbSet<PokemonAbility> PokemonAbilities { get; set; }
+    public DbSet<PokemonCategory> PokemonCategories { get; set; }
     public DbSet<PokemonOwner> PokemonOwners { get; set; }
 
 
@@ -28,7 +34,7 @@ public class PokemonDbContext : DbContext
             .HasOne(p => p.Ability)
             .WithMany(pc => pc.PokemonAbilities)
             .HasForeignKey(c => c.AbilityId);
-        
+
         modelBuilder.Entity<PokemonCategory>()
             .HasKey(pc => new { pc.PokemonId, pc.CategoryId });
         modelBuilder.Entity<PokemonCategory>()

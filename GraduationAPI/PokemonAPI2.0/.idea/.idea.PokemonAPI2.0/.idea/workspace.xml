@@ -9,13 +9,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5fe8b5e-931a-4ea6-a2f3-18ccb218a455" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../../.$pokemonDiagram.drawio.dtmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../pokemonDiagram.drawio" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PokemonAPI2.0/Controllers/PokedexController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PokemonAPI2.0/Interfaces/IPokedexRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PokemonAPI2.0/Repository/PokedexRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Controllers/PokemonController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Controllers/PokemonController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Data/PokemonDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Data/PokemonDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Helpers/MappingProfiles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Helpers/MappingProfiles.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Interfaces/IPokemonRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Interfaces/IPokemonRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Migrations/20221119221647_InitialCreate.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Migrations/20221119221647_InitialCreate.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Migrations/PokemonDbContextModelSnapshot.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Models/Pokemon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Models/Pokemon.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/PokemonAPI2.0.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/PokemonAPI2.0.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Repository/PokemonRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Repository/PokemonRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Seed.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Seed.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5330988bfaacf93f15e30f9b3dd6018a768f89da3b38d874fda77299c62164/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7d9a41d47547e1fe7fe548b21ab4de12cc2671170a023bc8c629017837eb5f4/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/829d6ac6e62b9bee9ef8e79e827d87d0c31a7c2eefbc354135d9a8f2c4deb/Mapper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c07a1d303f6388b4f360b66d3f1df41ba410cfc473175f62e1d9740aac986/LowLevelLifoSemaphore.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -31,11 +50,13 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "XThreadsFramesViewSplitterKey": "0.38988096",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "project.propVCSSupport.Mappings",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.editor",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -94,7 +115,11 @@
       <workItem from="1669335129103" duration="462000" />
       <workItem from="1669335658280" duration="1671000" />
       <workItem from="1669373385989" duration="1633000" />
-      <workItem from="1669566750683" duration="408000" />
+      <workItem from="1669566750683" duration="1798000" />
+      <workItem from="1669735944098" duration="2636000" />
+      <workItem from="1669740358438" duration="309000" />
+      <workItem from="1669740981669" duration="1047000" />
+      <workItem from="1669742454672" duration="5981000" />
     </task>
     <servers />
   </component>
@@ -116,5 +141,12 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="Type#PokemonWEB.Controllers.PokemonController" memberName="_mapper" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>

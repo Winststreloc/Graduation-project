@@ -28,7 +28,7 @@ public class Seed
                         Weight = 7,
                         Height = 70,
                         Gender = true,
-                        Experiance = 100,
+                        Experience = 100,
                         PokemonCategories = new List<PokemonCategory>
                         {
                             new() { Category = new Category { Id = new Guid(), Name = "Grass" } },
@@ -56,7 +56,7 @@ public class Seed
                         Weight = 13,
                         Height = 100,
                         Gender = true,
-                        Experiance = 1600,
+                        Experience = 1600,
                         PokemonCategories = new List<PokemonCategory>
                         {
                             new() { Category = new Category { Id = new Guid(), Name = "Grass" } },
@@ -84,7 +84,7 @@ public class Seed
                         Weight = 100,
                         Height = 200,
                         Gender = true,
-                        Experiance = 3600,
+                        Experience = 3600,
                         PokemonCategories = new List<PokemonCategory>
                         {
                             new() { Category = new Category { Id = new Guid(), Name = "Grass" } },

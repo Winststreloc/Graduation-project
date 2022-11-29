@@ -11,7 +11,7 @@ public class Pokemon
     public int Weight { get; set; }
     public int Height { get; set; }
     public bool Gender { get; set; }
-    public int Experiance { get; set; }
+    public int Experience { get; set; }
     
     public ICollection<PokemonAbility> PokemonAbilities { get; set; }
     public  ICollection<PokemonOwner> PokemonOwners { get; set; }

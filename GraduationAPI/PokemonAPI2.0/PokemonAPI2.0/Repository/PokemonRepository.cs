@@ -14,9 +14,9 @@ public class PokemonRepository : IPokemonRepository
         _context = context;
     }
 
-    public Pokemon GetPokemon(int pokedexId)
+    public Pokemon GetPokemon(Guid Id)
     {
-        return _context.Pokemon.FirstOrDefault(p => p.PokedexId == pokedexId);
+        return _context.Pokemon.FirstOrDefault(p => p.Id == Id);
     }
 
     public void CaluclateDamage(Pokemon selfPokemon, Ability ability, Pokemon opponentPokemon)
@@ -24,9 +24,9 @@ public class PokemonRepository : IPokemonRepository
         throw new NotImplementedException();
     }
 
-    public bool PokemonExists(int pokedexId)
+    public bool PokemonExists(Guid Id)
     {
-        return _context.Pokemon.Any(p => p.PokedexId == pokedexId);
+        return _context.Pokemon.Any(p => p.Id == Id);
     }
 
     public void DeletePokemon(Pokemon pokemon)
@@ -50,10 +50,10 @@ public class PokemonRepository : IPokemonRepository
         throw new NotImplementedException();
     }
 
-    public void CreatePokemon(string ownerId, string categoryId, Pokemon pokemon)
+    public void CreatePokemon(Guid ownerId, Guid categoryId, Pokemon pokemon)
     {
-        var pokemonOwnerEntity = _context.Owners.FirstOrDefault(o => o.FirstName == ownerId);
-        var category = _context.Categories.FirstOrDefault(o => o.Name == categoryId);
+        var pokemonOwnerEntity = _context.Owners.FirstOrDefault(o => o.Id == ownerId);
+        var category = _context.Categories.FirstOrDefault(o => o.Id == categoryId);
 
         var pokemonOwner = new PokemonOwner
         {
