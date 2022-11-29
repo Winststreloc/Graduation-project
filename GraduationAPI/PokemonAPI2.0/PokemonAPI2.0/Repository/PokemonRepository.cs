@@ -19,6 +19,11 @@ public class PokemonRepository : IPokemonRepository
         return _context.Pokemon.FirstOrDefault(p => p.Id == Id);
     }
 
+    public ICollection<Pokemon> GetPokemons(int count)
+    {
+        return _context.Pokemon.Take(count).OrderBy(p => p.PokedexId).ToList();
+    }
+
     public void CaluclateDamage(Pokemon selfPokemon, Ability ability, Pokemon opponentPokemon)
     {
         throw new NotImplementedException();
@@ -29,10 +34,10 @@ public class PokemonRepository : IPokemonRepository
         return _context.Pokemon.Any(p => p.Id == Id);
     }
 
-    public void DeletePokemon(Pokemon pokemon)
+    public bool DeletePokemon(Pokemon pokemon)
     {
         _context.Remove(pokemon);
-        Save();
+        return Save();
     }
 
     public void SubstractDamage(Pokemon pokemon, int damage)
@@ -75,20 +80,34 @@ public class PokemonRepository : IPokemonRepository
         Save();
     }
 
-    public void UpdatePokemon(Pokemon pokemon)
+    public bool UpdatePokemon(Guid ownerId, Guid categoryId, Pokemon pokemon)
     {
+        var pokemonOwnerEntity = _context.Owners.FirstOrDefault(o => o.Id == ownerId);
+        var category = _context.Categories.FirstOrDefault(o => o.Id == categoryId);
+
+        var pokemonOwner = new PokemonOwner
+        {
+            Owner = pokemonOwnerEntity,
+            Pokemon = pokemon
+        };
+
+        _context.Update(pokemonOwner);
+
+        var pokemonCategory = new PokemonCategory
+        {
+            Category = category,
+            Pokemon = pokemon
+        };
+
+        _context.Update(pokemonCategory);
+
         _context.Update(pokemon);
-        Save();
+        return Save();
     }
 
-    public void Save()
+    public bool Save()
     {
-        _context.SaveChanges();
-    }
-
-    public void Temp()
-    {
-        int? a = null;
-        string name = a == null ? "artur" : "vasya";
+        var saved = _context.SaveChanges();
+        return saved > 0 ? true : false;
     }
 }
