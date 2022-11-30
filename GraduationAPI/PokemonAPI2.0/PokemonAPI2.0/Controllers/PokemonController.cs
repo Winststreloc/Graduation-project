@@ -26,8 +26,7 @@ public class PokemonController : ControllerBase
         {
             return NotFound();
         }
-
-
+        
         var pokemon = _mapper.Map<PokemonDto>(_pokemonRepository.GetPokemon(Id));
 
         return Ok(pokemon);
