@@ -9,14 +9,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5fe8b5e-931a-4ea6-a2f3-18ccb218a455" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/PokemonAPI2.0/Controllers/CategoryController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PokemonAPI2.0/Dto/CategoryDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PokemonAPI2.0/Interfaces/ICategoryRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PokemonAPI2.0/Repository/CategoryRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Controllers/PokemonController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Controllers/PokemonController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PokemonAPI2.0/Controllers/PokedexController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PokemonAPI2.0/Interfaces/IPokedexRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PokemonAPI2.0/Repository/PokedexRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Data/PokemonDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Data/PokemonDbContext.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Helpers/MappingProfiles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Helpers/MappingProfiles.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Migrations/PokemonDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Migrations/PokemonDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Models/Level.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Models/Pokedex.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Models/Pokemon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Models/Pokemon.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Repository/PokemonRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Repository/PokemonRepository.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +116,8 @@
       <workItem from="1669740981669" duration="1047000" />
       <workItem from="1669742454672" duration="6534000" />
       <workItem from="1669759594705" duration="4889000" />
-      <workItem from="1669766627812" duration="5151000" />
+      <workItem from="1669766627812" duration="7357000" />
+      <workItem from="1669847463071" duration="4529000" />
     </task>
     <servers />
   </component>
@@ -153,19 +155,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/PokemonAPI2.0/Repository/PokemonRepository.cs</url>
-          <line>18</line>
-          <properties documentPath="D:\Study\Graduation project\Graduation-project\GraduationAPI\PokemonAPI2.0\PokemonAPI2.0\Repository\PokemonRepository.cs" initialLine="18" containingFunctionPresentation="method 'GetPokemon'">
-            <startOffsets>
-              <option value="400" />
-            </startOffsets>
-            <endOffsets>
-              <option value="456" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

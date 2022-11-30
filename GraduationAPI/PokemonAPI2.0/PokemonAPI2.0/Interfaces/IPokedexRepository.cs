@@ -1,6 +1,16 @@
-﻿namespace PokemonWEB.Interfaces;
+﻿using PokemonWEB.Dto;
+using PokemonWEB.Models;
+using PokemonWEB.Models.Action;
 
-public class IPokedexRepository
+namespace PokemonWEB.Interfaces;
+
+public interface IPokedexRepository
 {
-    
+    PokemonDto GetPokemon(int Id);
+    ICollection<PokemonDto> GetPokemons();
+    void CreatePokemon(PokemonDto pokemon);
+    bool UpdatePokemon(PokemonDto pokemon);
+    bool DeletePokemon(PokemonDto pokemon);
+    bool PokemonExists(int Id);
+    bool Save();
 }

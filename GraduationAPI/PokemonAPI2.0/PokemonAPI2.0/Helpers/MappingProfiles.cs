@@ -12,5 +12,8 @@ public class MappingProfiles : Profile
         CreateMap<PokemonDto, Pokemon>();
         CreateMap<Category, CategoryDto>();
         CreateMap<CategoryDto, Category>();
+
+        CreateMap<Pokedex, PokemonDto>();
+        CreateMap<PokemonDto, Pokedex>();
     }
 }

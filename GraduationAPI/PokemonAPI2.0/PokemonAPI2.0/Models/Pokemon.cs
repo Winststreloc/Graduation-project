@@ -1,5 +1,4 @@
 ﻿using PokemonAPI;
-using PokemonWEB.Models.Action;
 
 namespace PokemonWEB.Models;
 
@@ -12,6 +11,10 @@ public class Pokemon
     public int Height { get; set; }
     public bool Gender { get; set; }
     public int Experience { get; set; }
+    public  double BaseDamage { get; set; }
+    public double BaseHP { get; set; }
+    public double Defense { get; set; }
+    
     
     public ICollection<PokemonAbility> PokemonAbilities { get; set; }
     public  ICollection<PokemonOwner> PokemonOwners { get; set; }
