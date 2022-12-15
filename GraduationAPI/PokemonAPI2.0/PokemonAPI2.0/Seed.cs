@@ -15,96 +15,41 @@ public class Seed
 
     public void SeedDataContext()
     {
-        if (!_pokemonDbContext.PokemonOwners.Any())
+        if (!_pokemonDbContext.Pokedex.Any())
         {
-            var pokemonOwners = new List<PokemonOwner>
+            var pokemons = new List<Pokedex>
             {
                 new()
                 {
-                    Pokemon = new Pokemon
-                    {
-                        Id = new Guid(),
-                        Name = "Bulbasaur",
-                        Weight = 7,
-                        Height = 70,
-                        Gender = true,
-                        Experience = 100,
-                        PokemonCategories = new List<PokemonCategory>
-                        {
-                            new() { Category = new Category { Id = new Guid(), Name = "Grass" } },
-                            new() { Category = new Category { Id = new Guid(), Name = "Poison"} }
-                        },
-                        PokemonAbilities = new List<PokemonAbility>
-                        {
-                            new() {Ability = new Ability {Name = "Frontal attack", Damage = 40, Healing = 0, Id = new Guid()}}
-                        }
-                    },
-                    Owner = new Owner
-                    {
-                        Id = new Guid(),
-                        FirstName = "Jack",
-                        LastName = "London",
-                        Gym = "Brocks Gym",
-                    }
+                    PokedexId = 1,
+                    Name = "Bulbasur",
+                    Weight = 7,
+                    Height = 70,
+                    BaseDamage = 49,
+                    BaseHP = 45,
+                    BaseDefense = 49
                 },
                 new()
                 {
-                    Pokemon = new Pokemon
-                    {
-                        Id = new Guid(),
-                        Name = "Ivysaur",
-                        Weight = 13,
-                        Height = 100,
-                        Gender = true,
-                        Experience = 1600,
-                        PokemonCategories = new List<PokemonCategory>
-                        {
-                            new() { Category = new Category { Id = new Guid(), Name = "Grass" } },
-                            new() { Category = new Category { Id = new Guid(), Name = "Poison"} }
-                        },
-                        PokemonAbilities = new List<PokemonAbility>
-                        {
-                            new() {Ability = new Ability {Name = "Frontal attack", Damage = 40, Healing = 0, Id = new Guid()}}
-                        }
-                    },
-                    Owner = new Owner
-                    {
-                        Id = new Guid(),
-                        FirstName = "Harry",
-                        LastName = "Potter",
-                        Gym = "Mistys Gym",
-                    }
+                    PokedexId = 2,
+                    Name = "Invsyr",
+                    Weight = 13,
+                    Height = 100,
+                    BaseDamage = 60,
+                    BaseHP = 62,
+                    BaseDefense = 63
                 },
                 new()
                 {
-                    Pokemon = new Pokemon
-                    {
-                        Id = new Guid(),
-                        Name = "Ivysaur",
-                        Weight = 100,
-                        Height = 200,
-                        Gender = true,
-                        Experience = 3600,
-                        PokemonCategories = new List<PokemonCategory>
-                        {
-                            new() { Category = new Category { Id = new Guid(), Name = "Grass" } },
-                            new() { Category = new Category { Id = new Guid(), Name = "Poison"} }
-                        },
-                        PokemonAbilities = new List<PokemonAbility>
-                        {
-                            new() {Ability = new Ability {Name = "Frontal attack", Damage = 40, Healing = 0, Id = new Guid()}}
-                        }
-                    },
-                    Owner = new Owner
-                    {
-                        Id = new Guid(),
-                        FirstName = "Ash",
-                        LastName = "Ketchum",
-                        Gym = "Ashs Gym",
-                    }
+                    PokedexId = 3,
+                    Name = "Venuasaur",
+                    Weight = 100,
+                    Height = 200,
+                    BaseDamage = 80,
+                    BaseHP = 82,
+                    BaseDefense = 83
                 }
             };
-            _pokemonDbContext.PokemonOwners.AddRange(pokemonOwners);
             _pokemonDbContext.SaveChanges();
         }
     }

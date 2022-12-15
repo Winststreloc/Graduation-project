@@ -19,12 +19,12 @@ public class PokedexRepository : IPokedexRepository
     }
     public PokemonDto GetPokemon(int id)
     {
-        return _mapper.Map<PokemonDto>(_context.Pokedex.FirstOrDefault(p => p.Id == id));
+        return _mapper.Map<PokemonDto>(_context.Pokedex.FirstOrDefault(p => p.PokedexId == id));
     }
 
     public ICollection<PokemonDto> GetPokemons()
     {
-        return _mapper.Map<List<PokemonDto>>(_context.Pokemon.OrderBy(p => p.PokedexId).ToList());
+        return _mapper.Map<List<PokemonDto>>(_context.Pokedex.OrderBy(p => p.PokedexId).ToList());
     }
 
     public void CreatePokemon(PokemonDto pokemon)
@@ -47,7 +47,7 @@ public class PokedexRepository : IPokedexRepository
 
     public bool PokemonExists(int id)
     {
-        return _context.Pokedex.Any(p => p.Id == id);
+        return _context.Pokedex.Any(p => p.PokedexId == id);
     }
 
 

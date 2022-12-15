@@ -9,15 +9,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5fe8b5e-931a-4ea6-a2f3-18ccb218a455" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/PokemonAPI2.0/Controllers/PokedexController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PokemonAPI2.0/Interfaces/IPokedexRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PokemonAPI2.0/Repository/PokedexRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PokemonAPI2.0/Data/PokemonConfiguration.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PokemonAPI2.0/Models/Battle.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PokemonAPI2.0/Models/Level.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PokemonAPI2.0/Services/PokemonBattle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.$pokemonDiagram.drawio.dtmp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Data/PokemonDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Data/PokemonDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Helpers/MappingProfiles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Helpers/MappingProfiles.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Migrations/PokemonDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Migrations/PokemonDbContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Models/Level.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Models/Pokedex.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Models/Pokedex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Models/Pokedex.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Models/Pokemon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Models/Pokemon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Repository/PokedexRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Repository/PokedexRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokemonAPI2.0/Seed.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PokemonAPI2.0/Seed.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SQL/pokemonScript.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../../SQL/pokemonScript.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +120,13 @@
       <workItem from="1669742454672" duration="6534000" />
       <workItem from="1669759594705" duration="4889000" />
       <workItem from="1669766627812" duration="7357000" />
-      <workItem from="1669847463071" duration="4529000" />
+      <workItem from="1669847463071" duration="15443000" />
+      <workItem from="1669930385360" duration="221000" />
+      <workItem from="1669930632122" duration="1240000" />
+      <workItem from="1670246535874" duration="10109000" />
+      <workItem from="1670943227320" duration="1972000" />
+      <workItem from="1670949541700" duration="3000" />
+      <workItem from="1671117878351" duration="955000" />
     </task>
     <servers />
   </component>

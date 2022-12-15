@@ -96,3 +96,12 @@ insert into Pokemon
 values('93e80f41-636e-4d45-a4f3-9b5d0e1081eb', 20, 'Raticate', 19, 70, 0, 2000)
 insert into PokemonCategories
 values('93e80f41-636e-4d45-a4f3-9b5d0e1081eb', 'f4ba99c8-db8e-40c3-b270-deffae0e5a4d')
+
+insert into Pokedex
+values(1, 'Bulbasaur', 7, 70, 45, 49, 49, 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png')
+insert into Pokedex
+values(2, 'Ivysaur', 13, 100, 60, 62, 63, 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/002.png')
+insert into Pokedex
+values(3, 'Venusaur', 100, 185, 80, 82, 83, 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/003.png')
+insert into Pokedex
+values(4, 'Charmander', 8, 61, 39, 52, 43, 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png')

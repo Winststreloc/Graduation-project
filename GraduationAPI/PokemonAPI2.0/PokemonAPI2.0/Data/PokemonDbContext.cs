@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using PokemonAPI;
 using PokemonWEB.Models;
 using PokemonWEB.Models.Action;
@@ -25,8 +26,11 @@ public class PokemonDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); //TODO
+        
         modelBuilder.Entity<Pokedex>()
-            .HasKey(px => px.Id);
+            .HasKey(px => px.PokedexId);
         
         modelBuilder.Entity<PokemonAbility>()
             .HasKey(pa => new { pa.PokemonId, pa.AbilityId });
