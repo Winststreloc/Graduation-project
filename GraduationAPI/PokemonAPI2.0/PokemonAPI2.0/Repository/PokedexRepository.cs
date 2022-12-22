@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using PokemonAPI2._0.Migrations;
+using Microsoft.EntityFrameworkCore;
 using PokemonWEB.Data;
 using PokemonWEB.Dto;
 using PokemonWEB.Interfaces;
@@ -10,36 +10,35 @@ namespace PokemonWEB.Repository;
 public class PokedexRepository : IPokedexRepository
 {
     private readonly PokemonDbContext _context;
-    private readonly IMapper _mapper;
-    
-    public PokedexRepository(PokemonDbContext context, IMapper mapper)
+
+    public PokedexRepository(PokemonDbContext context)
     {
         _context = context;
-        _mapper = mapper;
-    }
-    public PokemonDto GetPokemon(int id)
-    {
-        return _mapper.Map<PokemonDto>(_context.Pokedex.FirstOrDefault(p => p.PokedexId == id));
     }
 
-    public ICollection<PokemonDto> GetPokemons()
+    public Pokedex GetPokemon(int id)
     {
-        return _mapper.Map<List<PokemonDto>>(_context.Pokedex.OrderBy(p => p.PokedexId).ToList());
+        return _context.Pokedex.FirstOrDefault(p => p.PokedexId == id);
     }
 
-    public void CreatePokemon(PokemonDto pokemon)
+    public ICollection<Pokedex> GetPokemons()
     {
-        _context.Add(pokemon);
-        Save();
+        return _context.Pokedex.OrderBy(p => p.PokedexId).ToList();
     }
 
-    public bool UpdatePokemon(PokemonDto pokemon)
+    public bool CreatePokemon(Pokedex pokemon)
+    {
+        _context.AddAsync(pokemon);
+        return Save();
+    }
+
+    public bool UpdatePokemon(Pokedex pokemon)
     {
         _context.Update(pokemon);
         return Save();
     }
 
-    public bool DeletePokemon(PokemonDto pokemon)
+    public bool DeletePokemon(Pokedex pokemon)
     {
         _context.Remove(pokemon);
         return Save();
@@ -49,8 +48,7 @@ public class PokedexRepository : IPokedexRepository
     {
         return _context.Pokedex.Any(p => p.PokedexId == id);
     }
-
-
+    
     public bool Save()
     {
         var saved = _context.SaveChanges();

@@ -13,7 +13,10 @@ public class MappingProfiles : Profile
         CreateMap<Category, CategoryDto>();
         CreateMap<CategoryDto, Category>();
 
-        CreateMap<Pokedex, PokemonDto>();
-        CreateMap<PokemonDto, Pokedex>();
+        CreateMap<Pokedex, PokedexDto>();
+        CreateMap<PokedexDto, Pokedex>();
+        
+        CreateMap<Pokedex, Task<PokedexDto>>();
+        CreateMap<Task<PokedexDto>, Pokedex>();
     }
 }

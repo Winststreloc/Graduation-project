@@ -12,8 +12,8 @@ using PokemonWEB.Data;
 namespace PokemonAPI2._0.Migrations
 {
     [DbContext(typeof(PokemonDbContext))]
-    [Migration("20221205223114_ChangePokemonAddLogic3")]
-    partial class ChangePokemonAddLogic3
+    [Migration("20221222140537_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,7 +39,7 @@ namespace PokemonAPI2._0.Migrations
                     b.ToTable("PokemonAbilities");
                 });
 
-            modelBuilder.Entity("PokemonWEB.Models.Action.Ability", b =>
+            modelBuilder.Entity("PokemonWEB.Models.Action.Moves", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -115,8 +115,8 @@ namespace PokemonAPI2._0.Migrations
                     b.Property<int>("BaseHP")
                         .HasColumnType("int");
 
-                    b.Property<int>("Height")
-                        .HasColumnType("int");
+                    b.Property<double>("Height")
+                        .HasColumnType("float");
 
                     b.Property<string>("ImageURL")
                         .IsRequired()
@@ -126,8 +126,11 @@ namespace PokemonAPI2._0.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Weight")
+                    b.Property<int>("PokemonPower")
                         .HasColumnType("int");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("float");
 
                     b.HasKey("PokedexId");
 
@@ -146,9 +149,6 @@ namespace PokemonAPI2._0.Migrations
                     b.Property<bool>("Gender")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Height")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -156,12 +156,11 @@ namespace PokemonAPI2._0.Migrations
                     b.Property<int>("PokedexId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Weight")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Pokemon");
+                    b.HasIndex("PokedexId");
+
+                    b.ToTable("Pokemons");
                 });
 
             modelBuilder.Entity("PokemonWEB.Models.PokemonCategory", b =>
@@ -196,7 +195,7 @@ namespace PokemonAPI2._0.Migrations
 
             modelBuilder.Entity("PokemonAPI.PokemonAbility", b =>
                 {
-                    b.HasOne("PokemonWEB.Models.Action.Ability", "Ability")
+                    b.HasOne("PokemonWEB.Models.Action.Moves", "Moves")
                         .WithMany("PokemonAbilities")
                         .HasForeignKey("AbilityId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -208,9 +207,20 @@ namespace PokemonAPI2._0.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Ability");
+                    b.Navigation("Moves");
 
                     b.Navigation("Pokemon");
+                });
+
+            modelBuilder.Entity("PokemonWEB.Models.Pokemon", b =>
+                {
+                    b.HasOne("PokemonWEB.Models.Pokedex", "Pokedex")
+                        .WithMany("Pokemons")
+                        .HasForeignKey("PokedexId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pokedex");
                 });
 
             modelBuilder.Entity("PokemonWEB.Models.PokemonCategory", b =>
@@ -251,7 +261,7 @@ namespace PokemonAPI2._0.Migrations
                     b.Navigation("Pokemon");
                 });
 
-            modelBuilder.Entity("PokemonWEB.Models.Action.Ability", b =>
+            modelBuilder.Entity("PokemonWEB.Models.Action.Moves", b =>
                 {
                     b.Navigation("PokemonAbilities");
                 });
@@ -264,6 +274,11 @@ namespace PokemonAPI2._0.Migrations
             modelBuilder.Entity("PokemonWEB.Models.Owner", b =>
                 {
                     b.Navigation("PokemonOwners");
+                });
+
+            modelBuilder.Entity("PokemonWEB.Models.Pokedex", b =>
+                {
+                    b.Navigation("Pokemons");
                 });
 
             modelBuilder.Entity("PokemonWEB.Models.Pokemon", b =>

@@ -77,11 +77,7 @@ public class PokemonController : ControllerBase
 
         var pokemonMap = _mapper.Map<Pokemon>(updatedPokemon);
 
-        if (!_pokemonRepository.UpdatePokemon(ownerId, catId, pokemonMap))
-        {
-            ModelState.AddModelError("", "Something went wrong updating owner");
-            return StatusCode(500, ModelState);
-        }
+        _pokemonRepository.UpdatePokemon(ownerId, catId, pokemonMap);
 
         return NoContent();
     }
