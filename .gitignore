@@ -503,3 +503,26 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 .idea
 # End of https://www.toptal.com/developers/gitignore/api/dotnetcore,csharp,rider,react
+/GraduationAPI/PokemonAPI2.0/.idea/.idea.PokemonAPI2.0/.idea/workspace.xml
+/GraduationAPI/PokemonAPI2.0/.idea/.idea.PokemonAPI2.0/.idea/dataSources.local.xml
+/GraduationAPI/PokemonAPI2.0/.idea/.idea.PokemonAPI2.0/.idea/dataSources.xml
+/GraduationAPI/PokemonAPI2.0/.idea/.idea.PokemonAPI2.0/.idea/dataSources/07b88d67-57d7-488f-85ef-039ada28369d.xml
+/GraduationAPI/PokemonAPI2.0/.idea/.idea.PokemonAPI2.0/.idea/dataSources/07b88d67-57d7-488f-85ef-039ada28369d/storage_v2/_src_/database/master.YiqNvw/schema/dbo.sYMBAA.zip
+/GraduationAPI/PokemonAPI2.0/.idea/.idea.PokemonAPI2.0/.idea/encodings.xml
+/GraduationAPI/PokemonAPI2.0/.idea/.idea.PokemonAPI2.0/.idea/vcs.xml
+/GraduationAPI/PokemonAPI2.0/.idea/.idea.PokemonAPI2.0/.idea/workspace.xml
+
+#Ignore thumbnails created by Windows
+Thumbs.db
+#Ignore files built by Visual Studio
+*.exe
+*.bak
+*.cache
+[Bb]in
+[Dd]ebug*/
+*.lib
+[Rr]elease*/
+[Tt]est[Rr]esult*
+#Nuget packages folder
+packages/
+*.idea
