@@ -1,10 +1,7 @@
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using PokemonWEB.Data;
-using PokemonWEB.Interfaces;
-using PokemonWEB.Repository;
 using PokemonAPI;
-using PokemonAPI.Service;
 
 
 var builder = WebApplication.CreateBuilder(args);

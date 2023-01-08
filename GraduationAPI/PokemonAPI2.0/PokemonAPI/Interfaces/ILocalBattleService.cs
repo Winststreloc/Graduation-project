@@ -3,7 +3,7 @@ using PokemonWEB.Models.Action;
 
 namespace PokemonAPI.Service;
 
-public interface ILocalBattle
+public interface ILocalBattleService
 {
     bool UpdateBattle(Battle battle, Ability moveUser);
 }

@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using PokemonAPI2._0.Models.Action;
 using PokemonWEB.Data;
 using PokemonWEB.Models;
@@ -5,32 +6,29 @@ using PokemonWEB.Models.Action;
 
 namespace PokemonAPI.Service;
 
-public class LocalBattle : ILocalBattle
+public class LocalBattleService : ILocalBattleService
 {
     private readonly PokemonDbContext _context;
 
-    public LocalBattle(PokemonDbContext context)
+    public LocalBattleService(PokemonDbContext context)
     {
         _context = context;
     }
 
     public bool UpdateBattle(Battle battle, Ability moveUser)
     {
-        Pokemon pokemonUser = battle.PokemonUser;
-        Pokemon pokemonEnemy = battle.PokemonEnemy;
-        var enemyAbilities =
-            (from a in _context.Abilities
-                join pa in _context.PokemonAbilities on a.Id equals pa.AbilityId
-                join p in _context.Pokemons on pa.PokemonId equals p.Id
-                select new Ability()
-            );
-        var abilities = enemyAbilities.ToArray();
         Random rnd = new Random();
-        var ability = abilities[rnd.Next(abilities.Length)];
+        var pokemonUser = battle.PokemonUser;
+        var pokemonEnemy = battle.PokemonEnemy;
+        var enemyAbilities = _context.Abilities.Select(a => a.PokemonAbilities
+            .Where(pa => pa.PokemonId == pokemonEnemy.Id)).ToArray();
+
+
+        var ability = enemyAbilities;
 
         var pokEnemyHp = GetDefence(pokemonEnemy) - GetDamage(pokemonUser, moveUser);
         double pokUserHp = GetDefence(pokemonUser) - GetDamage(pokemonEnemy, ability);
-
+        
         _context.Update(pokemonUser);
 
         return Save();

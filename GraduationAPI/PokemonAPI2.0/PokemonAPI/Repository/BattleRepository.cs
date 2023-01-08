@@ -9,12 +9,12 @@ namespace PokemonWEB.Repository;
 public class BattleRepository : IBattleRepository
 {
     private readonly PokemonDbContext _context;
-    private readonly ILocalBattle _battle;
+    private readonly ILocalBattleService _battleService;
 
-    public BattleRepository(PokemonDbContext context, LocalBattle battle)
+    public BattleRepository(PokemonDbContext context, LocalBattleService battleService)
     {
         _context = context;
-        _battle = battle;
+        _battleService = battleService;
     }
     public Battle GetBattle(Guid Id)
     {
@@ -36,7 +36,7 @@ public class BattleRepository : IBattleRepository
     public bool UpdateBattle(Guid battleId, Ability ability)
     {
         var battle = _context.Battles.FirstOrDefault(b => b.Id == battleId);
-        _battle.UpdateBattle(battle, ability);
+        _battleService.UpdateBattle(battle, ability);
         return Save();
     }
 
