@@ -20,11 +20,11 @@ public class LocalBattleService : ILocalBattleService
         Random rnd = new Random();
         var pokemonUser = battle.PokemonUser;
         var pokemonEnemy = battle.PokemonEnemy;
-        var enemyAbilities = _context.Abilities.Select(a => a.PokemonAbilities
-            .Where(pa => pa.PokemonId == pokemonEnemy.Id)).ToArray();
+        var enemyAbilities = _context.PokemonAbilities
+            .Where(pa => pa.PokemonId == pokemonEnemy.Id)
+            .Select(p => p.Ability).Take(4);
 
-
-        var ability = enemyAbilities;
+        var ability = enemyAbilities.First();
 
         var pokEnemyHp = GetDefence(pokemonEnemy) - GetDamage(pokemonUser, moveUser);
         double pokUserHp = GetDefence(pokemonUser) - GetDamage(pokemonEnemy, ability);

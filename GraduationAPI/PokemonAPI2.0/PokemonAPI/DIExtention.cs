@@ -10,8 +10,12 @@ public static class DIExtention
     public static void ConfigureServices(this IServiceCollection service)
     {
         service.AddScoped<IPokemonRepository, PokemonRepository>();
-        service.AddScoped<ILocalBattleService, LocalBattleService>();
+
         service.AddScoped<ICategoryRepository, CategoryRepository>();
         service.AddScoped<IPokedexRepository, PokedexRepository>();
+        service.AddScoped<IBattleRepository, BattleRepository>();        
+        service.AddScoped<ILocalBattleService, LocalBattleService>();
+        
+
     }
 }
