@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using PokemonAPI;
+using PokemonAPI2._0.Models.Action;
 using PokemonWEB.Data;
 
 namespace PokemonWEB.Models;
 
 public class Pokemon
 {
-    private readonly PokemonDbContext _context;
     public Guid Id { get; set; }
     public int PokedexId { get; set; }
     public Pokedex Pokedex { get; set; }
@@ -17,11 +17,11 @@ public class Pokemon
     public int CurrentDamage { get; set; }
     public int CurrentDefence { get; set; }
     public int Level => GetLevel();
-    public int MaxHealth => GetHP();
-    public int MaxDamage => GetDamage();
-    public int MaxDefence => GetDefence();
-    
-    
+    // public int MaxHealth => GetHP();
+    // public int MaxDamage => GetDamage();
+    // public int MaxDefence => GetDefence();
+
+
     public ICollection<PokemonAbility> PokemonAbilities { get; set; }
     public ICollection<PokemonOwner> PokemonOwners { get; set; }
     public ICollection<PokemonCategory> PokemonCategories { get; set; }
@@ -58,22 +58,22 @@ public class Pokemon
         return currentLevel;
     }
 
-    public int GetDamage()
-    {
-        var pokedex = _context.Pokedex.FirstOrDefault(p => p.PokedexId == PokedexId);
-        return pokedex.BaseDamage * (1 + Level / 100);
-    }
-    
-    public int GetHP()
-    {
-        var pokedex = _context.Pokedex.FirstOrDefault(p => p.PokedexId == PokedexId);
-        return pokedex.BaseHP * (1 + Level / 100);
-    }
-    
-    public int GetDefence()
-    {
-        var pokedex = _context.Pokedex.FirstOrDefault(p => p.PokedexId == PokedexId);
-        return pokedex.BaseHP * (1 + Level / 100);
-    }
+    // public int GetDamage()
+    // {
+    //     var pokedex = _context.Pokedex.FirstOrDefault(p => p.PokedexId == PokedexId);
+    //     return pokedex.BaseDamage * (1 + Level / 100);
+    // }
+    //
+    // public int GetHP()
+    // {
+    //     var pokedex = _context.Pokedex.SingleOrDefault(p => p.PokedexId == PokedexId);
+    //     return pokedex.BaseHP * (1 + Level / 100);
+    // }
+    //
+    // public int GetDefence()
+    // {
+    //     var pokedex = _context.Pokedex.FirstOrDefault(p => p.PokedexId == PokedexId);
+    //     return pokedex.BaseHP * (1 + Level / 100);
+    // }
     
 }

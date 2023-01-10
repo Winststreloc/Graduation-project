@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using PokemonAPI2._0.Models.Action;
 using PokemonWEB.Data;
 using PokemonWEB.Models;
@@ -15,11 +16,10 @@ public class LocalBattleService : ILocalBattleService
         _context = context;
     }
 
-    public bool UpdateBattle(Battle battle, Ability moveUser)
+    public ICollection<Pokemon> UpdateBattle(Pokemon pokemonUser, Pokemon pokemonEnemy, Ability moveUser)
     {
         Random rnd = new Random();
-        var pokemonUser = battle.PokemonUser;
-        var pokemonEnemy = battle.PokemonEnemy;
+        
         var enemyAbilities = _context.PokemonAbilities
             .Where(pa => pa.PokemonId == pokemonEnemy.Id)
             .Select(p => p.Ability).Take(4);
@@ -27,29 +27,24 @@ public class LocalBattleService : ILocalBattleService
         var ability = enemyAbilities.First();
 
         var pokEnemyHp = GetDefence(pokemonEnemy) - GetDamage(pokemonUser, moveUser);
-        double pokUserHp = GetDefence(pokemonUser) - GetDamage(pokemonEnemy, ability);
+        var pokUserHp = GetDefence(pokemonUser) - GetDamage(pokemonEnemy, ability);
+        pokemonUser.CurrentHealth = pokUserHp;
+        pokemonEnemy.CurrentHealth = pokEnemyHp;
         
+        var pokemons = new List<Pokemon>{pokemonUser, pokemonEnemy};
         _context.Update(pokemonUser);
-
-        return Save();
+        _context.Update(pokemonEnemy);
+        Save();
+        
+        return pokemons;
     }
 
-    // public bool BattleEnded(LocalBattle battle) //TODO
-    // {
-    //     return Save();
-    // }
-
-    // public void PrintBattleStatus(PokemonBattleRepository battleRepository, Pokemon pokemonUser, Pokemon pokemonEnemy)
-    // {
-    //     throw new NotImplementedException();
-    // }
-
-    private double GetDamage(Pokemon pokemon, Ability move)
+    private int GetDamage(Pokemon pokemon, Ability move)
     {
         return pokemon.CurrentDamage + move.Damage;
     }
 
-    private double GetDefence(Pokemon pokemon)
+    private int GetDefence(Pokemon pokemon)
     {
         return pokemon.CurrentHealth + (pokemon.CurrentDamage / 2);
     }

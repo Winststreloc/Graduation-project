@@ -9,11 +9,11 @@ using PokemonWEB.Data;
 
 #nullable disable
 
-namespace PokemonAPI2._0.Migrations
+namespace PokemonAPI.Migrations
 {
     [DbContext(typeof(PokemonDbContext))]
-    [Migration("20221225151842_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230110204836_RemoveBattle")]
+    partial class RemoveBattle
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,27 +37,6 @@ namespace PokemonAPI2._0.Migrations
                     b.HasIndex("AbilityId");
 
                     b.ToTable("PokemonAbilities");
-                });
-
-            modelBuilder.Entity("PokemonAPI2._0.Models.Action.Battle", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PokemonEnemyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PokemonUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PokemonEnemyId");
-
-                    b.HasIndex("PokemonUserId");
-
-                    b.ToTable("Battles");
                 });
 
             modelBuilder.Entity("PokemonWEB.Models.Action.Ability", b =>
@@ -240,25 +219,6 @@ namespace PokemonAPI2._0.Migrations
                     b.Navigation("Ability");
 
                     b.Navigation("Pokemon");
-                });
-
-            modelBuilder.Entity("PokemonAPI2._0.Models.Action.Battle", b =>
-                {
-                    b.HasOne("PokemonWEB.Models.Pokemon", "PokemonEnemy")
-                        .WithMany()
-                        .HasForeignKey("PokemonEnemyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PokemonWEB.Models.Pokemon", "PokemonUser")
-                        .WithMany()
-                        .HasForeignKey("PokemonUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PokemonEnemy");
-
-                    b.Navigation("PokemonUser");
                 });
 
             modelBuilder.Entity("PokemonWEB.Models.Pokemon", b =>

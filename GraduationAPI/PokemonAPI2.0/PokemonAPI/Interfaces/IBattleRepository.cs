@@ -6,9 +6,5 @@ namespace PokemonWEB.Interfaces;
 
 public interface IBattleRepository
 {
-    Battle GetBattle(Guid id);
-    void CreateBattle(Guid pokemonId, int pokedexIdEnemy);
-    bool UpdateBattle(Guid battleId, Ability ability);
-    bool DeleteBattle(Guid battleId);
-    bool BattleExists(Guid Id);
+    ICollection<Pokemon> UpdateBattle(Battle battle, Guid abilityId);
 }

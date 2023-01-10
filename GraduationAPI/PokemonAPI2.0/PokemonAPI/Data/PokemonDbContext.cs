@@ -15,7 +15,6 @@ public class PokemonDbContext : DbContext
 
 
     public DbSet<Ability> Abilities { get; set; }
-    public DbSet<Battle> Battles { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Owner> Owners { get; set; }
     public DbSet<Pokemon> Pokemons { get; set; }
@@ -27,10 +26,6 @@ public class PokemonDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); //TODO
-
-        modelBuilder.Entity<Battle>()
-            .HasKey(b => b.Id);
         modelBuilder.Entity<Pokedex>()
             .HasKey(p => p.PokedexId);
         modelBuilder.Entity<Pokedex>()

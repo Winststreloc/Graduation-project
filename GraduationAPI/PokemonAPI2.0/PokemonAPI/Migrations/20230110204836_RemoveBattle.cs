@@ -1,12 +1,11 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace PokemonAPI2._0.Migrations
+namespace PokemonAPI.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class RemoveBattle : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -95,31 +94,6 @@ namespace PokemonAPI2._0.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Battles",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PokemonUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PokemonEnemyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Battles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Battles_Pokemons_PokemonEnemyId",
-                        column: x => x.PokemonEnemyId,
-                        principalTable: "Pokemons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Battles_Pokemons_PokemonUserId",
-                        column: x => x.PokemonUserId,
-                        principalTable: "Pokemons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PokemonAbilities",
                 columns: table => new
                 {
@@ -192,16 +166,6 @@ namespace PokemonAPI2._0.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Battles_PokemonEnemyId",
-                table: "Battles",
-                column: "PokemonEnemyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Battles_PokemonUserId",
-                table: "Battles",
-                column: "PokemonUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PokemonAbilities_AbilityId",
                 table: "PokemonAbilities",
                 column: "AbilityId");
@@ -224,9 +188,6 @@ namespace PokemonAPI2._0.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Battles");
-
             migrationBuilder.DropTable(
                 name: "PokemonAbilities");
 
