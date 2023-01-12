@@ -19,11 +19,13 @@ jobs:
         dotnet-version: 6.0.x
 
     - name: Restore dependencies
-      run:  cd ./GraduationAPI/PokemonAPI2.0 && dotnet restore
+      run:  dotnet restore      
+      working-directory: ./GraduationAPI/PokemonAPI2.0
 
     - name: Build
       run: dotnet build --no-restore
       working-directory: ./GraduationAPI/PokemonAPI2.0
 
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal      
+      working-directory: ./GraduationAPI/PokemonAPI2.0
