@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokemonAPI.Interfaces;
 using PokemonAPI.Models;
@@ -64,6 +65,7 @@ public class AuthController : ControllerBase
         return _responce;
     }
 
+    [Authorize]
     [HttpGet]
     public async Task<Responce> RefreshToken(string refreshToken)
     {
