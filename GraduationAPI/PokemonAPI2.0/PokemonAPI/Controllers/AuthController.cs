@@ -8,7 +8,7 @@ using PokemonWEB.Dto;
 namespace PokemonWEB.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class AuthController : ControllerBase
 {
     private Responce? _responce;
@@ -54,7 +54,7 @@ public class AuthController : ControllerBase
             return _responce;
         }
 
-        if (_passwordHashing.HashingPassword(password) == candidate.PasswordHash)
+        if (_passwordHashing.VerifyHashedPassword(candidate.PasswordHash, password))
         {
             var userTokens = _token.GenerateTokens(candidate);
             _responce.Result = userTokens;

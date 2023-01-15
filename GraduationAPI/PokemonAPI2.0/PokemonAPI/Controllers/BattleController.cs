@@ -6,7 +6,7 @@ using PokemonWEB.Interfaces;
 namespace PokemonWEB.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class BattleController : ControllerBase
 {
     private readonly IBattleRepository _battleRepository;

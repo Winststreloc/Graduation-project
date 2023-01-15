@@ -52,6 +52,7 @@ public class UserRepository : IUserRepository
             Roles = Roles.User,
             PasswordHash = _passwordHashing.HashingPassword(userDto.Password)
         };
+        await _context.Users.AddAsync(user);
         await Save();
 
         var userTokens = _tokenService.GenerateTokens(user);
