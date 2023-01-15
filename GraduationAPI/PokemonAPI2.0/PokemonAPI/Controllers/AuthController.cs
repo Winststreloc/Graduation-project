@@ -63,4 +63,22 @@ public class AuthController : ControllerBase
         _responce.IsSuccess = false;
         return _responce;
     }
+
+    [HttpGet]
+    public async Task<Responce> RefreshToken(string refreshToken)
+    {
+        if (_token.ValidateRefreshToken(refreshToken))
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == "Id").Value;
+            var candidate = await _userRepository.GetUserById(Guid.Parse(userId));
+
+            var userTokens = _token.GenerateTokens(candidate);
+            _responce.Result = userTokens;
+            return _responce;
+        }
+
+        _responce.IsSuccess = false;
+        _responce.ErrorMessages = new List<string> { "Invalid refresh_token" };
+        return _responce;
+    }
 }

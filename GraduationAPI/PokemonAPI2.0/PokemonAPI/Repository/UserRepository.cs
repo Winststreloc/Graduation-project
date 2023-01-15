@@ -21,7 +21,7 @@ public class UserRepository : IUserRepository
         _tokenService = tokenService;
     }
 
-    public async Task<User> CredentialsIdentification(string email, string passwordHash)
+    public async Task<User?> CredentialsIdentification(string email, string passwordHash)
     {
         return await _context.Users.SingleOrDefaultAsync(u => u.Email == email && u.PasswordHash == passwordHash);
     }
@@ -29,6 +29,11 @@ public class UserRepository : IUserRepository
     public async Task<User?> GetUserByEmail(string email)
     {
         return await _context.Users.SingleOrDefaultAsync(u => u.Email == email);
+    }
+
+    public async Task<User?> GetUserById(Guid id)
+    {
+        return await _context.Users.SingleOrDefaultAsync(u => u.Id == id);
     }
 
     public async Task<User?> GetUserByNickName(string nickName)
