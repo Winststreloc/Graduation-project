@@ -30,7 +30,7 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<Responce?> Register([FromBody] UserDto userDto)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
             _responce.ErrorMessages.Add("Invalid username or password.");
             _responce.IsSuccess = false;
