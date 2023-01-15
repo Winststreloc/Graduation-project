@@ -16,7 +16,7 @@ public class PokemonDbContext : DbContext
 
     public DbSet<Ability> Abilities { get; set; }
     public DbSet<Category> Categories { get; set; }
-    public DbSet<Owner> Owners { get; set; }
+    public DbSet<User> Users { get; set; }
     public DbSet<Pokemon> Pokemons { get; set; }
     public DbSet<Pokedex> Pokedex { get; set; }
     public DbSet<PokemonAbility> PokemonAbilities { get; set; }
@@ -57,14 +57,14 @@ public class PokemonDbContext : DbContext
             .HasForeignKey(c => c.CategoryId);
 
         modelBuilder.Entity<PokemonOwner>()
-            .HasKey(po => new { po.PokemonId, po.OwnerId });
+            .HasKey(po => new { po.PokemonId, po.UserId });
         modelBuilder.Entity<PokemonOwner>()
             .HasOne(p => p.Pokemon)
             .WithMany(pc => pc.PokemonOwners)
             .HasForeignKey(p => p.PokemonId);
         modelBuilder.Entity<PokemonOwner>()
-            .HasOne(p => p.Owner)
+            .HasOne(p => p.User)
             .WithMany(pc => pc.PokemonOwners)
-            .HasForeignKey(c => c.OwnerId);
+            .HasForeignKey(c => c.UserId);
     }
 }

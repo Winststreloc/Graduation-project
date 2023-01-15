@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PokemonAPI.Interfaces;
+using PokemonAPI.Models.Enums;
 using PokemonWEB.Data;
 using PokemonWEB.Models;
 using PokemonWEB.Models.Action;
@@ -8,9 +10,11 @@ namespace PokemonAPI;
 public class Seed
 {
     private readonly PokemonDbContext _pokemonDbContext;
-    public Seed(PokemonDbContext context)
+    private readonly IPasswordHashingService _passwordHashing;
+    public Seed(PokemonDbContext context, IPasswordHashingService passwordHashing)
     {
         _pokemonDbContext = context;
+        _passwordHashing = passwordHashing;
     }
 
     public void SeedDataContext()
@@ -135,23 +139,43 @@ public class Seed
                 new PokemonOwner()
                 {
                     PokemonId = Guid.Parse("28de668a-4d83-4e14-adc1-b83ac929a272"),
-                    Owner = new Owner()
+                    User = new User()
                     {
                         Id = new Guid("d92119ca-bd69-4f7c-822b-27487892c615"),
                         FirstName = "Yash",
                         LastName = "Ketchyp",
-                        Gym = "PokeGym"
+                        NickName = "YashKetchup",
+                        Email = "yashkethyp@gmail.com",
+                        Roles = Roles.User,
+                        PasswordHash = _passwordHashing.HashingPassword("yash")
+                        
                     }
                 },
                 new PokemonOwner()
                 {
                     PokemonId = Guid.Parse("692c9ef3-8483-44dd-ae01-08d80107551d"),
-                    OwnerId = Guid.Parse("d92119ca-bd69-4f7c-822b-27487892c615")
+                    User = new User()
+                    {
+                        Id = Guid.Parse("5edb66d9-9a98-4470-8959-f19d1b461bfb"),
+                        NickName = "Martin",
+                        Email = "martin@gmail.com",
+                        Roles = Roles.Admin,
+                        PasswordHash = _passwordHashing.HashingPassword("martin")
+                    }
                 },
                 new PokemonOwner()
                 {
                     PokemonId = Guid.Parse("dacce0af-f1f9-4aa7-83a8-a49125589491"),
-                    OwnerId = Guid.Parse("d92119ca-bd69-4f7c-822b-27487892c615")
+                    User = new User()
+                    {
+                        Id = Guid.Parse("d919663a-0768-464c-b1de-90f97de8d2f3"),
+                        FirstName = "Arseny",
+                        LastName = "Stefanenko",
+                        NickName = "winst",
+                        Email = "winst@gmail.com",
+                        Roles = Roles.Admin,
+                        PasswordHash = _passwordHashing.HashingPassword("1234")
+                    }
                 }
             };
             

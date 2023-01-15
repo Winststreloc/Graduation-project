@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PokemonAPI.Migrations
 {
-    public partial class RemoveBattle : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -36,20 +36,6 @@ namespace PokemonAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Owners",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Gym = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Owners", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Pokedex",
                 columns: table => new
                 {
@@ -67,6 +53,23 @@ namespace PokemonAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pokedex", x => x.PokedexId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NickName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Roles = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -146,21 +149,21 @@ namespace PokemonAPI.Migrations
                 columns: table => new
                 {
                     PokemonId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PokemonOwners", x => new { x.PokemonId, x.OwnerId });
-                    table.ForeignKey(
-                        name: "FK_PokemonOwners_Owners_OwnerId",
-                        column: x => x.OwnerId,
-                        principalTable: "Owners",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_PokemonOwners", x => new { x.PokemonId, x.UserId });
                     table.ForeignKey(
                         name: "FK_PokemonOwners_Pokemons_PokemonId",
                         column: x => x.PokemonId,
                         principalTable: "Pokemons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PokemonOwners_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -176,9 +179,9 @@ namespace PokemonAPI.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PokemonOwners_OwnerId",
+                name: "IX_PokemonOwners_UserId",
                 table: "PokemonOwners",
-                column: "OwnerId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pokemons_PokedexId",
@@ -204,10 +207,10 @@ namespace PokemonAPI.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Owners");
+                name: "Pokemons");
 
             migrationBuilder.DropTable(
-                name: "Pokemons");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Pokedex");

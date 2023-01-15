@@ -58,7 +58,7 @@ public class PokemonController : ControllerBase
 
         return Ok("Created");
     }
-
+    
     [HttpPut("update-pokemon")]
     public IActionResult UpdatePokemon([FromQuery] Guid pokemonId, [FromQuery] int pokedexId, [FromQuery] Guid ownerId,
         [FromQuery] Guid catId, [FromBody]PokemonDto updatedPokemon)
