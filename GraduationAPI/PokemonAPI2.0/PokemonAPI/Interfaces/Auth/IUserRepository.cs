@@ -10,6 +10,6 @@ public interface IUserRepository
     Task<User?> GetUserByEmail(string email);
     Task<User?> GetUserById(Guid id);
     Task<User?> GetUserByNickName(string nickName);
-    Task<Responce?> RegisterNewUser(UserDto userDto);
+    Task<Responce?> RegisterNewUser(RegistrationView registrationView);
     Task<bool> Save();
 }

@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddCors();
 builder.Services.AddTransient<Seed>();
 builder.Services.AddControllers().AddJsonOptions(x =>
     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
@@ -77,6 +78,7 @@ app.UseCors(option =>
     option.AllowAnyHeader();
     option.AllowAnyMethod();
 });
+
 
 app.UseAuthorization();
 

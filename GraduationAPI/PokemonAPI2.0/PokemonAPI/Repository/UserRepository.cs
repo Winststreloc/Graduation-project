@@ -41,16 +41,15 @@ public class UserRepository : IUserRepository
         return await _context.Users.SingleOrDefaultAsync(u => u.NickName == nickName);
     }
 
-    public async Task<Responce?> RegisterNewUser(UserDto userDto)
+    public async Task<Responce?> RegisterNewUser(RegistrationView registrationView)
     {
         var user = new User()
         {
-            Email = userDto.Email,
-            FirstName = userDto.FirstName,
-            LastName = userDto.LastName,
-            NickName = userDto.NickName,
+            Email = registrationView.Email,
+            NickName = registrationView.NickName,
             Roles = Roles.User,
-            PasswordHash = _passwordHashing.HashingPassword(userDto.Password)
+            Gender = Enum.Parse<Gender>(registrationView.Gender),
+            PasswordHash = _passwordHashing.HashingPassword(registrationView.Password)
         };
         await _context.Users.AddAsync(user);
         await Save();

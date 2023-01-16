@@ -8,8 +8,9 @@ public class User
     public string NickName { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
-    public string Email { get; set; }
+    public string? Email { get; set; }
     public string PasswordHash { get; set; }
+    public Gender? Gender { get; set; }
     public Roles Roles { get; set; }
     public ICollection<PokemonOwner> PokemonOwners { get; set; }
 }

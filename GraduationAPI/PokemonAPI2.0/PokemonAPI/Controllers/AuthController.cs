@@ -9,7 +9,7 @@ namespace PokemonWEB.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AuthController : ControllerBase
+public class AuthController : Controller
 {
     private Responce? _responce;
     private readonly IMapper _mapper;
@@ -29,7 +29,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<Responce?> Register([FromBody] UserDto userDto)
+    public async Task<Responce?> Register(RegistrationView registrationView)
     {
         if (!ModelState.IsValid)
         {
@@ -38,14 +38,15 @@ public class AuthController : ControllerBase
             return _responce;
         }
 
-        _responce = await _userRepository.RegisterNewUser(userDto);
+        _responce = await _userRepository.RegisterNewUser(registrationView);
         return _responce;
     }
 
+
     [HttpPost("login")]
-    public async Task<Responce> Login([FromQuery] string nickName, [FromQuery] string password)
+    public async Task<Responce> Login(LogginModel logginModel)
     {
-        var candidate = await _userRepository.GetUserByNickName(nickName);
+        var candidate = await _userRepository.GetUserByNickName(logginModel.NickName);
 
         if (candidate == null)
         {
@@ -54,7 +55,7 @@ public class AuthController : ControllerBase
             return _responce;
         }
 
-        if (_passwordHashing.VerifyHashedPassword(candidate.PasswordHash, password))
+        if (_passwordHashing.VerifyHashedPassword(candidate.PasswordHash, logginModel.Password))
         {
             var userTokens = _token.GenerateTokens(candidate);
             _responce.Result = userTokens;
