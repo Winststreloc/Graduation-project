@@ -22,12 +22,12 @@ jobs:
 
     - name: Restore dependencies
       run:  dotnet restore      
-      working-directory: echo ${{ env.ROUTE_TO_POK }}
+      working-directory: ${{ env.ROUTE_TO_POK }}
 
     - name: Build
       run: dotnet build --no-restore
-      working-directory: echo ${{ env.ROUTE_TO_POK }}
+      working-directory: ${{ env.ROUTE_TO_POK }}
 
     - name: Test
       run: dotnet test --no-build --verbosity normal      
-      working-directory: echo ${{ env.ROUTE_TO_POK }}
+      working-directory: ${{ env.ROUTE_TO_POK }}
