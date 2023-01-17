@@ -6,6 +6,8 @@ on:
 
 env:
   ROUTE_TO_POK: ./GraduationAPI/PokemonAPI2.0
+  DEVELOP_REF: kakoyto_dev
+  OUTPUT: ${{ env.GITHUB_WORKSPACE }}/output 
 
 jobs:
   build:
@@ -14,6 +16,13 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+      
+    - name: Enviromment
+      run: printenev
+    
+    - name: Develop
+      if: ${{ env.DEVELOP_REF == 'refs/heads/develop'}}
+      run: echo "Running develop"
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
@@ -31,3 +40,13 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal      
       working-directory: ${{ env.ROUTE_TO_POK }}
+      
+    - name: Pack
+      working-directory: ${{ env.ROUTE_TO_POK }}
+      run: --dotnet publish --configuration Release --output @OUTPUT
+    
+    - name: Create Deliverable
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: Build Result
+        path: ${{ env.OUTPUT }}
