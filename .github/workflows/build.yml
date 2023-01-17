@@ -5,7 +5,7 @@ on:
     branches: [ "develop", "main" ]
 
 env:
-  ROUTE_TO_POK: './GraduationAPI/PokemonAPI2.0'
+  ROUTE_TO_POK: ./GraduationAPI/PokemonAPI2.0
 
 jobs:
   build:
