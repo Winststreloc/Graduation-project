@@ -3,12 +3,11 @@ name: Build
 on:
   push:
     branches: [ "develop", "main" ]
+  environment:
+    ROUTE_TO_POK: './GraduationAPI/PokemonAPI2.0'
 
 jobs:
   build:
-    variables:
-      ROUTE_TO_POK: './GraduationAPI/PokemonAPI2.0'
-      
     runs-on: ubuntu-latest
 
     steps:
