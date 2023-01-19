@@ -40,5 +40,6 @@ jobs:
         file: GraduationAPI/PokemonAPI2.0/PokemonAPI/Dockerfile
         context: GraduationAPI/PokemonAPI2.0
         push: true
+        tags: pockemon:latest
       
       
