@@ -40,7 +40,7 @@ jobs:
         file: GraduationAPI/PokemonAPI2.0/PokemonAPI/Dockerfile
         context: GraduationAPI/PokemonAPI2.0
         push: true
-        tags: andrienko/pockemon:latest
+        tags: hub.docker.com/andrienko/pockemon:latest
         secrets: |
             GIT_AUTH_TOKEN=dckr_pat_ZXtEuGxn-Iz1w2TAd86zE7XJT1Y
       
