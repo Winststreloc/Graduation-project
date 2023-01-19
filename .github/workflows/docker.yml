@@ -32,8 +32,8 @@ jobs:
     - name: Build Docker
       uses: docker/build-push-action@v3.3.0
       with:
-        file: PokemonAPI2.0/PokemonAPI/Dockerfile
-        context: "{{defaultContext}}:PokemonAPI2.0"
+        file: GraduationAPI/PokemonAPI2.0/PokemonAPI/Dockerfile
+        context: "{{defaultContext}}:GraduationAPI/PokemonAPI2.0"
         push: false
       
       
