@@ -40,7 +40,7 @@ jobs:
         file: GraduationAPI/PokemonAPI2.0/PokemonAPI/Dockerfile
         context: GraduationAPI/PokemonAPI2.0
         push: true
-        tags: pockemon:latest
+        tags: ghcr.io/pockemon:latest
         secrets: |
             GIT_AUTH_TOKEN=${{ secrets.GHCR_TOKEN }}
       
