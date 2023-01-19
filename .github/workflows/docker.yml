@@ -1,0 +1,27 @@
+name: Docker
+  
+on:
+  push:
+    branches: [ "develop", "main" ]
+
+env:
+  ROUTE_TO_POK: ./GraduationAPI/PokemonAPI2.0
+  DEVELOP_REF: kakoyto_dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Enviromment
+      run: |
+        echo "OUTPUT=$GITHUB_WORKSPACE/output" >> $GITHUB_ENV
+        echo "Output folder is"
+        echo "$OUTPUT"
+    
+    - name: Develop
+      if: ${{ env.DEVELOP_REF == 'refs/heads/develop'}}
+      run: echo "Running develop"
+    
+    - name: Checkout
+      uses: actions/checkout@v3
