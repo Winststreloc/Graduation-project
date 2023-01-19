@@ -39,6 +39,6 @@ jobs:
       with:
         file: GraduationAPI/PokemonAPI2.0/PokemonAPI/Dockerfile
         context: GraduationAPI/PokemonAPI2.0
-        push: false
+        push: true
       
       
