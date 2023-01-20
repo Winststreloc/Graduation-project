@@ -46,6 +46,7 @@ jobs:
         file: GraduationAPI/PokemonAPI2.0/PokemonAPI/Dockerfile
         context: GraduationAPI/PokemonAPI2.0
         push: true
+        load: true
         tags: andrienko/pockemon:latest
         
     - name: Upload Image
