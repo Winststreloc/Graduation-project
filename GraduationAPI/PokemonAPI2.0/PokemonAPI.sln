@@ -1,6 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonAPI", "PokemonAPI\PokemonAPI.csproj", "{BADD413F-6B5B-4556-838C-E66956A818AA}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokemonAPI", "PokemonAPI\PokemonAPI.csproj", "{BADD413F-6B5B-4556-838C-E66956A818AA}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C0C384AD-545E-432C-8D2D-EBBCA43ADAA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +17,15 @@ Global
 		{BADD413F-6B5B-4556-838C-E66956A818AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BADD413F-6B5B-4556-838C-E66956A818AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BADD413F-6B5B-4556-838C-E66956A818AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0C384AD-545E-432C-8D2D-EBBCA43ADAA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0C384AD-545E-432C-8D2D-EBBCA43ADAA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0C384AD-545E-432C-8D2D-EBBCA43ADAA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0C384AD-545E-432C-8D2D-EBBCA43ADAA8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {945EB6D0-CDBE-481B-8D7A-47CDFA3C8C4C}
 	EndGlobalSection
 EndGlobal

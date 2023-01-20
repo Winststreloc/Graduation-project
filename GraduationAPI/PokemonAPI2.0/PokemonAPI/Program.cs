@@ -62,4 +62,23 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+Task.Run(() =>
+{
+    if (app.Configuration.GetValue("InitDatabase", false))
+    {
+        try
+        {
+            Console.WriteLine($"Initializing database {app.Configuration.GetConnectionString("DefaultConnection")}");
+            using var scope = app.Services.CreateScope();
+            using var context = scope.ServiceProvider.GetService<PokemonDbContext>();
+            context?.Database.EnsureCreated();
+            context?.Database.Migrate();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Unable to initialize database {app.Configuration.GetConnectionString("DefaultConnection")}: {ex}");
+        }
+    }
+});
+
 app.Run();
