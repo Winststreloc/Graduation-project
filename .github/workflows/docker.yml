@@ -39,17 +39,18 @@ jobs:
       with:
         username: andrienko
         password: dckr_pat_ZXtEuGxn-Iz1w2TAd86zE7XJT1Y
-    
+        
+    - name: Log in to the Container registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+          
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v3.3.0
       with:
         file: GraduationAPI/PokemonAPI2.0/PokemonAPI/Dockerfile
         context: GraduationAPI/PokemonAPI2.0
         push: true
-        load: true
         tags: andrienko/pockemon:latest
-        
-    - name: Upload Image
-      uses: ishworkh/docker-image-artifact-upload@v1
-      with:
-        image: andrienko/pockemon:latest
