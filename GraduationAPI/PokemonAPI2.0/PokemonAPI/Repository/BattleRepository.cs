@@ -1,4 +1,5 @@
 ﻿using PokemonAPI.Service;
+using PokemonAPI.ViewModel;
 using PokemonAPI2._0.Models.Action;
 using PokemonWEB.Data;
 using PokemonWEB.Interfaces;
@@ -17,11 +18,11 @@ public class BattleRepository : IBattleRepository
         _battleService = battleService;
     }
 
-    public ICollection<Pokemon> UpdateBattle(Battle battle, int abilityId)
+    public ICollection<Pokemon> UpdateBattle(BattleViewModel battle)
     {
-        var pokUser = _context.Pokemons.FirstOrDefault(p => p.Id == battle.PokemonUserId);
-        var pokEnemy = _context.Pokemons.FirstOrDefault(p => p.Id == battle.PokemonEnemyId);
-        var ability = _context.Abilities.FirstOrDefault(a => a.Id == abilityId);
+        var pokUser = _context.Pokemons.FirstOrDefault(p => p.Id == battle.UserPokemon.Id);
+        var pokEnemy = _context.Pokemons.FirstOrDefault(p => p.Id == battle.EnemyPokemon.Id);
+        var ability = _context.Abilities.FirstOrDefault(a => a.Id == battle.UserAbility);
         var pokemons = _battleService.UpdateBattle(pokUser, pokEnemy, ability);
         Save();
         return pokemons;

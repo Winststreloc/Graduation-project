@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using PokemonAPI.ViewModel;
 using PokemonAPI2._0.Models.Action;
 using PokemonWEB.Data;
 using PokemonWEB.Interfaces;
@@ -22,9 +23,9 @@ public class BattleController : Controller
     }
 
     [HttpPut]
-    public IActionResult UpdateBattle([FromBody]Battle battle, int abilityId)
+    public IActionResult UpdateBattle([FromQuery]BattleViewModel battle)
     {
-        var pokemons = _battleRepository.UpdateBattle(battle, abilityId);
+        var pokemons = _battleRepository.UpdateBattle(battle);
         return Ok(pokemons);
     }
 }
