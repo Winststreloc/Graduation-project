@@ -162,7 +162,7 @@ public class Seed
                     PokemonId = Guid.Parse("28DE668A-4D83-4E14-ADC1-B83AC929A272"),
                     Ability = new Ability()
                     {
-                        Id = Guid.Parse("43de79c5-ddd9-47a8-8407-fa5680674264"),
+                        Id = 1,
                         Name = "Frontal Attack",
                         Damage = 10,
                         Healing = 0,
@@ -184,7 +184,7 @@ public class Seed
                     PokemonId = Guid.Parse("28DE668A-4D83-4E14-ADC1-B83AC929A272"),
                     Ability = new Ability()
                     {
-                        Id = Guid.Parse("e7692692-4b04-4171-9469-573976bc1c51"),
+                        Id = 2,
                         Name = "Photosynthesis",
                         Damage = 0,
                         Healing = 15,

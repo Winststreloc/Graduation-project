@@ -22,7 +22,7 @@ public class BattleController : Controller
     }
 
     [HttpPut]
-    public IActionResult UpdateBattle([FromBody]Battle battle, Guid abilityId)
+    public IActionResult UpdateBattle([FromBody]Battle battle, int abilityId)
     {
         var pokemons = _battleRepository.UpdateBattle(battle, abilityId);
         return Ok(pokemons);

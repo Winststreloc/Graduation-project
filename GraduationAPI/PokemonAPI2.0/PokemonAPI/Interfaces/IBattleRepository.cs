@@ -6,5 +6,5 @@ namespace PokemonWEB.Interfaces;
 
 public interface IBattleRepository
 {
-    ICollection<Pokemon> UpdateBattle(Battle battle, Guid abilityId);
+    ICollection<Pokemon> UpdateBattle(Battle battle, int abilityId);
 }
