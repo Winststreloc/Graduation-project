@@ -14,11 +14,9 @@ namespace PokemonWEB.Controllers;
 public class BattleController : Controller
 {
     private readonly IBattleRepository _battleRepository;
-    private readonly IMapper _mapper;
 
-    public BattleController(IMapper mapper, IBattleRepository battleRepository)
+    public BattleController(IBattleRepository battleRepository)
     {
-        _mapper = mapper;
         _battleRepository = battleRepository;
     }
 
