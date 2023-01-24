@@ -4,7 +4,7 @@ services:
   pokemonapi:
     image: ${DOCKER_REGISTRY-}pokemonapi
     environment:
-      INITDATABASE: true
+      INITDATABASE: "true"
       CONNECTIONSTRINGS__DEFAULTCONNECTION: Server=database;Database=PokemonWEB;User Id=SA;Password=db@TMS-NET-17;
     build:
       context: .
@@ -14,5 +14,8 @@ services:
     environment:
       MSSQL_SA_PASSWORD: "db@TMS-NET-17"
       ACCEPT_EULA: "Y"
-  helperapi:
-    image: ${DOCKER_REGISTRY-}helperapi
+  react-app:
+    image: ${DOCKER_REGISTRY-}react-app
+    build:
+      context: .
+      dockerfile: 
