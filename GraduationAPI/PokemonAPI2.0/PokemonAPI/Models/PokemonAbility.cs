@@ -6,7 +6,7 @@ namespace PokemonAPI;
 public class PokemonAbility
 {
     public Guid PokemonId { get; set; }
-    public Guid AbilityId { get; set; }
+    public int AbilityId { get; set; }
     public Pokemon Pokemon { get; set; }
     public Ability Ability { get; set; }
 }

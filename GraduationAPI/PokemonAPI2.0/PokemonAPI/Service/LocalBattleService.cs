@@ -1,6 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
-using PokemonAPI2._0.Models.Action;
 using PokemonWEB.Data;
 using PokemonWEB.Models;
 using PokemonWEB.Models.Action;
@@ -23,20 +20,15 @@ public class LocalBattleService : ILocalBattleService
         var enemyAbilities = _context.PokemonAbilities
             .Where(pa => pa.PokemonId == pokemonEnemy.Id)
             .Select(p => p.Ability).Take(4);
-
-        var ability = enemyAbilities.First();
-
-        var pokEnemyHp = GetDefence(pokemonEnemy) - GetDamage(pokemonUser, moveUser);
-        var pokUserHp = GetDefence(pokemonUser) - GetDamage(pokemonEnemy, ability);
-        pokemonUser.CurrentHealth = pokUserHp;
-        pokemonEnemy.CurrentHealth = pokEnemyHp;
         
-        var pokemons = new List<Pokemon>{pokemonUser, pokemonEnemy};
+        pokemonUser.CurrentHealth = GetDefence(pokemonUser) - GetDamage(pokemonEnemy, enemyAbilities.ElementAt(rnd.Next(enemyAbilities.Count())));
+        pokemonEnemy.CurrentHealth = GetDefence(pokemonEnemy) - GetDamage(pokemonUser, moveUser);
+        
         _context.Update(pokemonUser);
         _context.Update(pokemonEnemy);
         Save();
         
-        return pokemons;
+        return new List<Pokemon>{pokemonUser, pokemonEnemy};
     }
 
     private int GetDamage(Pokemon pokemon, Ability move)

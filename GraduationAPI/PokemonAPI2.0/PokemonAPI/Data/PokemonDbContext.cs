@@ -1,7 +1,5 @@
-﻿using System.Reflection;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PokemonAPI;
-using PokemonAPI2._0.Models.Action;
 using PokemonWEB.Models;
 using PokemonWEB.Models.Action;
 

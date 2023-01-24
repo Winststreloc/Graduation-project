@@ -5,7 +5,7 @@ namespace PokemonAPI.ViewModel;
 
 public class BattleViewModel
 {
-    public Pokemon UserPokemon { get; set; }
-    public Pokemon EnemyPokemon { get; set; }
+    public Guid UserPokemonId { get; set; }
+    public Guid EnemyPokemonId { get; set; }
     public int UserAbility { get; set; }
 }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PokemonAPI.Migrations
 {
-    public partial class RemoveBattle : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,10 +13,12 @@ namespace PokemonAPI.Migrations
                 name: "Abilities",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Damage = table.Column<int>(type: "int", nullable: false),
-                    Healing = table.Column<int>(type: "int", nullable: false)
+                    Healing = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,7 +100,7 @@ namespace PokemonAPI.Migrations
                 columns: table => new
                 {
                     PokemonId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AbilityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    AbilityId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

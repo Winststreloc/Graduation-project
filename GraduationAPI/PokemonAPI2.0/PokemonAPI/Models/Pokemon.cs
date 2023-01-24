@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
 using PokemonAPI;
-using PokemonAPI2._0.Models.Action;
-using PokemonWEB.Data;
+
+
 
 namespace PokemonWEB.Models;
 

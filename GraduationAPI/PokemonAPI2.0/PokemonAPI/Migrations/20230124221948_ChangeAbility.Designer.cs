@@ -12,8 +12,8 @@ using PokemonWEB.Data;
 namespace PokemonAPI.Migrations
 {
     [DbContext(typeof(PokemonDbContext))]
-    [Migration("20230110204836_RemoveBattle")]
-    partial class RemoveBattle
+    [Migration("20230124221948_ChangeAbility")]
+    partial class ChangeAbility
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,8 +29,8 @@ namespace PokemonAPI.Migrations
                     b.Property<Guid>("PokemonId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AbilityId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("AbilityId")
+                        .HasColumnType("int");
 
                     b.HasKey("PokemonId", "AbilityId");
 
@@ -41,12 +41,17 @@ namespace PokemonAPI.Migrations
 
             modelBuilder.Entity("PokemonWEB.Models.Action.Ability", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Damage")
                         .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Healing")
                         .HasColumnType("int");

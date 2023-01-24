@@ -162,7 +162,6 @@ public class Seed
                     PokemonId = Guid.Parse("28DE668A-4D83-4E14-ADC1-B83AC929A272"),
                     Ability = new Ability()
                     {
-                        Id = 1,
                         Name = "Frontal Attack",
                         Damage = 10,
                         Healing = 0,
@@ -172,19 +171,18 @@ public class Seed
                 new PokemonAbility()
                 {
                     PokemonId = Guid.Parse("692C9EF3-8483-44DD-AE01-08D80107551D"),
-                    AbilityId = Guid.Parse("43de79c5-ddd9-47a8-8407-fa5680674264")
+                    AbilityId = 1
                 },
                 new PokemonAbility()
                 {
                     PokemonId = Guid.Parse("DACCE0AF-F1F9-4AA7-83A8-A49125589491"),
-                    AbilityId = Guid.Parse("43de79c5-ddd9-47a8-8407-fa5680674264")
+                    AbilityId = 1
                 },
                 new PokemonAbility()
                 {
                     PokemonId = Guid.Parse("28DE668A-4D83-4E14-ADC1-B83AC929A272"),
                     Ability = new Ability()
                     {
-                        Id = 2,
                         Name = "Photosynthesis",
                         Damage = 0,
                         Healing = 15,
@@ -194,12 +192,12 @@ public class Seed
                 new PokemonAbility()
                 {
                     PokemonId = Guid.Parse("DACCE0AF-F1F9-4AA7-83A8-A49125589491"),
-                    AbilityId = Guid.Parse("e7692692-4b04-4171-9469-573976bc1c51")
+                    AbilityId = 2
                 },
                 new PokemonAbility()
                 {
                     PokemonId = Guid.Parse("692C9EF3-8483-44DD-AE01-08D80107551D"),
-                    AbilityId = Guid.Parse("e7692692-4b04-4171-9469-573976bc1c51")
+                    AbilityId = 2
                 },
 
             };
