@@ -1,6 +1,8 @@
-﻿using PokemonWEB.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PokemonWEB.Data;
 using PokemonWEB.Interfaces;
 using PokemonWEB.Models;
+using PokemonWEB.Models.Action;
 
 namespace PokemonWEB.Repository;
 
@@ -21,6 +23,15 @@ public class PokemonRepository : IPokemonRepository
     public ICollection<Pokemon> GetPokemons(int count)
     {
         return _context.Pokemons.Take(count).OrderBy(p => p.PokedexId).ToList();
+    }
+
+    public IQueryable<Ability> GetPokemonAbilities(Guid pokemonId)
+    {
+        var pokemon = _context.Pokemons.SingleOrDefault(p => p.Id == pokemonId);
+        var abilities = _context.PokemonAbilities
+            .Where(pa => pa.PokemonId == pokemon.Id)
+            .Select(p => p.Ability).Take(4);
+        return abilities;
     }
 
     public bool PokemonExists(Guid Id)
