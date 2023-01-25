@@ -19,7 +19,8 @@ public class LocalBattleService : ILocalBattleService
         
         var enemyAbilities = _context.PokemonAbilities
             .Where(pa => pa.PokemonId == pokemonEnemy.Id)
-            .Select(p => p.Ability).Take(4);
+            .Select(p => p.Ability)
+            .Take(4);
         
         pokemonUser.CurrentHealth = GetDefence(pokemonUser) - GetDamage(pokemonEnemy, enemyAbilities.ElementAt(rnd.Next(enemyAbilities.Count())));
         pokemonEnemy.CurrentHealth = GetDefence(pokemonEnemy) - GetDamage(pokemonUser, moveUser);
