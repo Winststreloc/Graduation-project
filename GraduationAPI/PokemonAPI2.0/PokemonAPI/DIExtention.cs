@@ -13,7 +13,7 @@ public static class DIExtention
         service.AddScoped<IPokemonRepository, PokemonRepository>();
         service.AddScoped<ICategoryRepository, CategoryRepository>();
         service.AddScoped<IPokedexRepository, PokedexRepository>();
-        service.AddScoped<ILocalBattleService, LocalBattleService>();        
+        service.AddScoped<IBattleService, BattleService>();        
         service.AddScoped<IBattleRepository, BattleRepository>();
 
         service.AddScoped<IUserRepository, UserRepository>();

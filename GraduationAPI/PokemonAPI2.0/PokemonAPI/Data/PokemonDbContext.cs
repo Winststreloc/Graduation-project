@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PokemonAPI;
+using PokemonAPI.Models;
 using PokemonWEB.Models;
 using PokemonWEB.Models.Action;
 
@@ -13,10 +14,11 @@ public class PokemonDbContext : DbContext
 
 
     public DbSet<Ability> Abilities { get; set; }
+    public DbSet<Battle> Battles { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Pokemon> Pokemons { get; set; }
-    public DbSet<Pokedex> Pokedex { get; set; }
+    public DbSet<PokemonRecord> Pokedex { get; set; }
     public DbSet<PokemonAbility> PokemonAbilities { get; set; }
     public DbSet<PokemonCategory> PokemonCategories { get; set; }
     public DbSet<PokemonOwner> PokemonOwners { get; set; }
@@ -24,12 +26,11 @@ public class PokemonDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Pokedex>()
+        modelBuilder.Entity<PokemonRecord>()
             .HasKey(p => p.PokedexId);
-        modelBuilder.Entity<Pokedex>()
-            .HasMany<Pokemon>(px => px.Pokemons)
-            .WithOne(p => p.Pokedex)
-            .IsRequired();
+        modelBuilder.Entity<PokemonRecord>()
+            .HasMany(px => px.Pokemons)
+            .WithOne(p => p.PokemonRecord);
 
 
         modelBuilder.Entity<PokemonAbility>()

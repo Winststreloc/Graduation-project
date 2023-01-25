@@ -1,5 +1,6 @@
 ﻿using PokemonAPI.Helpers;
 using PokemonAPI.Interfaces;
+using PokemonAPI.Models;
 using PokemonAPI.Models.Enums;
 using PokemonWEB.Data;
 using PokemonWEB.Models;
@@ -21,9 +22,9 @@ public class Seed
     {
         if (!_pokemonDbContext.Pokemons.Any())
         {
-            var pokedex = new List<Pokedex>()
+            var pokedex = new List<PokemonRecord>()
             {
-                new Pokedex()
+                new PokemonRecord()
                 {
                     PokedexId = 1,
                     Name = "Bulbasaur",
@@ -40,7 +41,7 @@ public class Seed
                     PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/2.gif",
                     PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
                 },
-                new Pokedex()
+                new PokemonRecord()
                 {
                     PokedexId = 2,
                     Name = "Ivysaur",
@@ -58,7 +59,7 @@ public class Seed
                     PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/2.gif",
                     PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
                 },
-                new Pokedex()
+                new PokemonRecord()
                 {
                     PokedexId = 3,
                     Name = "Venusaur ",
@@ -82,7 +83,7 @@ public class Seed
                 {
                     Id = new Guid("28de668a-4d83-4e14-adc1-b83ac929a272"),
                     Name = "Бульбазавр",
-                    PokedexId = 1,
+                    PokemonRecordId = 1,
                     Gender = true,
                     Experience = 300,
                     CurrentHealth = 45,
@@ -93,7 +94,7 @@ public class Seed
                 {
                     Id = new Guid("692c9ef3-8483-44dd-ae01-08d80107551d"),
                     Name = "Ивизавр",
-                    PokedexId = 2,
+                    PokemonRecordId = 2,
                     Gender = true,
                     Experience = 1806,
                     CurrentHealth = 60,
@@ -104,7 +105,7 @@ public class Seed
                 {
                     Id = new Guid("dacce0af-f1f9-4aa7-83a8-a49125589491"),
                     Name = "Венозавр",
-                    PokedexId = 3,
+                    PokemonRecordId = 3,
                     Gender = true,
                     Experience = 300,
                     CurrentHealth = 80,
@@ -246,13 +247,24 @@ public class Seed
                 },
 
             };
-            
+
+            var battles = new List<Battle>()
+            {
+                new Battle()
+                {
+                    BattleEnded = false,
+                    Pokemon1 = Guid.Parse("28de668a-4d83-4e14-adc1-b83ac929a272"),
+                    Pokemon2 = Guid.Parse("692c9ef3-8483-44dd-ae01-08d80107551d"),
+                    Queue = Queue.FirstPokemon
+                }
+            };
             _pokemonDbContext.Pokedex.AddRange(pokedex);
             _pokemonDbContext.Pokemons.AddRange(pokemons);
             _pokemonDbContext.PokemonCategories.AddRange(pokemonCategory);
             _pokemonDbContext.PokemonOwners.AddRange(pokemonOwner);
             _pokemonDbContext.PokemonAbilities.AddRange(pokemonAbility);
-            _pokemonDbContext.SaveChangesWithIdentityInsert<Pokedex>();
+            _pokemonDbContext.Battles.AddRange(battles);
+            _pokemonDbContext.SaveChangesWithIdentityInsert<PokemonRecord>();
             _pokemonDbContext.SaveChanges();
         }
     }

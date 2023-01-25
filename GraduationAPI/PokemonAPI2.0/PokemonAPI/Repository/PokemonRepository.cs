@@ -22,7 +22,7 @@ public class PokemonRepository : IPokemonRepository
 
     public ICollection<Pokemon> GetPokemons(int count)
     {
-        return _context.Pokemons.Take(count).OrderBy(p => p.PokedexId).ToList();
+        return _context.Pokemons.Take(count).OrderBy(p => p.PokemonRecordId).ToList();
     }
 
     public IQueryable<Ability> GetPokemonAbilities(Guid pokemonId)

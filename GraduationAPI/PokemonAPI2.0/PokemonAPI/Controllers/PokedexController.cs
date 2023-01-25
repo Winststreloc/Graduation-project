@@ -53,7 +53,7 @@ public class PokedexController : ControllerBase
             return BadRequest(ModelState);
         }
         
-        _pokedexRepository.CreatePokemon(_mapper.Map<Pokedex>(pokemon));
+        _pokedexRepository.CreatePokemon(_mapper.Map<PokemonRecord>(pokemon));
 
         return Ok("Created");
     }
@@ -68,7 +68,7 @@ public class PokedexController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest();
         
-        _pokedexRepository.UpdatePokemon(_mapper.Map<Pokedex>(updatedPokemon));
+        _pokedexRepository.UpdatePokemon(_mapper.Map<PokemonRecord>(updatedPokemon));
         
         return NoContent();
     }
@@ -88,7 +88,7 @@ public class PokedexController : ControllerBase
             return BadRequest(ModelState);
 
 
-        _pokedexRepository.DeletePokemon(_mapper.Map<Pokedex>(pokemonToDelete));
+        _pokedexRepository.DeletePokemon(_mapper.Map<PokemonRecord>(pokemonToDelete));
         return NoContent();
     }
 }
