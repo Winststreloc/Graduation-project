@@ -31,10 +31,6 @@ jobs:
       with:
         dotnet-version: 6.0.x
 
-    - name: Restore dependencies
-      run:  dotnet restore      
-      working-directory: ${{ env.ROUTE_TO_POK }}
-
     - name: Build
       run: dotnet build --no-restore
       working-directory: ${{ env.ROUTE_TO_POK }}
