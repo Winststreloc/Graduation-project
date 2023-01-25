@@ -12,8 +12,8 @@ using PokemonWEB.Data;
 namespace PokemonAPI.Migrations
 {
     [DbContext(typeof(PokemonDbContext))]
-    [Migration("20230124221948_ChangeAbility")]
-    partial class ChangeAbility
+    [Migration("20230125094036_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

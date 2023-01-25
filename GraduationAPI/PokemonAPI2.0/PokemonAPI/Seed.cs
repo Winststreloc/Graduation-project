@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PokemonAPI.Helpers;
 using PokemonWEB.Data;
 using PokemonWEB.Models;
 using PokemonWEB.Models.Action;
@@ -21,6 +22,7 @@ public class Seed
             {
                 new Pokedex()
                 {
+                    PokedexId = 1,
                     Name = "Бульбазавр",
                     BaseDamage = 49,
                     BaseDefense = 49,
@@ -31,6 +33,7 @@ public class Seed
                 },
                 new Pokedex()
                 {
+                    PokedexId = 2,
                     Name = "Ивизавр",
                     BaseDamage = 62,
                     BaseDefense = 63,
@@ -41,6 +44,7 @@ public class Seed
                 },
                 new Pokedex()
                 {
+                    PokedexId = 3,
                     Name = "Венозавр",
                     BaseDamage = 82,
                     BaseDefense = 83,
@@ -207,6 +211,7 @@ public class Seed
             _pokemonDbContext.PokemonCategories.AddRange(pokemonCategory);
             _pokemonDbContext.PokemonOwners.AddRange(pokemonOwner);
             _pokemonDbContext.PokemonAbilities.AddRange(pokemonAbility);
+            _pokemonDbContext.SaveChangesWithIdentityInsert<Pokedex>();
             _pokemonDbContext.SaveChanges();
         }
     }
