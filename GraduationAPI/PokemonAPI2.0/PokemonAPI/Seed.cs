@@ -29,7 +29,13 @@ public class Seed
                     BaseHP = 45,
                     Weight = 6.9,
                     Height = 0.62,
-                    ImageURL = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png"
+                    Description = "Этот покемон любит вздремнуть на солнышке. Его луковица растет за счет поглощения солнечных лучей.",
+                    Category = "Grass",
+                    NextEvol = 2,
+                    MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png",
+                    PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/1.gif",
+                    PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/2.gif",
+                    PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
                 },
                 new Pokedex()
                 {
@@ -40,7 +46,16 @@ public class Seed
                     BaseHP = 60,
                     Weight = 13,
                     Height = 0.92,
-                    ImageURL = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/002.png"
+                    Description = "На спине Ивизавра растёт огромное семя. Чтобы выдерживать вес, ноги и туловище " +
+                                  "становятся более толстыми и прочными. Частое лежание на солнце предвещает скорое " +
+                                  "расцветание семени в огромный цветок.",
+                    Category = "Grass",
+                    NextEvol = 3,
+                    PrevEvol = 1,
+                    MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/002.png",
+                    PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/1.gif",
+                    PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/2.gif",
+                    PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
                 },
                 new Pokedex()
                 {
@@ -51,7 +66,14 @@ public class Seed
                     BaseHP = 80,
                     Weight = 100,
                     Height = 1.85,
-                    ImageURL = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/003.png"
+                    Description = "На спине Венозавра находится огромный цветок. Вбирая питательные вещества и солнечный цвет, " +
+                                  "он приобретает яркие цвета. Аромат цветка способен успокаивать людей.",
+                    Category = "Grass",
+                    PrevEvol = 2,
+                    MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/003.png",
+                    PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/1.gif",
+                    PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/2.gif",
+                    PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
                 }
             };
             var pokemons = new List<Pokemon>()
@@ -166,10 +188,10 @@ public class Seed
                     PokemonId = Guid.Parse("28DE668A-4D83-4E14-ADC1-B83AC929A272"),
                     Ability = new Ability()
                     {
+                        Id = 1,
                         Name = "Frontal Attack",
                         Damage = 10,
                         Healing = 0,
-
                     }
                 },
                 new PokemonAbility()
@@ -187,10 +209,10 @@ public class Seed
                     PokemonId = Guid.Parse("28DE668A-4D83-4E14-ADC1-B83AC929A272"),
                     Ability = new Ability()
                     {
+                        Id = 2,
                         Name = "Photosynthesis",
                         Damage = 0,
                         Healing = 15,
-
                     }
                 },
                 new PokemonAbility()
@@ -207,11 +229,12 @@ public class Seed
             };
             
             _pokemonDbContext.Pokedex.AddRange(pokedex);
+            _pokemonDbContext.SaveChangesWithIdentityInsert<Pokedex>();
             _pokemonDbContext.Pokemons.AddRange(pokemons);
             _pokemonDbContext.PokemonCategories.AddRange(pokemonCategory);
             _pokemonDbContext.PokemonOwners.AddRange(pokemonOwner);
+            _pokemonDbContext.SaveChangesWithIdentityInsert<Ability>();
             _pokemonDbContext.PokemonAbilities.AddRange(pokemonAbility);
-            _pokemonDbContext.SaveChangesWithIdentityInsert<Pokedex>();
             _pokemonDbContext.SaveChanges();
         }
     }

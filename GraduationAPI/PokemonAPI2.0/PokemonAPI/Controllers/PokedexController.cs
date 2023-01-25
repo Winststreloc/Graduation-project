@@ -21,14 +21,14 @@ public class PokedexController : ControllerBase
     }
 
     [HttpGet("pokemonId")]
-    public async Task<IActionResult> GetPokemon([FromQuery]int id)
+    public IActionResult GetPokemon([FromQuery]int id)
     {
         if (!_pokedexRepository.PokemonExists(id))
         {
             return NotFound();
         }
         
-        var pokemon = await _mapper.Map<Task<PokedexDto>>(_pokedexRepository.GetPokemon(id));
+        var pokemon = _mapper.Map<PokedexDto>(_pokedexRepository.GetPokemon(id));
         return Ok(pokemon);
     }
 

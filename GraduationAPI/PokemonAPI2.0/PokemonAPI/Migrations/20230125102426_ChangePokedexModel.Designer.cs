@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PokemonWEB.Data;
 
@@ -11,9 +12,10 @@ using PokemonWEB.Data;
 namespace PokemonAPI.Migrations
 {
     [DbContext(typeof(PokemonDbContext))]
-    partial class PokemonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230125102426_ChangePokedexModel")]
+    partial class ChangePokedexModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,7 +120,8 @@ namespace PokemonAPI.Migrations
                     b.Property<int>("BaseHP")
                         .HasColumnType("int");
 
-                    b.Property<string>("Category")
+                    b.Property<string>("CategoryImg")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
@@ -127,16 +130,13 @@ namespace PokemonAPI.Migrations
                     b.Property<double>("Height")
                         .HasColumnType("float");
 
-                    b.Property<string>("MainUrl")
+                    b.Property<string>("MainImg")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("NextEvol")
-                        .HasColumnType("int");
 
                     b.Property<string>("PokEvol1")
                         .HasColumnType("nvarchar(max)");
@@ -148,9 +148,6 @@ namespace PokemonAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PokemonPower")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PrevEvol")
                         .HasColumnType("int");
 
                     b.Property<double>("Weight")
