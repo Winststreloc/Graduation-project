@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using PokemonAPI.Interfaces;
 using PokemonAPI.Service;
 using PokemonWEB.Interfaces;
 using PokemonWEB.Repository;
@@ -13,7 +14,12 @@ public static class DIExtention
         service.AddScoped<ICategoryRepository, CategoryRepository>();
         service.AddScoped<IPokedexRepository, PokedexRepository>();
         service.AddScoped<ILocalBattleService, LocalBattleService>();        
-        service.AddScoped<IBattleRepository, BattleRepository>();        
+        service.AddScoped<IBattleRepository, BattleRepository>();
+
+        service.AddScoped<IUserRepository, UserRepository>();
+        service.AddScoped<IPasswordHashingService, PasswordHashingService>();
+        service.AddScoped<ITokenService, TokenService>();
+
 
     }
 }

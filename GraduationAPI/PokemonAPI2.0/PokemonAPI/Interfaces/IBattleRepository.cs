@@ -7,6 +7,6 @@ namespace PokemonWEB.Interfaces;
 
 public interface IBattleRepository
 {
-    ICollection<Pokemon> UpdateBattle(BattleViewModel battle);
+    ICollection<Pokemon> UpdateBattle(BattleViewDto battle);
     bool BattleEnded(ICollection<Pokemon> pokemons);
 }

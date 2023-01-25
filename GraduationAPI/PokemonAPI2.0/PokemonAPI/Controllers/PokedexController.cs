@@ -8,7 +8,7 @@ using PokemonWEB.Models;
 namespace PokemonWEB.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class PokedexController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -21,14 +21,14 @@ public class PokedexController : ControllerBase
     }
 
     [HttpGet("pokemonId")]
-    public async Task<IActionResult> GetPokemon([FromQuery]int id)
+    public IActionResult GetPokemon([FromQuery]int id)
     {
         if (!_pokedexRepository.PokemonExists(id))
         {
             return NotFound();
         }
         
-        var pokemon = await _mapper.Map<Task<PokedexDto>>(_pokedexRepository.GetPokemon(id));
+        var pokemon = _mapper.Map<PokedexDto>(_pokedexRepository.GetPokemon(id));
         return Ok(pokemon);
     }
 
@@ -40,6 +40,7 @@ public class PokedexController : ControllerBase
     }
 
     [HttpPost("create-pokedex-pokemon")]
+    [Authorize]
     public IActionResult CreatePokemon([FromBody] PokedexDto pokemon)
     {
         if (pokemon == null)
@@ -58,6 +59,7 @@ public class PokedexController : ControllerBase
     }
 
     [HttpPut("update-pokedex-pokemon")]
+    [Authorize]
     public IActionResult UpdatePokemon([FromBody]PokedexDto updatedPokemon)
     {
         if (updatedPokemon == null)
@@ -72,6 +74,7 @@ public class PokedexController : ControllerBase
     }
 
     [HttpDelete("delete-pokedex-pokemon")]
+    [Authorize]
     public IActionResult DeletePokemon([FromQuery]int pokemonId)
     {
         if (!_pokedexRepository.PokemonExists(pokemonId))

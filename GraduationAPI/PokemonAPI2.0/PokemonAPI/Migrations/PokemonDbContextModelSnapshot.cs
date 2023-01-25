@@ -78,29 +78,6 @@ namespace PokemonAPI.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("PokemonWEB.Models.Owner", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Gym")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Owners");
-                });
-
             modelBuilder.Entity("PokemonWEB.Models.Pokedex", b =>
                 {
                     b.Property<int>("PokedexId")
@@ -118,10 +95,16 @@ namespace PokemonAPI.Migrations
                     b.Property<int>("BaseHP")
                         .HasColumnType("int");
 
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("Height")
                         .HasColumnType("float");
 
-                    b.Property<string>("ImageURL")
+                    b.Property<string>("MainUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -129,7 +112,22 @@ namespace PokemonAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("NextEvol")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PokEvol1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PokEvol2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PokEvol3")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PokemonPower")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PrevEvol")
                         .HasColumnType("int");
 
                     b.Property<double>("Weight")
@@ -195,14 +193,48 @@ namespace PokemonAPI.Migrations
                     b.Property<Guid>("PokemonId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("OwnerId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("PokemonId", "OwnerId");
+                    b.HasKey("PokemonId", "UserId");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("PokemonOwners");
+                });
+
+            modelBuilder.Entity("PokemonWEB.Models.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NickName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Roles")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("PokemonAPI.PokemonAbility", b =>
@@ -256,21 +288,21 @@ namespace PokemonAPI.Migrations
 
             modelBuilder.Entity("PokemonWEB.Models.PokemonOwner", b =>
                 {
-                    b.HasOne("PokemonWEB.Models.Owner", "Owner")
-                        .WithMany("PokemonOwners")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PokemonWEB.Models.Pokemon", "Pokemon")
                         .WithMany("PokemonOwners")
                         .HasForeignKey("PokemonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Owner");
+                    b.HasOne("PokemonWEB.Models.User", "User")
+                        .WithMany("PokemonOwners")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Pokemon");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PokemonWEB.Models.Action.Ability", b =>
@@ -281,11 +313,6 @@ namespace PokemonAPI.Migrations
             modelBuilder.Entity("PokemonWEB.Models.Category", b =>
                 {
                     b.Navigation("PokemonCategories");
-                });
-
-            modelBuilder.Entity("PokemonWEB.Models.Owner", b =>
-                {
-                    b.Navigation("PokemonOwners");
                 });
 
             modelBuilder.Entity("PokemonWEB.Models.Pokedex", b =>
@@ -299,6 +326,11 @@ namespace PokemonAPI.Migrations
 
                     b.Navigation("PokemonCategories");
 
+                    b.Navigation("PokemonOwners");
+                });
+
+            modelBuilder.Entity("PokemonWEB.Models.User", b =>
+                {
                     b.Navigation("PokemonOwners");
                 });
 #pragma warning restore 612, 618

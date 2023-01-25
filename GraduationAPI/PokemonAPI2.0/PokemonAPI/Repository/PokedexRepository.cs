@@ -17,9 +17,9 @@ public class PokedexRepository : IPokedexRepository
         _context = context;
     }
 
-    public async Task<Pokedex> GetPokemon(int id)
+    public Pokedex GetPokemon(int id)
     {
-        return await _context.Pokedex.FirstOrDefaultAsync(p => p.PokedexId == id);
+        return _context.Pokedex.FirstOrDefault(p => p.PokedexId == id);
     }
 
     public ICollection<Pokedex> GetPokemons()

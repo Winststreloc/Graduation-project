@@ -17,7 +17,7 @@ public class BattleRepository : IBattleRepository
         _battleService = battleService;
     }
 
-    public ICollection<Pokemon> UpdateBattle(BattleViewModel battle)
+    public ICollection<Pokemon> UpdateBattle(BattleViewDto battle)
     {
         var pokUser = _context.Pokemons.FirstOrDefault(p => p.Id == battle.UserPokemonId);
         var pokEnemy = _context.Pokemons.FirstOrDefault(p => p.Id == battle.EnemyPokemonId);
