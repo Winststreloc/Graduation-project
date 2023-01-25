@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokemonWEB.Dto;
 using PokemonWEB.Interfaces;
@@ -7,7 +8,7 @@ using PokemonWEB.Models;
 namespace PokemonWEB.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class PokemonController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -58,7 +59,7 @@ public class PokemonController : ControllerBase
 
         return Ok("Created");
     }
-
+    
     [HttpPut("update-pokemon")]
     public IActionResult UpdatePokemon([FromQuery] Guid pokemonId, [FromQuery] int pokedexId, [FromQuery] Guid ownerId,
         [FromQuery] Guid catId, [FromBody]PokemonDto updatedPokemon)

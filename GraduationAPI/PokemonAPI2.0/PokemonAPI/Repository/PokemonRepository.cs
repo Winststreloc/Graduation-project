@@ -47,12 +47,12 @@ public class PokemonRepository : IPokemonRepository
 
     public void CreatePokemon(Guid ownerId, Guid categoryId, Pokemon pokemon)
     {
-        var pokemonOwnerEntity = _context.Owners.FirstOrDefault(o => o.Id == ownerId);
+        var pokemonOwnerEntity = _context.Users.FirstOrDefault(o => o.Id == ownerId);
         var category = _context.Categories.FirstOrDefault(o => o.Id == categoryId);
 
         var pokemonOwner = new PokemonOwner
         {
-            Owner = pokemonOwnerEntity,
+            User = pokemonOwnerEntity,
             Pokemon = pokemon
         };
 
@@ -72,12 +72,12 @@ public class PokemonRepository : IPokemonRepository
 
     public bool UpdatePokemon(Guid ownerId, Guid categoryId, Pokemon pokemon)
     {
-        var pokemonOwnerEntity = _context.Owners.FirstOrDefault(o => o.Id == ownerId);
+        var pokemonOwnerEntity = _context.Users.FirstOrDefault(o => o.Id == ownerId);
         var category = _context.Categories.FirstOrDefault(o => o.Id == categoryId);
 
         var pokemonOwner = new PokemonOwner
         {
-            Owner = pokemonOwnerEntity,
+            User = pokemonOwnerEntity,
             Pokemon = pokemon
         };
 

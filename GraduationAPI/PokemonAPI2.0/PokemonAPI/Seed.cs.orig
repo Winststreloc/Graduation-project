@@ -1,6 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+<<<<<<< HEAD
 using PokemonAPI.Helpers;
+=======
+using PokemonAPI.Interfaces;
 using PokemonAPI.Models.Enums;
+>>>>>>> feature/authentication
 using PokemonWEB.Data;
 using PokemonWEB.Models;
 using PokemonWEB.Models.Action;
@@ -233,7 +237,6 @@ public class Seed
                         Name = "Photosynthesis",
                         Damage = 0,
                         Healing = 15,
-
                     }
                 },
                 new PokemonAbility()

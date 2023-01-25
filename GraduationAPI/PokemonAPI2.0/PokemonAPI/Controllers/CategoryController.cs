@@ -7,7 +7,7 @@ using PokemonWEB.Models;
 namespace PokemonWEB.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class CategoryController : ControllerBase
 {
     private readonly IMapper _mapper;

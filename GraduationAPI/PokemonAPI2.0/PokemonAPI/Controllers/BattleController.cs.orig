@@ -1,10 +1,12 @@
+<<<<<<< HEAD
+﻿using Microsoft.AspNetCore.Mvc;
+using PokemonAPI.ViewModel;
+=======
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using PokemonAPI.ViewModel;
-using PokemonWEB.Data;
+using PokemonAPI2._0.Models.Action;
+>>>>>>> feature/authentication
 using PokemonWEB.Interfaces;
-using PokemonWEB.Models;
-using PokemonWEB.Models.Action;
 
 namespace PokemonWEB.Controllers;
 
@@ -13,11 +15,9 @@ namespace PokemonWEB.Controllers;
 public class BattleController : ControllerBase
 {
     private readonly IBattleRepository _battleRepository;
-    private readonly IMapper _mapper;
 
     public BattleController(IBattleRepository battleRepository)
     {
-        _mapper = mapper;
         _battleRepository = battleRepository;
     }
 

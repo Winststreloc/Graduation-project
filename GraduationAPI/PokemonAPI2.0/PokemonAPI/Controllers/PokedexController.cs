@@ -8,7 +8,7 @@ using PokemonWEB.Models;
 namespace PokemonWEB.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class PokedexController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -40,6 +40,7 @@ public class PokedexController : ControllerBase
     }
 
     [HttpPost("create-pokedex-pokemon")]
+    [Authorize]
     public IActionResult CreatePokemon([FromBody] PokedexDto pokemon)
     {
         if (pokemon == null)
@@ -58,6 +59,7 @@ public class PokedexController : ControllerBase
     }
 
     [HttpPut("update-pokedex-pokemon")]
+    [Authorize]
     public IActionResult UpdatePokemon([FromBody]PokedexDto updatedPokemon)
     {
         if (updatedPokemon == null)
@@ -72,6 +74,7 @@ public class PokedexController : ControllerBase
     }
 
     [HttpDelete("delete-pokedex-pokemon")]
+    [Authorize]
     public IActionResult DeletePokemon([FromQuery]int pokemonId)
     {
         if (!_pokedexRepository.PokemonExists(pokemonId))
