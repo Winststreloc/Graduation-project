@@ -41,22 +41,22 @@ public class UserRepository : IUserRepository
         return await _context.Users.SingleOrDefaultAsync(u => u.NickName == nickName);
     }
 
-    public async Task<Responce?> RegisterNewUser(RegistrationView registrationView)
+    public async Task<ResponceAuthDto?> RegisterNewUser(RegistrationModelDto registrationModelDto)
     {
         var user = new User()
         {
-            Email = registrationView.Email,
-            NickName = registrationView.NickName,
+            Email = registrationModelDto.Email,
+            NickName = registrationModelDto.NickName,
             Roles = Roles.User,
-            Gender = Enum.Parse<Gender>(registrationView.Gender),
-            PasswordHash = _passwordHashing.HashingPassword(registrationView.Password)
+            Gender = Enum.Parse<Gender>(registrationModelDto.Gender),
+            PasswordHash = _passwordHashing.HashingPassword(registrationModelDto.Password)
         };
         await _context.Users.AddAsync(user);
         await Save();
 
         var userTokens = _tokenService.GenerateTokens(user);
         
-        return new Responce(){ Result = userTokens };
+        return new ResponceAuthDto(){ Result = userTokens };
     }
 
     public async Task<bool> Save()

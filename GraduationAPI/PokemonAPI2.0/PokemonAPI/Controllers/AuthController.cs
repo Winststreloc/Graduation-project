@@ -11,7 +11,7 @@ namespace PokemonWEB.Controllers;
 [Route("[controller]")]
 public class AuthController : Controller
 {
-    private Responce? _responce;
+    private ResponceAuthDto? _responce;
     private readonly IMapper _mapper;
     private readonly IUserRepository _userRepository;
     private readonly ITokenService _token;
@@ -25,11 +25,11 @@ public class AuthController : Controller
         _userRepository = userRepository;
         _passwordHashing = passwordHashing;
         _token = token;
-        _responce = new Responce();
+        _responce = new ResponceAuthDto();
     }
 
     [HttpPost("register")]
-    public async Task<Responce?> Register(RegistrationView registrationView)
+    public async Task<ResponceAuthDto?> Register(RegistrationModelDto registrationModelDto)
     {
         if (!ModelState.IsValid)
         {
@@ -38,15 +38,15 @@ public class AuthController : Controller
             return _responce;
         }
 
-        _responce = await _userRepository.RegisterNewUser(registrationView);
+        _responce = await _userRepository.RegisterNewUser(registrationModelDto);
         return _responce;
     }
 
 
     [HttpPost("login")]
-    public async Task<Responce> Login(LogginModel logginModel)
+    public async Task<ResponceAuthDto> Login(LogginModelDto logginModelDto)
     {
-        var candidate = await _userRepository.GetUserByNickName(logginModel.NickName);
+        var candidate = await _userRepository.GetUserByNickName(logginModelDto.NickName);
 
         if (candidate == null)
         {
@@ -55,7 +55,7 @@ public class AuthController : Controller
             return _responce;
         }
 
-        if (_passwordHashing.VerifyHashedPassword(candidate.PasswordHash, logginModel.Password))
+        if (_passwordHashing.VerifyHashedPassword(candidate.PasswordHash, logginModelDto.Password))
         {
             var userTokens = _token.GenerateTokens(candidate);
             _responce.Result = userTokens;
@@ -68,7 +68,7 @@ public class AuthController : Controller
 
     [Authorize]
     [HttpGet]
-    public async Task<Responce> RefreshToken(string refreshToken)
+    public async Task<ResponceAuthDto> RefreshToken(string refreshToken)
     {
         if (_token.ValidateRefreshToken(refreshToken))
         {

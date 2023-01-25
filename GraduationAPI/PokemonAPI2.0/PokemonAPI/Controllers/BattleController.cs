@@ -15,14 +15,14 @@ public class BattleController : ControllerBase
     private readonly IBattleRepository _battleRepository;
     private readonly IMapper _mapper;
 
-    public BattleController(IBattleRepository battleRepository)
+    public BattleController(IBattleRepository battleRepository, IMapper mapper)
     {
         _mapper = mapper;
         _battleRepository = battleRepository;
     }
 
     [HttpPut]
-    public IActionResult UpdateBattle([FromBody]BattleViewModel battle)
+    public IActionResult UpdateBattle([FromBody]BattleViewDto battle)
     {
         var pokemons = _battleRepository.UpdateBattle(battle);
         var battleEnded = _battleRepository.BattleEnded(pokemons);

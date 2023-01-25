@@ -3,7 +3,7 @@ using PokemonWEB.Models.Action;
 
 namespace PokemonAPI.ViewModel;
 
-public class BattleViewModel
+public class BattleViewDto
 {
     public Guid UserPokemonId { get; set; }
     public Guid EnemyPokemonId { get; set; }

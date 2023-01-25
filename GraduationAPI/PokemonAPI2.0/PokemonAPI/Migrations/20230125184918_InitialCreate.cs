@@ -50,7 +50,14 @@ namespace PokemonAPI.Migrations
                     BaseDefense = table.Column<int>(type: "int", nullable: false),
                     Weight = table.Column<double>(type: "float", nullable: false),
                     Height = table.Column<double>(type: "float", nullable: false),
-                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MainUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NextEvol = table.Column<int>(type: "int", nullable: true),
+                    PrevEvol = table.Column<int>(type: "int", nullable: true),
+                    PokEvol1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PokEvol2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PokEvol3 = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,8 +72,9 @@ namespace PokemonAPI.Migrations
                     NickName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: true),
                     Roles = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

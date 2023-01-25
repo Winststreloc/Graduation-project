@@ -1,6 +1,6 @@
 ﻿namespace PokemonAPI.Models;
 
-public class Responce
+public class ResponceAuthDto
 {
     public bool IsSuccess { get; set; } = true;
     public object Result { get; set; }

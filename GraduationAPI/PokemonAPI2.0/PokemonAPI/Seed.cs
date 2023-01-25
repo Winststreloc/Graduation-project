@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PokemonAPI.Helpers;
+﻿using PokemonAPI.Helpers;
+using PokemonAPI.Interfaces;
 using PokemonAPI.Models.Enums;
 using PokemonWEB.Data;
 using PokemonWEB.Models;
@@ -19,7 +19,7 @@ public class Seed
 
     public void SeedDataContext()
     {
-        if (!_pokemonDbContext.Pokedex.Any())
+        if (!_pokemonDbContext.Pokemons.Any())
         {
             var pokedex = new List<Pokedex>()
             {
@@ -208,7 +208,6 @@ public class Seed
                     PokemonId = Guid.Parse("28DE668A-4D83-4E14-ADC1-B83AC929A272"),
                     Ability = new Ability()
                     {
-                        Id = 1,
                         Name = "Frontal Attack",
                         Damage = 10,
                         Healing = 0,
@@ -229,7 +228,6 @@ public class Seed
                     PokemonId = Guid.Parse("28DE668A-4D83-4E14-ADC1-B83AC929A272"),
                     Ability = new Ability()
                     {
-                        Id = 2,
                         Name = "Photosynthesis",
                         Damage = 0,
                         Healing = 15,
@@ -250,12 +248,11 @@ public class Seed
             };
             
             _pokemonDbContext.Pokedex.AddRange(pokedex);
-            _pokemonDbContext.SaveChangesWithIdentityInsert<Pokedex>();
             _pokemonDbContext.Pokemons.AddRange(pokemons);
             _pokemonDbContext.PokemonCategories.AddRange(pokemonCategory);
             _pokemonDbContext.PokemonOwners.AddRange(pokemonOwner);
-            _pokemonDbContext.SaveChangesWithIdentityInsert<Ability>();
             _pokemonDbContext.PokemonAbilities.AddRange(pokemonAbility);
+            _pokemonDbContext.SaveChangesWithIdentityInsert<Pokedex>();
             _pokemonDbContext.SaveChanges();
         }
     }
