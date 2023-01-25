@@ -23,13 +23,13 @@ public class Seed
                 new Pokedex()
                 {
                     PokedexId = 1,
-                    Name = "Бульбазавр",
+                    Name = "Bulbasaur",
                     BaseDamage = 49,
                     BaseDefense = 49,
                     BaseHP = 45,
                     Weight = 6.9,
                     Height = 0.62,
-                    Description = "Этот покемон любит вздремнуть на солнышке. Его луковица растет за счет поглощения солнечных лучей.",
+                    Description = "There is a plant seed on its back right from the day this Pokémon is born. The seed slowly grows larger.",
                     Category = "Grass",
                     NextEvol = 2,
                     MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png",
@@ -40,15 +40,13 @@ public class Seed
                 new Pokedex()
                 {
                     PokedexId = 2,
-                    Name = "Ивизавр",
+                    Name = "Ivysaur",
                     BaseDamage = 62,
                     BaseDefense = 63,
                     BaseHP = 60,
                     Weight = 13,
                     Height = 0.92,
-                    Description = "На спине Ивизавра растёт огромное семя. Чтобы выдерживать вес, ноги и туловище " +
-                                  "становятся более толстыми и прочными. Частое лежание на солнце предвещает скорое " +
-                                  "расцветание семени в огромный цветок.",
+                    Description = "When the bulb on its back grows large, it appears to lose the ability to stand on its hind legs.",
                     Category = "Grass",
                     NextEvol = 3,
                     PrevEvol = 1,
@@ -60,14 +58,13 @@ public class Seed
                 new Pokedex()
                 {
                     PokedexId = 3,
-                    Name = "Венозавр",
+                    Name = "Venusaur ",
                     BaseDamage = 82,
                     BaseDefense = 83,
                     BaseHP = 80,
                     Weight = 100,
                     Height = 1.85,
-                    Description = "На спине Венозавра находится огромный цветок. Вбирая питательные вещества и солнечный цвет, " +
-                                  "он приобретает яркие цвета. Аромат цветка способен успокаивать людей.",
+                    Description = "Its plant blooms when it is absorbing solar energy. It stays on the move to seek sunlight.",
                     Category = "Grass",
                     PrevEvol = 2,
                     MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/003.png",
