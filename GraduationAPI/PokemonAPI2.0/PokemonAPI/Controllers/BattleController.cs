@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using PokemonAPI.ViewModel;
-using PokemonWEB.Data;
+using PokemonAPI.Dto;
 using PokemonWEB.Interfaces;
-using PokemonWEB.Models;
-using PokemonWEB.Models.Action;
 
 namespace PokemonWEB.Controllers;
 
@@ -21,16 +18,15 @@ public class BattleController : ControllerBase
         _battleRepository = battleRepository;
     }
 
-    [HttpPut]
-    public IActionResult UpdateBattle([FromBody]BattleViewDto battle)
+    [HttpPost("create-battle")]
+    public async Task<Guid> BattleCreate([FromBody] BattleCreateDto battle)
     {
-        var pokemons = _battleRepository.UpdateBattle(battle);
-        var battleEnded = _battleRepository.BattleEnded(pokemons);
-        ResponceBattle responce = new ResponceBattle()
-        {
-            Pokemons = pokemons,
-            BattleEnded = battleEnded
-        };
-        return Ok(responce);
+        return await _battleRepository.CreateBattle(battle);
+    }
+
+    [HttpPost("update-battle")]
+    public async Task<BattleResponceDto> MovePokemon(BattleMoveDto battleUpdateDto)
+    {
+        return await _battleRepository.MovePokemon(battleUpdateDto);
     }
 }

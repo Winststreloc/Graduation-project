@@ -8,8 +8,8 @@ namespace PokemonWEB.Models;
 public class Pokemon
 {
     public Guid Id { get; set; }
-    public int PokedexId { get; set; }
-    public Pokedex Pokedex { get; set; }
+    public int PokemonRecordId { get; set; }
+    public PokemonRecord? PokemonRecord { get; set; }
     public string Name { get; set; }
     public bool Gender { get; set; }
     public int Experience { get; set; }

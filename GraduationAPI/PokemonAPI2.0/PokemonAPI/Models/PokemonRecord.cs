@@ -3,7 +3,7 @@
 /// <summary>
 /// Pokedex is library with Pokemons, which will be associated using the PokemonID with the Pokemons class for pokemons property
 /// </summary>
-public class Pokedex
+public class PokemonRecord
 {
     public int PokedexId { get; set; }
     public string Name { get; set; }
@@ -14,8 +14,6 @@ public class Pokedex
     public double Weight { get; set; }
     public double Height { get; set; }
     public string? Description { get; set; }
-    
-
     public string MainUrl { get; set; }
     public string? Category { get; set; }
     public int? NextEvol { get; set; }

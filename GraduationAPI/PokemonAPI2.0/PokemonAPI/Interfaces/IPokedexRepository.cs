@@ -5,10 +5,10 @@ namespace PokemonWEB.Interfaces;
 
 public interface IPokedexRepository
 {
-    Pokedex GetPokemon(int id);
-    ICollection<Pokedex> GetPokemons();
-    bool CreatePokemon(Pokedex pokemon);
-    bool UpdatePokemon(Pokedex pokemon);
-    bool DeletePokemon(Pokedex pokemon);
+    PokemonRecord GetPokemon(int id);
+    ICollection<PokemonRecord> GetPokemons();
+    bool CreatePokemon(PokemonRecord pokemon);
+    bool UpdatePokemon(PokemonRecord pokemon);
+    bool DeletePokemon(PokemonRecord pokemon);
     bool PokemonExists(int id);
 }

@@ -26,6 +26,21 @@ namespace PokemonAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Battles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Pokemon1 = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Pokemon2 = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BattleEnded = table.Column<bool>(type: "bit", nullable: false),
+                    Queue = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Battles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
                 {
@@ -87,7 +102,7 @@ namespace PokemonAPI.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PokedexId = table.Column<int>(type: "int", nullable: false),
+                    PokemonRecordId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Gender = table.Column<bool>(type: "bit", nullable: false),
                     Experience = table.Column<int>(type: "int", nullable: false),
@@ -99,8 +114,8 @@ namespace PokemonAPI.Migrations
                 {
                     table.PrimaryKey("PK_Pokemons", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pokemons_Pokedex_PokedexId",
-                        column: x => x.PokedexId,
+                        name: "FK_Pokemons_Pokedex_PokemonRecordId",
+                        column: x => x.PokemonRecordId,
                         principalTable: "Pokedex",
                         principalColumn: "PokedexId",
                         onDelete: ReferentialAction.Cascade);
@@ -194,13 +209,16 @@ namespace PokemonAPI.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pokemons_PokedexId",
+                name: "IX_Pokemons_PokemonRecordId",
                 table: "Pokemons",
-                column: "PokedexId");
+                column: "PokemonRecordId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Battles");
+
             migrationBuilder.DropTable(
                 name: "PokemonAbilities");
 
