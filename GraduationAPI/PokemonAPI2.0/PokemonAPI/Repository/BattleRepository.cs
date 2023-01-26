@@ -38,13 +38,31 @@ public class BattleRepository : IBattleRepository
     {
         var battle = await _context.Battles.SingleOrDefaultAsync(b => b.Id == battleMoveDto.BattleId);
         var move = await _context.Abilities.SingleOrDefaultAsync(a => a.Id == battleMoveDto.AbilityId);
+        var currentQueue = battle.Queue;
+        
         if (battle.BattleEnded)
-            return new BattleResponceDto();
+        {
+            throw new Exception("Battle ended");
+        }
+
 
         var pokemon1 = await _context.Pokemons.SingleOrDefaultAsync(p => p.Id == battle.Pokemon1);
         var pokemon2 = await _context.Pokemons.SingleOrDefaultAsync(p => p.Id == battle.Pokemon2);
-        var pokemon = battle.Queue == Queue.FirstPokemon ? pokemon1 : pokemon2;
-        return _battleService.MovePokemon(pokemon, battle.Queue == Queue.FirstPokemon ? pokemon2 : pokemon1, move);
+        
+        var responseDto = _battleService.MovePokemon(currentQueue == Queue.FirstPokemon ? pokemon1 : pokemon2, currentQueue == Queue.FirstPokemon ? pokemon2 : pokemon1, move);
+
+        battle.Queue = currentQueue == Queue.FirstPokemon ? Queue.SecondPokemon : Queue.FirstPokemon;
+        _context.Update(battle);
+        _context.Update(responseDto.Pokemon2);
+        
+        if (battle.BattleEnded)
+        {
+            _context.Remove(battle);
+        }
+        
+        await _context.SaveChangesAsync();
+
+        return responseDto;
     }
 
 }
