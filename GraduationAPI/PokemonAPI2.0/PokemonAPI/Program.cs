@@ -4,12 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PokemonWEB.Data;
 using PokemonAPI;
+using PokemonAPI.Hubs;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddSignalR();
 builder.Services.AddControllers();
 builder.Services.AddCors();
 builder.Services.AddTransient<Seed>();
@@ -17,7 +18,6 @@ builder.Services.AddControllers().AddJsonOptions(x =>
     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 DIExtention.ConfigureServices(builder.Services);
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -83,6 +83,7 @@ app.UseCors(option =>
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<ChatHub>("/battle");
 
 Task.Run(() =>
 {
