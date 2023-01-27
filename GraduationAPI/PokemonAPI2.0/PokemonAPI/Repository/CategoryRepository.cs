@@ -19,7 +19,7 @@ public class CategoryRepository : ICategoryRepository
         return _context.Categories.OrderBy(c => c.Name).ToList();
     }
 
-    public Category GetCategory(Guid Id)
+    public Category GetCategory(int Id)
     {
         return _context.Categories.FirstOrDefault(c => c.Id == Id);
     }
@@ -28,14 +28,15 @@ public class CategoryRepository : ICategoryRepository
     {
         return _context.Categories.FirstOrDefault(c => c.Name == name);
     }
+    
 
-    public ICollection<Pokemon> GetPokemonByCategory(Guid categoryId)
+    public ICollection<Pokemon> GetPokemonByCategory(int categoryId)
     {
         return _context.PokemonCategories.Where(pc => pc.CategoryId == categoryId)
             .Select(pc => pc.Pokemon).ToList();
     }
 
-    public bool CategoryExists(Guid id)
+    public bool CategoryExists(int id)
     {
         return _context.Categories.Any(c => c.Id == id);
     }

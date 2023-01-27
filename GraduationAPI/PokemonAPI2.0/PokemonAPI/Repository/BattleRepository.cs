@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using PokemonAPI.Dto;
 using PokemonAPI.Interfaces;
 using PokemonAPI.Models;
 using PokemonAPI.Models.Enums;
 using PokemonWEB.Data;
 using PokemonWEB.Interfaces;
+using PokemonWEB.Models;
 
 namespace PokemonWEB.Repository;
 
@@ -28,6 +30,22 @@ public class BattleRepository : IBattleRepository
             BattleEnded = false,
             Queue = Queue.FirstPokemon
         };
+        _context.Battles.Add(battle);
+        await _context.SaveChangesAsync();
+
+        return battle.Id;
+    }
+
+    public async Task<Guid> CreateLocalBattle(Guid pokemonId)
+    {
+        var battle = new Battle()
+        {
+            Pokemon1 = pokemonId,
+            Pokemon2 = await _battleService.GenerateRandomPokemon(),
+            BattleEnded = false,
+            Queue = Queue.FirstPokemon
+        };
+        
         _context.Battles.Add(battle);
         await _context.SaveChangesAsync();
 
@@ -64,5 +82,4 @@ public class BattleRepository : IBattleRepository
 
         return responseDto;
     }
-
 }

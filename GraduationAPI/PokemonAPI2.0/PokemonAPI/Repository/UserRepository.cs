@@ -38,7 +38,7 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> GetUserByNickName(string nickName)
     {
-        return await _context.Users.SingleOrDefaultAsync(u => u.NickName == nickName);
+        return await _context.Users.FirstOrDefaultAsync(u => u.NickName == nickName);
     }
 
     public async Task<ResponceAuthDto?> RegisterNewUser(RegistrationModelDto registrationModelDto)
