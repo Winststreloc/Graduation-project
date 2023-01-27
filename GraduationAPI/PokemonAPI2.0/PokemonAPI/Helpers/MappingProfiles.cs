@@ -12,8 +12,6 @@ public class MappingProfiles : Profile
         CreateMap<Category, CategoryDto>().ReverseMap();
         CreateMap<PokemonRecord, PokedexDto>().ReverseMap();
         CreateMap<User, UserDto>().ReverseMap();
-
-        CreateMap<PokemonRecord, Task<PokedexDto>>();
-        CreateMap<Task<PokedexDto>, PokemonRecord>();
+        CreateMap<Pokemon, PokemonRecord>().ReverseMap();
     }
 }

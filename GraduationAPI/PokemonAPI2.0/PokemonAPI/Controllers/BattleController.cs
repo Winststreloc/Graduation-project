@@ -19,9 +19,15 @@ public class BattleController : ControllerBase
     }
 
     [HttpPost("create-battle")]
-    public async Task<Guid> BattleCreate([FromBody] BattleCreateDto battle)
+    public async Task<Guid> CreateBattle([FromBody] BattleCreateDto battle)
     {
         return await _battleRepository.CreateBattle(battle);
+    }
+
+    [HttpPost("create-local-battle")]
+    public async Task<Guid> CreateLocalBattle([FromQuery]Guid pokemonId)
+    {
+        return await _battleRepository.CreateLocalBattle(pokemonId);
     }
 
     [HttpPost("update-battle")]
