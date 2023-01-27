@@ -8,24 +8,23 @@ namespace PokemonWEB.Models;
 public class Pokemon
 {
     public Guid Id { get; set; }
-    public int PokedexId { get; set; }
-    public Pokedex Pokedex { get; set; }
+    public int PokemonRecordId { get; set; }
+    public PokemonRecord? PokemonRecord { get; set; }
+    public Guid UserId { get; set; }
+    public User User { get; set; }
     public string Name { get; set; }
-    public bool Gender { get; set; }
+    public bool? Gender { get; set; }
     public int Experience { get; set; }
     public int CurrentHealth { get; set; }
     public int CurrentDamage { get; set; }
     public int CurrentDefence { get; set; }
-    public int Level => GetLevel();
+    public int? Level => GetLevel();
     // public int MaxHealth => GetHP();
     // public int MaxDamage => GetDamage();
     // public int MaxDefence => GetDefence();
-
-
     public ICollection<PokemonAbility> PokemonAbilities { get; set; }
-    public ICollection<PokemonOwner> PokemonOwners { get; set; }
-    public ICollection<PokemonCategory> PokemonCategories { get; set; }
-    
+    public ICollection<PokemonCategory>? PokemonCategories { get; set; } //TODO
+
     private int GetLevel()
     {
         int currentLevel = 0;

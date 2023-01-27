@@ -1,12 +1,11 @@
-﻿using PokemonAPI.ViewModel;
-
-using PokemonWEB.Models;
-
+﻿using PokemonAPI.Dto;
 
 namespace PokemonWEB.Interfaces;
 
 public interface IBattleRepository
 {
-    ICollection<Pokemon> UpdateBattle(BattleViewModel battle);
-    bool BattleEnded(ICollection<Pokemon> pokemons);
+    Task<Guid> CreateBattle(BattleCreateDto battleCreateDto);
+    Task<Guid> CreateLocalBattle(Guid pokemonId);
+    Task<BattleResponceDto> MovePokemon(BattleMoveDto battleMoveDto);
+    
 }

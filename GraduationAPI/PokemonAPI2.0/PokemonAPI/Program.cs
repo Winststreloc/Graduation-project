@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using PokemonWEB.Data;
 using PokemonAPI;
 
@@ -9,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddCors();
 builder.Services.AddTransient<Seed>();
 builder.Services.AddControllers().AddJsonOptions(x =>
     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
@@ -22,6 +25,24 @@ builder.Services.AddDbContext<PokemonDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = AuthOptions.ISSUER,
+            
+            ValidateAudience = true,
+            ValidAudience = AuthOptions.AUDIENCE,
+            ValidateLifetime = false,
+            
+            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+            ValidateIssuerSigningKey = true,
+        };
+    });
 
 var app = builder.Build();
 
@@ -57,6 +78,7 @@ app.UseCors(option =>
     option.AllowAnyHeader();
     option.AllowAnyMethod();
 });
+
 
 app.UseAuthorization();
 

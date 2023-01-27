@@ -26,29 +26,31 @@ namespace PokemonAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Categories",
+                name: "Battles",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Pokemon1 = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Pokemon2 = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BattleEnded = table.Column<bool>(type: "bit", nullable: false),
+                    Queue = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Battles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Owners",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Gym = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Owners", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,7 +66,14 @@ namespace PokemonAPI.Migrations
                     BaseDefense = table.Column<int>(type: "int", nullable: false),
                     Weight = table.Column<double>(type: "float", nullable: false),
                     Height = table.Column<double>(type: "float", nullable: false),
-                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MainUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NextEvol = table.Column<int>(type: "int", nullable: true),
+                    PrevEvol = table.Column<int>(type: "int", nullable: true),
+                    PokEvol1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PokEvol2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PokEvol3 = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -72,13 +81,32 @@ namespace PokemonAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NickName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: true),
+                    Roles = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Pokemons",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PokedexId = table.Column<int>(type: "int", nullable: false),
+                    PokemonRecordId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Gender = table.Column<bool>(type: "bit", nullable: false),
+                    Gender = table.Column<bool>(type: "bit", nullable: true),
                     Experience = table.Column<int>(type: "int", nullable: false),
                     CurrentHealth = table.Column<int>(type: "int", nullable: false),
                     CurrentDamage = table.Column<int>(type: "int", nullable: false),
@@ -88,10 +116,16 @@ namespace PokemonAPI.Migrations
                 {
                     table.PrimaryKey("PK_Pokemons", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pokemons_Pokedex_PokedexId",
-                        column: x => x.PokedexId,
+                        name: "FK_Pokemons_Pokedex_PokemonRecordId",
+                        column: x => x.PokemonRecordId,
                         principalTable: "Pokedex",
                         principalColumn: "PokedexId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Pokemons_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -124,7 +158,7 @@ namespace PokemonAPI.Migrations
                 columns: table => new
                 {
                     PokemonId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -143,30 +177,6 @@ namespace PokemonAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "PokemonOwners",
-                columns: table => new
-                {
-                    PokemonId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PokemonOwners", x => new { x.PokemonId, x.OwnerId });
-                    table.ForeignKey(
-                        name: "FK_PokemonOwners_Owners_OwnerId",
-                        column: x => x.OwnerId,
-                        principalTable: "Owners",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PokemonOwners_Pokemons_PokemonId",
-                        column: x => x.PokemonId,
-                        principalTable: "Pokemons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_PokemonAbilities_AbilityId",
                 table: "PokemonAbilities",
@@ -178,26 +188,26 @@ namespace PokemonAPI.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PokemonOwners_OwnerId",
-                table: "PokemonOwners",
-                column: "OwnerId");
+                name: "IX_Pokemons_PokemonRecordId",
+                table: "Pokemons",
+                column: "PokemonRecordId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pokemons_PokedexId",
+                name: "IX_Pokemons_UserId",
                 table: "Pokemons",
-                column: "PokedexId");
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Battles");
+
+            migrationBuilder.DropTable(
                 name: "PokemonAbilities");
 
             migrationBuilder.DropTable(
                 name: "PokemonCategories");
-
-            migrationBuilder.DropTable(
-                name: "PokemonOwners");
 
             migrationBuilder.DropTable(
                 name: "Abilities");
@@ -206,13 +216,13 @@ namespace PokemonAPI.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Owners");
-
-            migrationBuilder.DropTable(
                 name: "Pokemons");
 
             migrationBuilder.DropTable(
                 name: "Pokedex");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

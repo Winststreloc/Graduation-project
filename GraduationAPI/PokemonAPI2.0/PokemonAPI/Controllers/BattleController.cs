@@ -1,30 +1,38 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PokemonAPI.ViewModel;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using PokemonAPI.Dto;
 using PokemonWEB.Interfaces;
 
 namespace PokemonWEB.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
-public class BattleController : Controller
+[Route("[controller]")]
+public class BattleController : ControllerBase
 {
     private readonly IBattleRepository _battleRepository;
+    private readonly IMapper _mapper;
 
-    public BattleController(IBattleRepository battleRepository)
+    public BattleController(IBattleRepository battleRepository, IMapper mapper)
     {
+        _mapper = mapper;
         _battleRepository = battleRepository;
     }
 
-    [HttpPut]
-    public IActionResult UpdateBattle([FromBody]BattleViewModel battle)
+    [HttpPost("create-battle")]
+    public async Task<Guid> CreateBattle([FromBody] BattleCreateDto battle)
     {
-        var pokemons = _battleRepository.UpdateBattle(battle);
-        var battleEnded = _battleRepository.BattleEnded(pokemons);
-        ResponceBattle responce = new ResponceBattle()
-        {
-            Pokemons = pokemons,
-            BattleEnded = battleEnded
-        };
-        return Ok(responce);
+        return await _battleRepository.CreateBattle(battle);
+    }
+
+    [HttpPost("create-local-battle")]
+    public async Task<Guid> CreateLocalBattle([FromQuery]Guid pokemonId)
+    {
+        return await _battleRepository.CreateLocalBattle(pokemonId);
+    }
+
+    [HttpPost("update-battle")]
+    public async Task<BattleResponceDto> MovePokemon(BattleMoveDto battleUpdateDto)
+    {
+        return await _battleRepository.MovePokemon(battleUpdateDto);
     }
 }

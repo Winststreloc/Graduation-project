@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokemonWEB.Dto;
 using PokemonWEB.Interfaces;
@@ -7,7 +8,7 @@ using PokemonWEB.Models;
 namespace PokemonWEB.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class PokemonController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -40,7 +41,7 @@ public class PokemonController : ControllerBase
     }
 
     [HttpPost("create-pokemon")]
-    public IActionResult CreatePokemon([FromQuery] Guid categoryGuid, [FromQuery] Guid ownerGuid,
+    public IActionResult CreatePokemon([FromQuery] int categoryId, [FromQuery] Guid userId,
         [FromBody] PokemonDto pokemonCreate)
     {
         if (pokemonCreate == null)
@@ -54,14 +55,14 @@ public class PokemonController : ControllerBase
         }
 
         var pokemon = _mapper.Map<Pokemon>(pokemonCreate);
-        _pokemonRepository.CreatePokemon(ownerGuid, categoryGuid, pokemon);
+        _pokemonRepository.CreatePokemon(userId, categoryId, pokemon);
 
         return Ok("Created");
     }
-
+    
     [HttpPut("update-pokemon")]
     public IActionResult UpdatePokemon([FromQuery] Guid pokemonId, [FromQuery] int pokedexId, [FromQuery] Guid ownerId,
-        [FromQuery] Guid catId, [FromBody]PokemonDto updatedPokemon)
+        [FromQuery] int categoryId, [FromBody]PokemonDto updatedPokemon)
     {
         if (updatedPokemon == null)
             return BadRequest(ModelState);
@@ -77,7 +78,7 @@ public class PokemonController : ControllerBase
 
         var pokemonMap = _mapper.Map<Pokemon>(updatedPokemon);
 
-        _pokemonRepository.UpdatePokemon(ownerId, catId, pokemonMap);
+        _pokemonRepository.UpdatePokemon(ownerId, categoryId, pokemonMap);
 
         return NoContent();
     }

@@ -8,7 +8,7 @@ using PokemonWEB.Models;
 namespace PokemonWEB.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class PokedexController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -40,6 +40,7 @@ public class PokedexController : ControllerBase
     }
 
     [HttpPost("create-pokedex-pokemon")]
+    [Authorize]
     public IActionResult CreatePokemon([FromBody] PokedexDto pokemon)
     {
         if (pokemon == null)
@@ -52,12 +53,13 @@ public class PokedexController : ControllerBase
             return BadRequest(ModelState);
         }
         
-        _pokedexRepository.CreatePokemon(_mapper.Map<Pokedex>(pokemon));
+        _pokedexRepository.CreatePokemon(_mapper.Map<PokemonRecord>(pokemon));
 
         return Ok("Created");
     }
 
     [HttpPut("update-pokedex-pokemon")]
+    [Authorize]
     public IActionResult UpdatePokemon([FromBody]PokedexDto updatedPokemon)
     {
         if (updatedPokemon == null)
@@ -66,12 +68,13 @@ public class PokedexController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest();
         
-        _pokedexRepository.UpdatePokemon(_mapper.Map<Pokedex>(updatedPokemon));
+        _pokedexRepository.UpdatePokemon(_mapper.Map<PokemonRecord>(updatedPokemon));
         
         return NoContent();
     }
 
     [HttpDelete("delete-pokedex-pokemon")]
+    [Authorize]
     public IActionResult DeletePokemon([FromQuery]int pokemonId)
     {
         if (!_pokedexRepository.PokemonExists(pokemonId))
@@ -85,7 +88,7 @@ public class PokedexController : ControllerBase
             return BadRequest(ModelState);
 
 
-        _pokedexRepository.DeletePokemon(_mapper.Map<Pokedex>(pokemonToDelete));
+        _pokedexRepository.DeletePokemon(_mapper.Map<PokemonRecord>(pokemonToDelete));
         return NoContent();
     }
 }

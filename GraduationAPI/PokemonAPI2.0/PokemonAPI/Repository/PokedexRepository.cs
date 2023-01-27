@@ -17,29 +17,29 @@ public class PokedexRepository : IPokedexRepository
         _context = context;
     }
 
-    public Pokedex GetPokemon(int id)
+    public PokemonRecord GetPokemon(int id)
     {
         return _context.Pokedex.FirstOrDefault(p => p.PokedexId == id);
     }
 
-    public ICollection<Pokedex> GetPokemons()
+    public ICollection<PokemonRecord> GetPokemons()
     {
         return _context.Pokedex.OrderBy(p => p.PokedexId).ToList();
     }
 
-    public bool CreatePokemon(Pokedex pokemon)
+    public bool CreatePokemon(PokemonRecord pokemon)
     {
         _context.AddAsync(pokemon);
         return Save();
     }
 
-    public bool UpdatePokemon(Pokedex pokemon)
+    public bool UpdatePokemon(PokemonRecord pokemon)
     {
         _context.Update(pokemon);
         return Save();
     }
 
-    public bool DeletePokemon(Pokedex pokemon)
+    public bool DeletePokemon(PokemonRecord pokemon)
     {
         _context.Remove(pokemon);
         return Save();
@@ -52,7 +52,7 @@ public class PokedexRepository : IPokedexRepository
     
     public bool Save()
     {
-        var saved = _context.SaveChangesWithIdentityInsert<Pokedex>();
+        var saved = _context.SaveChangesWithIdentityInsert<PokemonRecord>();
         return saved > 0;
     }
 }
