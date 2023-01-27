@@ -12,7 +12,6 @@ public class PokemonDbContext : DbContext
     {
     }
 
-
     public DbSet<Ability> Abilities { get; set; }
     public DbSet<Battle> Battles { get; set; }
     public DbSet<Category> Categories { get; set; }
@@ -21,19 +20,19 @@ public class PokemonDbContext : DbContext
     public DbSet<PokemonRecord> Pokedex { get; set; }
     public DbSet<PokemonAbility> PokemonAbilities { get; set; }
     public DbSet<PokemonCategory> PokemonCategories { get; set; }
-    public DbSet<PokemonOwner> PokemonOwners { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<PokemonRecord>()
             .HasKey(p => p.PokedexId);
-        modelBuilder.Entity<PokemonRecord>()
-            .HasMany(px => px.Pokemons)
-            .WithOne(p => p.PokemonRecord);
+        modelBuilder.Entity<Pokemon>()
+            .HasOne(p => p.PokemonRecord)
+            .WithMany(pr => pr.Pokemons)
+            .HasForeignKey(p => p.PokemonRecordId);
 
 
-        modelBuilder.Entity<PokemonAbility>()
+            modelBuilder.Entity<PokemonAbility>()
             .HasKey(pa => new { pa.PokemonId, pa.AbilityId });
         modelBuilder.Entity<PokemonAbility>()
             .HasOne(p => p.Pokemon)
@@ -55,15 +54,11 @@ public class PokemonDbContext : DbContext
             .WithMany(pc => pc.PokemonCategories)
             .HasForeignKey(c => c.CategoryId);
 
-        modelBuilder.Entity<PokemonOwner>()
-            .HasKey(po => new { po.PokemonId, po.UserId });
-        modelBuilder.Entity<PokemonOwner>()
-            .HasOne(p => p.Pokemon)
-            .WithMany(pc => pc.PokemonOwners)
-            .HasForeignKey(p => p.PokemonId);
-        modelBuilder.Entity<PokemonOwner>()
+        modelBuilder.Entity<User>()
+            .HasKey(p => p.Id);
+        modelBuilder.Entity<Pokemon>()
             .HasOne(p => p.User)
-            .WithMany(pc => pc.PokemonOwners)
-            .HasForeignKey(c => c.UserId);
+            .WithMany(c => c.Pokemons)
+            .HasForeignKey(p => p.UserId);
     }
 }

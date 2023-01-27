@@ -5,10 +5,10 @@ namespace PokemonWEB.Interfaces;
 public interface ICategoryRepository
 {
     ICollection<Category> GetCategories();
-    Category GetCategory(Guid id);
+    Category GetCategory(int id);
     Category GetCategory(string name);
-    ICollection<Pokemon> GetPokemonByCategory(Guid categoryId);
-    bool CategoryExists(Guid id);
+    ICollection<Pokemon> GetPokemonByCategory(int categoryId);
+    bool CategoryExists(int id);
     bool CategoryExists(string name);
     bool CreateCategory(Category category);
     bool UpdateCategory(Category category);

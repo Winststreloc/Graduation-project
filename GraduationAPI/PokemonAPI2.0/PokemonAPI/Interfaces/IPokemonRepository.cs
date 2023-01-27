@@ -9,8 +9,8 @@ public interface IPokemonRepository
     ICollection<Pokemon> GetPokemons(int countPokemon);
     IQueryable<Ability> GetPokemonAbilities(Guid pokemonId);
 
-    void CreatePokemon(Guid ownerId, Guid categoryId, Pokemon pokemon);
-    bool UpdatePokemon(Guid ownerId, Guid categoryId, Pokemon pokemon);
+    void CreatePokemon(Guid userId, int categoryId, Pokemon pokemon);
+    bool UpdatePokemon(Guid ownerId, int categoryId, Pokemon pokemon);
     bool DeletePokemon(Pokemon pokemon);
     bool PokemonExists(Guid Id);
 }

@@ -12,5 +12,6 @@ public class User
     public string PasswordHash { get; set; }
     public Gender? Gender { get; set; }
     public Roles Roles { get; set; }
-    public ICollection<PokemonOwner> PokemonOwners { get; set; }
+    
+    public ICollection<Pokemon> Pokemons { get; set; }
 }
