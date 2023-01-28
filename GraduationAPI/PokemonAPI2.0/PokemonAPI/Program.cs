@@ -12,7 +12,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddSignalR();
 builder.Services.AddControllers();
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ClientPermission", policy =>
+    {
+        policy.AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithOrigins("http://localhost:3000")
+            .AllowCredentials();
+    });
+});
 builder.Services.AddTransient<Seed>();
 builder.Services.AddControllers().AddJsonOptions(x =>
     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
@@ -72,18 +81,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors(option =>
-{
-    option.AllowAnyOrigin();
-    option.AllowAnyHeader();
-    option.AllowAnyMethod();
-});
+app.UseCors("ClientPermission");
 
 
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapHub<ChatHub>("/battle");
+app.MapHub<ChatHub>("/chat");
 
 Task.Run(() =>
 {
