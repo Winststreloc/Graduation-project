@@ -11,5 +11,6 @@ public interface IUserRepository
     Task<User?> GetUserById(Guid id);
     Task<User?> GetUserByNickName(string nickName);
     Task<Responce?> RegisterNewUser(RegistrationView registrationView);
+    Task<bool> UserNameOrEmailExists(string userName, string email);
     Task<bool> Save();
 }
