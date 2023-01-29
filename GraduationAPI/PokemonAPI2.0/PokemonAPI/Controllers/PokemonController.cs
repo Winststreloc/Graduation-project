@@ -40,6 +40,13 @@ public class PokemonController : ControllerBase
         return Ok(pokemons);
     }
 
+    [HttpPut("healing-user-pokemons")]
+    public async Task<IActionResult> HealingUserPokemons([FromQuery] Guid userId)
+    {
+        var result = await _pokemonRepository.HealingUserPokemons(userId);
+        return result ? Ok() : NoContent();
+    }
+
     [HttpPost("create-pokemon")]
     public IActionResult CreatePokemon([FromQuery] int categoryId, [FromQuery] Guid userId,
         [FromBody] PokemonDto pokemonCreate)

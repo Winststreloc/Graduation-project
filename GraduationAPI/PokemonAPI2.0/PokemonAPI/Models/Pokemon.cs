@@ -1,6 +1,6 @@
 ﻿
 using PokemonAPI;
-
+using PokemonAPI.Interfaces;
 
 
 namespace PokemonWEB.Models;
@@ -18,13 +18,11 @@ public class Pokemon
     public int CurrentHealth { get; set; }
     public int CurrentDamage { get; set; }
     public int CurrentDefence { get; set; }
-    public int? Level => GetLevel();
-    // public int MaxHealth => GetHP();
-    // public int MaxDamage => GetDamage();
-    // public int MaxDefence => GetDefence();
+    
+    public int Level => GetLevel();
     public ICollection<PokemonAbility> PokemonAbilities { get; set; }
     public ICollection<PokemonCategory>? PokemonCategories { get; set; } //TODO
-
+    
     private int GetLevel()
     {
         int currentLevel = 0;
@@ -56,23 +54,4 @@ public class Pokemon
 
         return currentLevel;
     }
-
-    // public int GetDamage()
-    // {
-    //     var pokedex = _context.Pokedex.FirstOrDefault(p => p.PokedexId == PokedexId);
-    //     return pokedex.BaseDamage * (1 + Level / 100);
-    // }
-    //
-    // public int GetHP()
-    // {
-    //     var pokedex = _context.Pokedex.SingleOrDefault(p => p.PokedexId == PokedexId);
-    //     return pokedex.BaseHP * (1 + Level / 100);
-    // }
-    //
-    // public int GetDefence()
-    // {
-    //     var pokedex = _context.Pokedex.FirstOrDefault(p => p.PokedexId == PokedexId);
-    //     return pokedex.BaseHP * (1 + Level / 100);
-    // }
-    
 }

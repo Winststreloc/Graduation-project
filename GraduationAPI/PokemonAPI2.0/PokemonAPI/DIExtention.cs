@@ -11,6 +11,7 @@ public static class DIExtention
     public static void ConfigureServices(this IServiceCollection service)
     {
         service.AddScoped<IPokemonRepository, PokemonRepository>();
+        service.AddScoped<IPokemonService, PokemonService>();
         service.AddScoped<ICategoryRepository, CategoryRepository>();
         service.AddScoped<IPokedexRepository, PokedexRepository>();
         service.AddScoped<IBattleService, BattleService>();        

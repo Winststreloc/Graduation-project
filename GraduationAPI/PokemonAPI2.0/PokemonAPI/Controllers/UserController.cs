@@ -18,14 +18,14 @@ public class UserController : Controller
         _mapper = mapper;
     }
 
-    [HttpGet("get-User-ByNickName")]
+    [HttpGet("get-user-by-nickname")]
     public async Task<IActionResult> GetUserByName(string nickname)
     {
         var user = await _repository.GetUserByNickName(nickname);
         return Ok(user);
     }
 
-    [HttpGet("get-User-ByEmail")]
+    [HttpGet("get-user-byemail")]
     public async Task<IActionResult> GetUserByEmail(string email)
     {
         var user = await _repository.GetUserByEmail(email);

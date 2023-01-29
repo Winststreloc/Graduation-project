@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PokemonAPI.Interfaces;
 using PokemonWEB.Data;
 using PokemonWEB.Interfaces;
 using PokemonWEB.Models;
@@ -9,10 +10,12 @@ namespace PokemonWEB.Repository;
 public class PokemonRepository : IPokemonRepository
 {
     private readonly PokemonDbContext _context;
+    private readonly IPokemonService _pokemonService;
     
-    public PokemonRepository(PokemonDbContext context)
+    public PokemonRepository(PokemonDbContext context, IPokemonService pokemonService)
     {
         _context = context;
+        _pokemonService = pokemonService;
     }
 
     public Pokemon GetPokemon(Guid Id)
@@ -32,6 +35,17 @@ public class PokemonRepository : IPokemonRepository
             .Where(pa => pa.PokemonId == pokemon.Id)
             .Select(p => p.Ability).Take(4);
         return abilities;
+    }
+    public async Task<ICollection<Pokemon>> GetUserPokemons(Guid userId)
+    {
+        return await _context.Pokemons.Where(p => p.UserId == userId).ToListAsync();
+    }
+
+
+    public async Task<bool> HealingUserPokemons(Guid userId)
+    {
+        var pokemons = await GetUserPokemons(userId);
+        return await _pokemonService.HealingPokemons(pokemons);
     }
 
     public bool PokemonExists(Guid Id)

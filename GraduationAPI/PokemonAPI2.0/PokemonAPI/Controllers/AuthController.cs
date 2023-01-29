@@ -38,7 +38,7 @@ public class AuthController : Controller
             return _responce;
         }
 
-        if (await _userRepository.UserNameOrEmailExists(registrationView.NickName, registrationView.Email))
+        if (await _userRepository.UserNameOrEmailExists(registrationModelDto.NickName, registrationModelDto.Email))
         {
             _responce.ErrorMessages = new List<string> {"NickName or email is exists."};
             _responce.IsSuccess = false;
