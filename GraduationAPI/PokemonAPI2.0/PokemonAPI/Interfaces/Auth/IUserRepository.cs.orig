@@ -10,7 +10,11 @@ public interface IUserRepository
     Task<User?> GetUserByEmail(string email);
     Task<User?> GetUserById(Guid id);
     Task<User?> GetUserByNickName(string nickName);
+<<<<<<< HEAD
     Task<ResponceAuthDto?> RegisterNewUser(RegistrationModelDto registrationModelDto);
+=======
+    Task<Responce?> RegisterNewUser(RegistrationView registrationView);
     Task<bool> UserNameOrEmailExists(string userName, string email);
+>>>>>>> feature/authentication
     Task<bool> Save();
 }
