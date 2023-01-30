@@ -56,7 +56,13 @@ public class BattleRepository : IBattleRepository
     {
         var battle = await _context.Battles.SingleOrDefaultAsync(b => b.Id == battleMoveDto.BattleId);
         var move = await _context.Abilities.SingleOrDefaultAsync(a => a.Id == battleMoveDto.AbilityId);
+        if (move == null || battle == null)
+        {
+            throw new ArgumentNullException($"Battle or move not found",nameof(move));
+        }
         var currentQueue = battle.Queue;
+        
+        
         
         if (battle.BattleEnded)
         {

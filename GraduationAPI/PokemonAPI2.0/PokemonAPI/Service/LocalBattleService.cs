@@ -39,7 +39,6 @@ public class LocalBattleService : ILocalBattleService
 
     private int GetDefence(Pokemon pokemon)
     {
-        var value = Math.Round(34.245, 2);
         return pokemon.CurrentHealth + (pokemon.CurrentDamage / 2);
     }
 

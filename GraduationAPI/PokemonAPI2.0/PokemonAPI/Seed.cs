@@ -196,7 +196,7 @@ public class Seed
             _pokemonDbContext.SaveChanges();
         }
 
-        if (!_pokemonDbContext.PokemonCategories.Any())
+        if (!_pokemonDbContext.PokemonAbilities.Any())
         {
             var pokemonAbility = new List<PokemonAbility>()
             {
