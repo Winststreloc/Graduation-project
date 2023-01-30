@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PokemonAPI.Helpers;
 using PokemonAPI.Interfaces;
 using PokemonWEB.Data;
 using PokemonWEB.Interfaces;
@@ -11,6 +12,7 @@ public class PokemonRepository : IPokemonRepository
 {
     private readonly PokemonDbContext _context;
     private readonly IPokemonService _pokemonService;
+    private const string ComputerNickName = "ashKetchum";
     
     public PokemonRepository(PokemonDbContext context, IPokemonService pokemonService)
     {
@@ -48,6 +50,13 @@ public class PokemonRepository : IPokemonRepository
         return await _pokemonService.HealingPokemons(pokemons);
     }
 
+    public async Task<bool> IsComputerPokemon(Pokemon pokemon)
+    {
+        var computer = await _context.Users.SingleOrDefaultAsync(u => u.NickName == ComputerNickName);
+        var computerPokemons = await _context.Pokemons.Where(p => p.UserId == computer.Id).ToListAsync();
+        return computerPokemons.Any(p => p == pokemon);
+    }
+
     public bool PokemonExists(Guid Id)
     {
         return _context.Pokemons.Any(p => p.Id == Id);
@@ -59,24 +68,26 @@ public class PokemonRepository : IPokemonRepository
         return Save();
     }
 
-    public void CreatePokemon(Guid userId, int categoryId, Pokemon pokemon)
+    public async Task<bool> CreatePokemon(Guid userId, int categoryId, Pokemon pokemon)
     {
-        var pokemonOwnerEntity = _context.Users.FirstOrDefault(o => o.Id == userId);
-        var category = _context.Categories.FirstOrDefault(o => o.Id == categoryId);
-
+        var pokemonOwnerEntity =  await _context.Users.SingleOrDefaultAsync(o => o.Id == userId);
+        var categoryEntity =  await _context.Categories.SingleOrDefaultAsync(o => o.Id == categoryId);
+        var pokemonRecordEntity =  await _context.Pokedex.SingleOrDefaultAsync(p => p.Id == pokemon.PokemonRecordId);
         var pokemonCategory = new PokemonCategory
         {
-            Category = category,
+            Category = categoryEntity,
             Pokemon = pokemon
         };
 
         pokemon.User = pokemonOwnerEntity;
-        
-        _context.Add(pokemonCategory);
+        pokemon.PokemonRecord = pokemonRecordEntity;
 
-        _context.Add(pokemon);
-        Save();
+        await _context.AddAsync(pokemonCategory);
+        await _context.AddAsync(pokemon);
+
+        return await _context.SaveChangesAsync() > 0;
     }
+
 
     public bool UpdatePokemon(Guid ownerId, int categoryId, Pokemon pokemon)
     {

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PokemonWEB.Data;
 using PokemonAPI;
+using PokemonAPI.Middleware;
 using PokemonAPI.Hubs;
 
 
@@ -82,6 +83,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("ClientPermission");
 
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseAuthorization();
 

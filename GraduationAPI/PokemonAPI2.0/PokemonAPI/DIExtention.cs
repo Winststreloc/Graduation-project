@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PokemonAPI.Interfaces;
+using PokemonAPI.Middleware;
 using PokemonAPI.Service;
 using PokemonWEB.Interfaces;
 using PokemonWEB.Repository;
@@ -20,6 +21,7 @@ public static class DIExtention
         service.AddScoped<IUserRepository, UserRepository>();
         service.AddScoped<IPasswordHashingService, PasswordHashingService>();
         service.AddScoped<ITokenService, TokenService>();
+        service.AddScoped<ExceptionMiddleware>();
 
 
     }

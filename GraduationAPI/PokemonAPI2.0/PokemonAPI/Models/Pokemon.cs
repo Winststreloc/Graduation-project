@@ -1,7 +1,5 @@
-﻿
-using PokemonAPI;
-using PokemonAPI.Interfaces;
-
+﻿using PokemonAPI;
+using PokemonAPI.Models;
 
 namespace PokemonWEB.Models;
 
@@ -11,7 +9,9 @@ public class Pokemon
     public int PokemonRecordId { get; set; }
     public PokemonRecord? PokemonRecord { get; set; }
     public Guid UserId { get; set; }
-    public User User { get; set; }
+    public User? User { get; set; }
+    public Guid? BattleId { get; set; }
+    public Battle? Battle { get; set; }
     public string Name { get; set; }
     public bool? Gender { get; set; }
     public int Experience { get; set; }

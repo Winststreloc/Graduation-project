@@ -19,12 +19,12 @@ public class PokedexRepository : IPokedexRepository
 
     public PokemonRecord GetPokemon(int id)
     {
-        return _context.Pokedex.FirstOrDefault(p => p.PokedexId == id);
+        return _context.Pokedex.FirstOrDefault(p => p.Id == id);
     }
 
     public ICollection<PokemonRecord> GetPokemons()
     {
-        return _context.Pokedex.OrderBy(p => p.PokedexId).ToList();
+        return _context.Pokedex.OrderBy(p => p.Id).ToList();
     }
 
     public bool CreatePokemon(PokemonRecord pokemon)
@@ -47,7 +47,7 @@ public class PokedexRepository : IPokedexRepository
 
     public bool PokemonExists(int id)
     {
-        return _context.Pokedex.Any(p => p.PokedexId == id);
+        return _context.Pokedex.Any(p => p.Id == id);
     }
     
     public bool Save()

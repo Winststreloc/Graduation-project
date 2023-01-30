@@ -26,19 +26,19 @@ public class PokemonService : IPokemonService
     
     public async Task<int> GetDamage(int pokedexId, int level)
     {
-        var pokedex = await _context.Pokedex.FirstOrDefaultAsync(p => p.PokedexId == pokedexId);
+        var pokedex = await _context.Pokedex.FirstOrDefaultAsync(p => p.Id == pokedexId);
         return pokedex.BaseDamage * (1 + level / 100);
     }
     
     public async Task<int> MaxPokemonHP(int pokedexId, int level)
     {
-        var pokedex = await _context.Pokedex.SingleOrDefaultAsync(p => p.PokedexId == pokedexId);
+        var pokedex = await _context.Pokedex.SingleOrDefaultAsync(p => p.Id == pokedexId);
         return pokedex.BaseHP * (1 + level / 100);
     }
     
     public async Task<int> GetDefence(int pokedexId, int level)
     {
-        var pokedex = await _context.Pokedex.FirstOrDefaultAsync(p => p.PokedexId == pokedexId);
+        var pokedex = await _context.Pokedex.FirstOrDefaultAsync(p => p.Id == pokedexId);
         return pokedex.BaseHP * (1 + level / 100);
     }
 }

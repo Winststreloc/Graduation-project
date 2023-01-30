@@ -10,8 +10,8 @@ public interface IPokemonRepository
     IQueryable<Ability> GetPokemonAbilities(Guid pokemonId);
     Task<ICollection<Pokemon>> GetUserPokemons(Guid userId);
     Task<bool> HealingUserPokemons(Guid userId);
-
-    void CreatePokemon(Guid userId, int categoryId, Pokemon pokemon);
+    Task<bool> IsComputerPokemon(Pokemon pokemon);
+    Task<bool> CreatePokemon(Guid userId, int categoryId, Pokemon pokemon);
     bool UpdatePokemon(Guid ownerId, int categoryId, Pokemon pokemon);
     bool DeletePokemon(Pokemon pokemon);
     bool PokemonExists(Guid Id);
