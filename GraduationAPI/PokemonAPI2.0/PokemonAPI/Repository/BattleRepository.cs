@@ -43,7 +43,7 @@ public class BattleRepository : IBattleRepository
         return battle.Id;
     }
 
-    public async Task<Guid> CreateLocalBattle(Guid pokemonId)
+    public async Task<Battle> CreateLocalBattle(Guid pokemonId)
     {
         var attackPokemon = await _context.Pokemons.SingleOrDefaultAsync(p => p.Id == pokemonId);
         var battle = new Battle()
@@ -60,7 +60,7 @@ public class BattleRepository : IBattleRepository
         _context.Battles.Add(battle);
         await _context.SaveChangesAsync();
 
-        return battle.Id;
+        return battle;
     }
 
     public async Task<BattleResponceDto> MovePokemon(BattleMoveDto battleMoveDto)
