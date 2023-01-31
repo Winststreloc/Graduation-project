@@ -71,6 +71,8 @@ public class BattleRepository : IBattleRepository
         {
             throw new Exception("Battle not found or ended");
         }
+
+        battle.Pokemons = await _context.Pokemons.Where(p => p.BattleId == battle.Id).ToListAsync();
         
         var move = await _context.Abilities.SingleOrDefaultAsync(a => a.Id == battleMoveDto.AbilityId);
         if (move == null)
