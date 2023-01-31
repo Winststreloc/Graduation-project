@@ -18,7 +18,7 @@ public class BattleService : IBattleService
         _context = context;
     }
 
-    public BattleResponceDto MovePokemon(Pokemon? pokemon1, Pokemon? pokemon2,  Ability ability)
+    public BattleResponceDto MovePokemon(Pokemon? pokemon1, Pokemon? pokemon2,  Ability? ability)
     {
         var damage = GetDamage(pokemon1, ability);
         pokemon2.CurrentHealth = GetDefence(pokemon2) - damage;
@@ -44,11 +44,15 @@ public class BattleService : IBattleService
         var pokeRecord = await _context.Pokedex.SingleOrDefaultAsync(p =>
             p.Id == randomId);
         var abilities = _context.PokemonAbilities
-            .Where(pa => pa.AbilityId == 1 && pa.AbilityId == 2)
+            .Where(pa => pa.AbilityId == 1 || pa.AbilityId == 2)
+            .Select(pa => pa.Ability)
             .ToList();
+        var rndAbility = abilities.ElementAtOrDefault(rnd.Next(abilities.Count));
         var categories = _context.PokemonCategories
             .Where(c => c.CategoryId == 1 && c.CategoryId == 2)
+            .Select(pc => pc.Category)
             .ToList();
+        var computerUser = await _context.Users.SingleOrDefaultAsync(u => u.NickName == ComputerNickName);
 
         var pokemon = new Pokemon()
         {
@@ -57,28 +61,29 @@ public class BattleService : IBattleService
             CurrentDamage = pokeRecord.BaseDamage,
             CurrentDefence = pokeRecord.BaseDefense,
             CurrentHealth = pokeRecord.BaseHP,
-            PokemonAbilities = abilities,
             Experience = 0,
             Gender = default,
-            PokemonCategories = categories
+            User = computerUser,
+            UserId = computerUser.Id
         };
         
-        _context.Pokemons.Add(pokemon);
+        await _context.AddAsync(pokemon);
         await _context.SaveChangesAsync();
         
         return pokemon;
     }
 
-    public async Task<Ability> GetRandomPokemonAbility(Guid pokemonId)
+    public async Task<Ability?> GetRandomPokemonAbility(Guid pokemonId)
     {
         Random rnd = new Random();
         var existAbilities = await _context.PokemonAbilities
             .Where(pa => pa.PokemonId == pokemonId)
-            .Select(p => p.Ability).ToArrayAsync();
-        return existAbilities.ElementAt(rnd.Next(existAbilities.Length));
+            .Select(p => p.Ability).ToListAsync();
+        var result = existAbilities.ElementAtOrDefault(rnd.Next(existAbilities.Count));
+        return result;
     }
 
-    private int GetDamage(Pokemon? pokemon, Ability move)
+    private int GetDamage(Pokemon? pokemon, Ability? move)
     {
         return pokemon.CurrentDamage + move.Damage;
     }

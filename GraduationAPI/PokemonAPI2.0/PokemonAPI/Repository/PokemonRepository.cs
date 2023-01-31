@@ -72,7 +72,6 @@ public class PokemonRepository : IPokemonRepository
     {
         var pokemonOwnerEntity =  await _context.Users.SingleOrDefaultAsync(o => o.Id == userId);
         var categoryEntity =  await _context.Categories.SingleOrDefaultAsync(o => o.Id == categoryId);
-        var pokemonRecordEntity =  await _context.Pokedex.SingleOrDefaultAsync(p => p.Id == pokemon.PokemonRecordId);
         var pokemonCategory = new PokemonCategory
         {
             Category = categoryEntity,
@@ -80,7 +79,6 @@ public class PokemonRepository : IPokemonRepository
         };
 
         pokemon.User = pokemonOwnerEntity;
-        pokemon.PokemonRecord = pokemonRecordEntity;
 
         await _context.AddAsync(pokemonCategory);
         await _context.AddAsync(pokemon);

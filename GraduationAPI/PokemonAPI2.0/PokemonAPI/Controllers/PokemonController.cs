@@ -20,7 +20,7 @@ public class PokemonController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet("pokemonId")]
+    [HttpGet("get-pokemon")]
     public IActionResult GetPokemon([FromQuery] Guid Id)
     {
         if (!_pokemonRepository.PokemonExists(Id))

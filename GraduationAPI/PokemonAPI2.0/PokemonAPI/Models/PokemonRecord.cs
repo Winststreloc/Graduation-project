@@ -21,5 +21,4 @@ public class PokemonRecord
     public string? PokEvol1 { get; set; }
     public string? PokEvol2 { get; set; }
     public string? PokEvol3 { get; set; }
-    public ICollection<Pokemon> Pokemons { get; set; }
 }

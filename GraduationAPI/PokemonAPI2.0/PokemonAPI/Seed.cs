@@ -21,6 +21,67 @@ public class Seed
 
     public void SeedDataContext()
     {
+        if (!_pokemonDbContext.Pokedex.Any())
+        {
+            var pokedex = new List<PokemonRecord>
+            {
+                new PokemonRecord()
+                {
+                    //PokedexId = 1,
+                    Name = "Bulbasaur",
+                    BaseDamage = 49,
+                    BaseDefense = 49,
+                    BaseHP = 45,
+                    Weight = 6.9,
+                    Height = 0.62,
+                    Description =
+                        "There is a plant seed on its back right from the day this Pokémon is born. The seed slowly grows larger.",
+                    Category = "Grass",
+                    NextEvol = 2,
+                    MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png",
+                    PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/1.gif",
+                    PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/2.gif",
+                    PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
+                },
+                new PokemonRecord()
+                {
+                    //PokedexId = 2,
+                    Name = "Ivysaur",
+                    BaseDamage = 62,
+                    BaseDefense = 63,
+                    BaseHP = 60,
+                    Weight = 13,
+                    Height = 0.92,
+                    Description =
+                        "When the bulb on its back grows large, it appears to lose the ability to stand on its hind legs.",
+                    Category = "Grass",
+                    NextEvol = 3,
+                    PrevEvol = 1,
+                    MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/002.png",
+                    PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/1.gif",
+                    PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/2.gif",
+                    PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
+                },
+                new PokemonRecord()
+                {
+                    //PokedexId = 3,
+                    Name = "Venusaur ",
+                    BaseDamage = 82,
+                    BaseDefense = 83,
+                    BaseHP = 80,
+                    Weight = 100,
+                    Height = 1.85,
+                    Description =
+                        "Its plant blooms when it is absorbing solar energy. It stays on the move to seek sunlight.",
+                    Category = "Grass",
+                    PrevEvol = 2,
+                    MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/003.png",
+                    PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/1.gif",
+                    PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/2.gif",
+                    PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
+                }
+            };
+        }
         if (!_pokemonDbContext.Pokemons.Any())
         {
             var pokemons = new List<Pokemon>()
@@ -29,24 +90,7 @@ public class Seed
                 {
                     Id = new Guid("28de668a-4d83-4e14-adc1-b83ac929a272"),
                     Name = "Бульбазавр",
-                    PokemonRecord = new PokemonRecord()
-                    {
-                        //PokedexId = 1,
-                        Name = "Bulbasaur",
-                        BaseDamage = 49,
-                        BaseDefense = 49,
-                        BaseHP = 45,
-                        Weight = 6.9,
-                        Height = 0.62,
-                        Description =
-                            "There is a plant seed on its back right from the day this Pokémon is born. The seed slowly grows larger.",
-                        Category = "Grass",
-                        NextEvol = 2,
-                        MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png",
-                        PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/1.gif",
-                        PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/2.gif",
-                        PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
-                    },
+                    PokemonRecordId = 1,
                     Gender = true,
                     Experience = 300,
                     CurrentHealth = 45,
@@ -64,25 +108,7 @@ public class Seed
                 {
                     Id = new Guid("692c9ef3-8483-44dd-ae01-08d80107551d"),
                     Name = "Ивизавр",
-                    PokemonRecord = new PokemonRecord()
-                    {
-                        //PokedexId = 2,
-                        Name = "Ivysaur",
-                        BaseDamage = 62,
-                        BaseDefense = 63,
-                        BaseHP = 60,
-                        Weight = 13,
-                        Height = 0.92,
-                        Description =
-                            "When the bulb on its back grows large, it appears to lose the ability to stand on its hind legs.",
-                        Category = "Grass",
-                        NextEvol = 3,
-                        PrevEvol = 1,
-                        MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/002.png",
-                        PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/1.gif",
-                        PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/2.gif",
-                        PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
-                    },
+                    PokemonRecordId = 2,
                     Gender = true,
                     Experience = 1806,
                     CurrentHealth = 60,
@@ -100,25 +126,8 @@ public class Seed
                 {
                     Id = new Guid("dacce0af-f1f9-4aa7-83a8-a49125589491"),
                     Name = "Венозавр",
-                    PokemonRecord = new PokemonRecord()
-                    {
-                        //PokedexId = 3,
-                        Name = "Venusaur ",
-                        BaseDamage = 82,
-                        BaseDefense = 83,
-                        BaseHP = 80,
-                        Weight = 100,
-                        Height = 1.85,
-                        Description =
-                            "Its plant blooms when it is absorbing solar energy. It stays on the move to seek sunlight.",
-                        Category = "Grass",
-                        PrevEvol = 2,
-                        MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/003.png",
-                        PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/1.gif",
-                        PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/2.gif",
-                        PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
-                    },
                     Gender = true,
+                    PokemonRecordId = 3,
                     Experience = 300,
                     CurrentHealth = 80,
                     CurrentDamage = 82,
