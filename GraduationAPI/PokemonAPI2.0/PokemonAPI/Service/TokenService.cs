@@ -1,9 +1,11 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Principal;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using PokemonAPI.Interfaces;
 using PokemonAPI.Models;
+using PokemonAPI.Models.Enums;
 using PokemonWEB.Models;
 
 namespace PokemonAPI.Service;
@@ -12,7 +14,7 @@ public class TokenService : ITokenService
 {
     private const int _accessTokenExpiresMinutes = 60;
     private const int _refreshTokenExpiresDays = 30;
-    
+
     public Token GenerateTokens(User candidateForTokens)
     {
         var claims = GetUserClaims(candidateForTokens);
@@ -33,11 +35,17 @@ public class TokenService : ITokenService
 
     public IEnumerable<Claim> GetUserClaims(User candidateForTokens)
     {
-        return new List<Claim>() {
-            new Claim("Id", candidateForTokens.Id.ToString()),
-            new Claim(ClaimTypes.Role, candidateForTokens.Roles.ToString()),
-            new Claim("NickName", candidateForTokens.NickName),
-        };
+        var claims = new List<Claim>();
+        claims.Add(new Claim("Id", candidateForTokens.Id.ToString()));
+        claims.Add(new Claim("NickName", candidateForTokens.NickName));
+        claims.Add(new Claim(ClaimTypes.Role, candidateForTokens.Roles.ToString()));
+        return claims;
+        // return new List<Claim>()
+        // {
+        //     new Claim("Id", candidateForTokens.Id.ToString()),
+        //     new Claim( "Role", candidateForTokens.Roles.ToString()),
+        //     new Claim("NickName", candidateForTokens.NickName),
+        // };
     }
 
     public string GenerateAccessToken(IEnumerable<Claim> userClaims)
@@ -47,7 +55,8 @@ public class TokenService : ITokenService
             audience: AuthOptions.AUDIENCE,
             claims: userClaims,
             expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(_accessTokenExpiresMinutes)),
-            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(),
+                SecurityAlgorithms.HmacSha256));
 
         return new JwtSecurityTokenHandler().WriteToken(jwt);
     }
@@ -60,7 +69,8 @@ public class TokenService : ITokenService
             audience: AuthOptions.AUDIENCE,
             claims: userClaims.Where(claim => claim.Type == "Id"),
             expires: DateTime.UtcNow.Add(TimeSpan.FromDays(_refreshTokenExpiresDays)),
-            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(),
+                SecurityAlgorithms.HmacSha256));
 
         return new JwtSecurityTokenHandler().WriteToken(jwt);
     }
@@ -76,7 +86,6 @@ public class TokenService : ITokenService
             ValidIssuer = AuthOptions.ISSUER,
             IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
             ValidAudience = AuthOptions.AUDIENCE,
-
         };
 
 
@@ -85,7 +94,6 @@ public class TokenService : ITokenService
         try
         {
             IPrincipal principal = tokenHandler.ValidateToken(refreshToken, validationParameters, out validatedToken);
-
         }
         catch (SecurityTokenSignatureKeyNotFoundException)
         {

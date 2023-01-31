@@ -34,14 +34,22 @@ public class PokemonController : ControllerBase
     }
 
     [HttpGet("get-pokemons")]
+    [Authorize(Policy = "Admin")]
     public IActionResult GetPokemons([FromQuery] int countPokemons)
     {
         var pokemons = _mapper.Map<List<PokemonDto>>(_pokemonRepository.GetPokemons(countPokemons));
         return Ok(pokemons);
     }
 
+    [HttpPut("healing-user-pokemons")]
+    public async Task<IActionResult> HealingUserPokemons([FromQuery] Guid userId)
+    {
+        var result = await _pokemonRepository.HealingUserPokemons(userId);
+        return result ? Ok() : NoContent();
+    }
+
     [HttpPost("create-pokemon")]
-    public IActionResult CreatePokemon([FromQuery] int categoryId, [FromQuery] Guid userId,
+    public async Task<IActionResult> CreatePokemon([FromQuery] int categoryId, [FromQuery] Guid userId,
         [FromBody] PokemonDto pokemonCreate)
     {
         if (pokemonCreate == null)
@@ -55,7 +63,10 @@ public class PokemonController : ControllerBase
         }
 
         var pokemon = _mapper.Map<Pokemon>(pokemonCreate);
-        _pokemonRepository.CreatePokemon(userId, categoryId, pokemon);
+        if (!await _pokemonRepository.CreatePokemon(userId, categoryId, pokemon))
+        {
+            ModelState.AddModelError("", "Something went wrong deleting owner");
+        }
 
         return Ok("Created");
     }
@@ -67,7 +78,7 @@ public class PokemonController : ControllerBase
         if (updatedPokemon == null)
             return BadRequest(ModelState);
 
-        if (pokedexId != updatedPokemon.PokedexId)
+        if (pokedexId != updatedPokemon.PokemonRecordId)
             return BadRequest(ModelState);
 
         if (!_pokemonRepository.PokemonExists(pokemonId))

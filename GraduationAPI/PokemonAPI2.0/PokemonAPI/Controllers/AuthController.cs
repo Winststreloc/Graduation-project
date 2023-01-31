@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokemonAPI.Interfaces;
@@ -33,7 +34,14 @@ public class AuthController : Controller
     {
         if (!ModelState.IsValid)
         {
-            _responce.ErrorMessages.Add("Invalid username or password.");
+            _responce.ErrorMessages = new List<string>{"Invalid username or password."};
+            _responce.IsSuccess = false;
+            return _responce;
+        }
+
+        if (await _userRepository.UserNameOrEmailExists(registrationModelDto.NickName, registrationModelDto.Email))
+        {
+            _responce.ErrorMessages = new List<string> {"NickName or email is exists."};
             _responce.IsSuccess = false;
             return _responce;
         }
@@ -65,9 +73,9 @@ public class AuthController : Controller
         _responce.IsSuccess = false;
         return _responce;
     }
-
-    [Authorize]
+    
     [HttpGet]
+    [Authorize]
     public async Task<ResponceAuthDto> RefreshToken(string refreshToken)
     {
         if (_token.ValidateRefreshToken(refreshToken))

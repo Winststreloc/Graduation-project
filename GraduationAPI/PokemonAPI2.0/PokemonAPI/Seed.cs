@@ -132,22 +132,8 @@ public class Seed
                     },
                 },
             };
-
-
-            var battles = new List<Battle>()
-            {
-                new Battle()
-                {
-                    BattleEnded = false,
-                    Pokemon1 = Guid.Parse("28de668a-4d83-4e14-adc1-b83ac929a272"),
-                    Pokemon2 = Guid.Parse("692c9ef3-8483-44dd-ae01-08d80107551d"),
-                    Queue = Queue.FirstPokemon
-                }
-            };
-
+            
             _pokemonDbContext.Pokemons.AddRange(pokemons);
-            _pokemonDbContext.Battles.AddRange(battles);
-            //_pokemonDbContext.SaveChangesWithIdentityInsert<PokemonRecord>();
             _pokemonDbContext.SaveChanges();
         }
         
@@ -196,7 +182,7 @@ public class Seed
             _pokemonDbContext.SaveChanges();
         }
 
-        if (!_pokemonDbContext.PokemonCategories.Any())
+        if (!_pokemonDbContext.PokemonAbilities.Any())
         {
             var pokemonAbility = new List<PokemonAbility>()
             {
@@ -242,6 +228,22 @@ public class Seed
                 },
             };
             _pokemonDbContext.PokemonAbilities.AddRange(pokemonAbility);
+            _pokemonDbContext.SaveChanges();
+        }
+
+        if (!_pokemonDbContext.Users.Any(u => u.NickName == "ashKetchum"))
+        {
+            var user = new User()
+            {
+                Email = "ashKetchum@gmail.com",
+                FirstName = "Ash",
+                LastName = "Ketchum",
+                Gender = Gender.Male,
+                NickName = "ashKetchum",
+                PasswordHash = _passwordHashing.HashingPassword("secretPassword"),
+                Roles = Roles.User
+            };
+            _pokemonDbContext.Users.AddRange(user);
             _pokemonDbContext.SaveChanges();
         }
     }

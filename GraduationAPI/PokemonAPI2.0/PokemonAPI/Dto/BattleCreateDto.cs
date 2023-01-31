@@ -2,6 +2,6 @@
 
 public class BattleCreateDto
 {
-    public Guid Pokemon1 { get; set; }
-    public Guid Pokemon2 { get; set; }
+    public Guid AttackPokemon { get; set; }
+    public Guid DefendingPokemon { get; set; }
 }

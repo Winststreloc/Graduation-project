@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokemonWEB.Dto;
 using PokemonWEB.Interfaces;
@@ -8,6 +9,7 @@ namespace PokemonWEB.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class CategoryController : ControllerBase
 {
     private readonly IMapper _mapper;

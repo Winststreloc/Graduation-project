@@ -11,13 +11,14 @@ public class BattleService : IBattleService
 {
     private readonly PokemonDbContext _context;
     private static readonly int[] _randomPokemonsIdForLocalBattle = { 1, 2, 3 };
-    private static readonly int[] _randomAbilityIdForLocalBattle = { 1, 2, 3 }; //TODO
+    private static readonly int[] _randomAbilityIdForLocalBattle = { 1, 2, 3 };
+    private const string ComputerNickName = "ashKetchum";
     public BattleService(PokemonDbContext context)
     {
         _context = context;
     }
 
-    public BattleResponceDto MovePokemon(Pokemon pokemon1, Pokemon pokemon2,  Ability ability)
+    public BattleResponceDto MovePokemon(Pokemon? pokemon1, Pokemon? pokemon2,  Ability ability)
     {
         var damage = GetDamage(pokemon1, ability);
         pokemon2.CurrentHealth = GetDefence(pokemon2) - damage;
@@ -28,19 +29,20 @@ public class BattleService : IBattleService
         {
             BattleEnded = battleEnded,
             Description = description,
-            Pokemon1 = pokemon1,
-            Pokemon2 = pokemon2
+            AtackPokemon = pokemon1,
+            DefendingPokemon = pokemon2
         };
+        
         
         return battleResponce;
     }
     
-    public async Task<Guid> GenerateRandomPokemon()
+    public async Task<Pokemon> GenerateRandomPokemon()
     {
         Random rnd = new Random();
         var randomId = _randomPokemonsIdForLocalBattle[rnd.Next(_randomPokemonsIdForLocalBattle.Length - 1)];
         var pokeRecord = await _context.Pokedex.SingleOrDefaultAsync(p =>
-            p.PokedexId == randomId);
+            p.Id == randomId);
         var abilities = _context.PokemonAbilities
             .Where(pa => pa.AbilityId == 1 && pa.AbilityId == 2)
             .ToList();
@@ -51,7 +53,7 @@ public class BattleService : IBattleService
         var pokemon = new Pokemon()
         {
             Name = pokeRecord.Name,
-            PokemonRecordId = pokeRecord.PokedexId,
+            PokemonRecordId = pokeRecord.Id,
             CurrentDamage = pokeRecord.BaseDamage,
             CurrentDefence = pokeRecord.BaseDefense,
             CurrentHealth = pokeRecord.BaseHP,
@@ -64,15 +66,24 @@ public class BattleService : IBattleService
         _context.Pokemons.Add(pokemon);
         await _context.SaveChangesAsync();
         
-        return pokemon.Id;
+        return pokemon;
     }
-    
-    private int GetDamage(Pokemon pokemon, Ability move)
+
+    public async Task<Ability> GetRandomPokemonAbility(Guid pokemonId)
+    {
+        Random rnd = new Random();
+        var existAbilities = await _context.PokemonAbilities
+            .Where(pa => pa.PokemonId == pokemonId)
+            .Select(p => p.Ability).ToArrayAsync();
+        return existAbilities.ElementAt(rnd.Next(existAbilities.Length));
+    }
+
+    private int GetDamage(Pokemon? pokemon, Ability move)
     {
         return pokemon.CurrentDamage + move.Damage;
     }
 
-    private int GetDefence(Pokemon pokemon)
+    private int GetDefence(Pokemon? pokemon)
     {
         return pokemon.CurrentHealth + (pokemon.CurrentDamage / 2);
     }

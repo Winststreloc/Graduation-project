@@ -24,41 +24,10 @@ public class PokemonDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<PokemonRecord>()
-            .HasKey(p => p.PokedexId);
-        modelBuilder.Entity<Pokemon>()
-            .HasOne(p => p.PokemonRecord)
-            .WithMany(pr => pr.Pokemons)
-            .HasForeignKey(p => p.PokemonRecordId);
-
-
-            modelBuilder.Entity<PokemonAbility>()
-            .HasKey(pa => new { pa.PokemonId, pa.AbilityId });
-        modelBuilder.Entity<PokemonAbility>()
-            .HasOne(p => p.Pokemon)
-            .WithMany(pa => pa.PokemonAbilities)
-            .HasForeignKey(a => a.PokemonId);
-        modelBuilder.Entity<PokemonAbility>()
-            .HasOne(p => p.Ability)
-            .WithMany(pc => pc.PokemonAbilities)
-            .HasForeignKey(c => c.AbilityId);
-
-        modelBuilder.Entity<PokemonCategory>()
-            .HasKey(pc => new { pc.PokemonId, pc.CategoryId });
-        modelBuilder.Entity<PokemonCategory>()
-            .HasOne(p => p.Pokemon)
-            .WithMany(pc => pc.PokemonCategories)
-            .HasForeignKey(p => p.PokemonId);
-        modelBuilder.Entity<PokemonCategory>()
-            .HasOne(p => p.Category)
-            .WithMany(pc => pc.PokemonCategories)
-            .HasForeignKey(c => c.CategoryId);
-
-        modelBuilder.Entity<User>()
-            .HasKey(p => p.Id);
-        modelBuilder.Entity<Pokemon>()
-            .HasOne(p => p.User)
-            .WithMany(c => c.Pokemons)
-            .HasForeignKey(p => p.UserId);
+        modelBuilder.ApplyConfiguration(new PokemonRecordConfiguration());
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new PokemonAbilityConfiguration());
+        modelBuilder.ApplyConfiguration(new PokemonConfiguration());
+        modelBuilder.ApplyConfiguration(new PokemonCategoryConfiguration());
     }
 }

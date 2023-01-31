@@ -59,6 +59,13 @@ public class UserRepository : IUserRepository
         return new ResponceAuthDto(){ Result = userTokens };
     }
 
+    public async Task<bool> UserNameOrEmailExists(string userName, string email)
+    {
+        var existEmail = await _context.Users.AnyAsync(u => u.Email == email);
+        var existUser = await _context.Users.AnyAsync(u => u.NickName == userName);
+        return existEmail != false || existUser != false;
+    }
+
     public async Task<bool> Save()
     {
         var saved = await _context.SaveChangesAsync();

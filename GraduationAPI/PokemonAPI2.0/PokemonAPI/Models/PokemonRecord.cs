@@ -5,7 +5,7 @@
 /// </summary>
 public class PokemonRecord
 {
-    public int PokedexId { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; }
     public int PokemonPower { get; set; }
     public int BaseDamage { get; set; }
@@ -21,7 +21,5 @@ public class PokemonRecord
     public string? PokEvol1 { get; set; }
     public string? PokEvol2 { get; set; }
     public string? PokEvol3 { get; set; }
-
-
     public ICollection<Pokemon> Pokemons { get; set; }
 }
