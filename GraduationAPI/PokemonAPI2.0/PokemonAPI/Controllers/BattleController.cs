@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PokemonAPI.Dto;
+using PokemonAPI.Models;
 using PokemonWEB.Interfaces;
 
 namespace PokemonWEB.Controllers;
@@ -25,7 +26,7 @@ public class BattleController : ControllerBase
     }
 
     [HttpPost("create-local-battle")]
-    public async Task<Guid> CreateLocalBattle([FromQuery]Guid pokemonId)
+    public async Task<Battle> CreateLocalBattle([FromQuery]Guid pokemonId)
     {
         return await _battleRepository.CreateLocalBattle(pokemonId);
     }
