@@ -34,11 +34,17 @@ public class PokemonController : ControllerBase
     }
 
     [HttpGet("get-pokemons")]
-    [Authorize(Policy = "Admin")]
+    [Authorize]
     public IActionResult GetPokemons([FromQuery] int countPokemons)
     {
         var pokemons = _mapper.Map<List<PokemonDto>>(_pokemonRepository.GetPokemons(countPokemons));
         return Ok(pokemons);
+    }
+
+    [HttpGet("get-user-pokemons")]
+    public async Task<ICollection<Pokemon>> GetUserPokemons([FromQuery] Guid userId)
+    {
+        return await _pokemonRepository.GetUserPokemons(userId);
     }
 
     [HttpPut("healing-user-pokemons")]
