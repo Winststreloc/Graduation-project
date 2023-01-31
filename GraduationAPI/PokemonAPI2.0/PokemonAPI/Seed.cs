@@ -235,7 +235,7 @@ public class Seed
         {
             var user = new User()
             {
-                Email = "ashKetchum@gmaul.com",
+                Email = "ashKetchum@gmail.com",
                 FirstName = "Ash",
                 LastName = "Ketchum",
                 Gender = Gender.Male,

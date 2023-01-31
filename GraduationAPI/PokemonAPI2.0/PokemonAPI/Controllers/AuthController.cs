@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokemonAPI.Interfaces;
@@ -72,9 +73,9 @@ public class AuthController : Controller
         _responce.IsSuccess = false;
         return _responce;
     }
-
-    [Authorize]
+    
     [HttpGet]
+    [Authorize]
     public async Task<ResponceAuthDto> RefreshToken(string refreshToken)
     {
         if (_token.ValidateRefreshToken(refreshToken))

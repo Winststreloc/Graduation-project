@@ -2,10 +2,12 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using PokemonWEB.Data;
 using PokemonAPI;
 using PokemonAPI.Middleware;
 using PokemonAPI.Hubs;
+using Swashbuckle.AspNetCore.Filters;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,7 +32,30 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 DIExtention.ConfigureServices(builder.Services);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(op =>
+{
+    op.SwaggerDoc("v1", new OpenApiInfo() {Title = "PokemonAPI", Version = "v1"});
+    op.AddSecurityDefinition("bearer",
+        new OpenApiSecurityScheme()
+        {
+            Type = SecuritySchemeType.Http,
+            BearerFormat = "jwt",
+            Scheme = "bearer"
+        });
+    op.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+        {
+            new OpenApiSecurityScheme()
+            {
+                Reference = new OpenApiReference() {Type = ReferenceType.SecurityScheme, Id = "bearer"},
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer",
+                BearerFormat = "jwt"
+            },
+            new List<string>()
+        }
+    });
+});
 builder.Services.AddDbContext<PokemonDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -53,6 +78,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
         };
     });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy => policy.RequireClaim("Admin", "Moder"));
+    options.AddPolicy("User", policy => policy.RequireClaim("User"));
+});
 
 var app = builder.Build();
 

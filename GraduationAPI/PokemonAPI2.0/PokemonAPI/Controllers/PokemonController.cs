@@ -34,6 +34,7 @@ public class PokemonController : ControllerBase
     }
 
     [HttpGet("get-pokemons")]
+    [Authorize(Policy = "Admin")]
     public IActionResult GetPokemons([FromQuery] int countPokemons)
     {
         var pokemons = _mapper.Map<List<PokemonDto>>(_pokemonRepository.GetPokemons(countPokemons));
