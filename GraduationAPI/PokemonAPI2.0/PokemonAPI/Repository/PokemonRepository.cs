@@ -50,7 +50,7 @@ public class PokemonRepository : IPokemonRepository
         return await _pokemonService.HealingPokemons(pokemons);
     }
 
-    public async Task<bool> IsComputerPokemon(Pokemon pokemon)
+    public async Task<bool> IsComputerPokemon(Pokemon? pokemon)
     {
         var computer = await _context.Users.SingleOrDefaultAsync(u => u.NickName == ComputerNickName);
         var computerPokemons = await _context.Pokemons.Where(p => p.UserId == computer.Id).ToListAsync();

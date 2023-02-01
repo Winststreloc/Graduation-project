@@ -6,6 +6,7 @@ public class BattleResponceDto
 {
     public Pokemon? AtackPokemon { get; set; }
     public Pokemon? DefendingPokemon { get; set; }
-    public string Description { get; set; }
+    public string DescriptionFirstPokemon { get; set; }
+    public string? DescriptionSecondPokemon { get; set; }
     public bool BattleEnded { get; set; }
 }

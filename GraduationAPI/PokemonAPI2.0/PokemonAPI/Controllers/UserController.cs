@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokemonAPI.Interfaces;
 using PokemonWEB.Models;
@@ -7,6 +8,7 @@ namespace PokemonWEB.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class UserController : Controller
 {
     private readonly IUserRepository _repository;

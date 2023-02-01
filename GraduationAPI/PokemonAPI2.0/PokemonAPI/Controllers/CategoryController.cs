@@ -20,6 +20,7 @@ public class CategoryController : ControllerBase
         _mapper = mapper;
         _categoryRepository = categoryRepository;
     }
+    
 
     [HttpGet("get-category")]
     public IActionResult GetCategory([FromQuery]int categoryId)
@@ -33,6 +34,7 @@ public class CategoryController : ControllerBase
         return Ok(category);
     }
     
+
     [HttpGet("get-category-name")]
     public IActionResult GetCategory([FromQuery]string name)
     {
@@ -44,6 +46,7 @@ public class CategoryController : ControllerBase
         var category = _mapper.Map<CategoryDto>(_categoryRepository.GetCategory(name));
         return Ok(category);
     }
+
 
     [HttpPost("create-category")]
     public IActionResult CreateCategory([FromBody]CategoryDto? categoryDto)

@@ -81,6 +81,8 @@ public class Seed
                     PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
                 }
             };
+            _pokemonDbContext.Pokedex.AddRange(pokedex);
+            _pokemonDbContext.SaveChanges();
         }
         if (!_pokemonDbContext.Pokemons.Any())
         {
@@ -145,7 +147,6 @@ public class Seed
             _pokemonDbContext.Pokemons.AddRange(pokemons);
             _pokemonDbContext.SaveChanges();
         }
-        
         if (!_pokemonDbContext.PokemonCategories.Any())
         {
             var pokemonCategory = new List<PokemonCategory>()
@@ -155,7 +156,8 @@ public class Seed
                     PokemonId = Guid.Parse("28de668a-4d83-4e14-adc1-b83ac929a272"),
                     Category = new Category()
                     {
-                        Name = "Grass"
+                        Name = "Grass",
+                        ImageUrl = "https://pokepower.ru/img/world/typs/grass.png",
                     }
                 },
                 new PokemonCategory()
@@ -163,7 +165,8 @@ public class Seed
                     PokemonId = Guid.Parse("28de668a-4d83-4e14-adc1-b83ac929a272"),
                     Category = new Category()
                     {
-                        Name = "Poison"
+                        Name = "Eart",
+                        ImageUrl = "https://pokepower.ru/img/world/typs/grass.png"
                     }
                 },
                 new PokemonCategory()
@@ -190,7 +193,6 @@ public class Seed
             _pokemonDbContext.PokemonCategories.AddRange(pokemonCategory);
             _pokemonDbContext.SaveChanges();
         }
-
         if (!_pokemonDbContext.PokemonAbilities.Any())
         {
             var pokemonAbility = new List<PokemonAbility>()
@@ -203,6 +205,8 @@ public class Seed
                         Name = "Frontal Attack",
                         Damage = 10,
                         Healing = 0,
+                        Description = "The Pokémon accelerates and rams the opponent with its body.",
+                        ImageUrl = "https://pokepower.ru/img/world/typs/normal.png"
                     }
                 },
                 new PokemonAbility()
@@ -223,6 +227,8 @@ public class Seed
                         Name = "Photosynthesis",
                         Damage = 0,
                         Healing = 15,
+                        Description = "The Pokémon's body is covered with a bright and brilliant white light that heals wounds ",
+                        ImageUrl = "https://pokepower.ru/img/world/typs/grass.png"
                     }
                 },
                 new PokemonAbility()
@@ -239,7 +245,6 @@ public class Seed
             _pokemonDbContext.PokemonAbilities.AddRange(pokemonAbility);
             _pokemonDbContext.SaveChanges();
         }
-
         if (!_pokemonDbContext.Users.Any(u => u.NickName == "ashKetchum"))
         {
             var user = new User()

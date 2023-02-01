@@ -30,10 +30,10 @@ namespace PokemonAPI.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Pokemon1 = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Pokemon2 = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BattleEnded = table.Column<bool>(type: "bit", nullable: false),
-                    Queue = table.Column<int>(type: "int", nullable: false)
+                    Queue = table.Column<int>(type: "int", nullable: false),
+                    AttackPokemon = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DefendingPokemon = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,7 +57,7 @@ namespace PokemonAPI.Migrations
                 name: "Pokedex",
                 columns: table => new
                 {
-                    PokedexId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PokemonPower = table.Column<int>(type: "int", nullable: false),
@@ -77,7 +77,7 @@ namespace PokemonAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pokedex", x => x.PokedexId);
+                    table.PrimaryKey("PK_Pokedex", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -105,6 +105,7 @@ namespace PokemonAPI.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PokemonRecordId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BattleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Gender = table.Column<bool>(type: "bit", nullable: true),
                     Experience = table.Column<int>(type: "int", nullable: false),
@@ -116,11 +117,10 @@ namespace PokemonAPI.Migrations
                 {
                     table.PrimaryKey("PK_Pokemons", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pokemons_Pokedex_PokemonRecordId",
-                        column: x => x.PokemonRecordId,
-                        principalTable: "Pokedex",
-                        principalColumn: "PokedexId",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Pokemons_Battles_BattleId",
+                        column: x => x.BattleId,
+                        principalTable: "Battles",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Pokemons_Users_UserId",
                         column: x => x.UserId,
@@ -188,9 +188,9 @@ namespace PokemonAPI.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pokemons_PokemonRecordId",
+                name: "IX_Pokemons_BattleId",
                 table: "Pokemons",
-                column: "PokemonRecordId");
+                column: "BattleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pokemons_UserId",
@@ -201,7 +201,7 @@ namespace PokemonAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Battles");
+                name: "Pokedex");
 
             migrationBuilder.DropTable(
                 name: "PokemonAbilities");
@@ -219,7 +219,7 @@ namespace PokemonAPI.Migrations
                 name: "Pokemons");
 
             migrationBuilder.DropTable(
-                name: "Pokedex");
+                name: "Battles");
 
             migrationBuilder.DropTable(
                 name: "Users");
