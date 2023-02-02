@@ -48,10 +48,9 @@ public class PokemonController : ControllerBase
     }
 
     [HttpPut("healing-user-pokemons")]
-    public async Task<IActionResult> HealingUserPokemons([FromQuery] Guid userId)
+    public async Task<int> HealingUserPokemons([FromQuery] Guid userId)
     {
-        var result = await _pokemonRepository.HealingUserPokemons(userId);
-        return result ? Ok() : NoContent();
+        return await _pokemonRepository.HealingUserPokemons(userId);;
     }
 
     [HttpPost("create-pokemon")]

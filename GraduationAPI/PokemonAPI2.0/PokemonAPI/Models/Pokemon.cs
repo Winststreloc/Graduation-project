@@ -16,14 +16,32 @@ public class Pokemon
     public bool? Gender { get; set; }
     public int Experience { get; set; }
     public int CurrentHealth { get; set; }
+    public int MaxHealth => GetMaxHP();
     public int CurrentDamage { get; set; }
+    public int MaxDamage => GetMaxDamage();
     public int CurrentDefence { get; set; }
+    public int MaxDefence => GetMaxDefence();
     
     
     public int Level => GetLevel();
     public List<PokemonAbility> PokemonAbilities { get; set; }
     public IEnumerable<PokemonCategory>? PokemonCategories { get; set; } //TODO
     
+    private int GetMaxHP()
+    {
+        var result = (double)PokemonRecord!.BaseHP * 2 * ((double)Level / 100.0) + 10.0 + (double)Level;
+        return (int)result;
+    }
+    private int GetMaxDamage()
+    {
+        var result = (double)PokemonRecord!.BaseDamage * 2.0 * ((double)Level / 100.0) + 10.0 + (double)Level;
+        return (int)result;
+    }
+    private int GetMaxDefence()
+    {
+        var result = (double)PokemonRecord!.BaseDefense * 2.0 * ((double)Level / 100.0) + 10.0 + (double)Level;
+        return (int)result;
+    }
     private int GetLevel()
     {
         int currentLevel = 0;

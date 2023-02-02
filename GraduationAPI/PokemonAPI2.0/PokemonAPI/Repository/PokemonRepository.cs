@@ -46,7 +46,7 @@ public class PokemonRepository : IPokemonRepository
             .ToListAsync();
     }
 
-    public async Task<bool> HealingUserPokemons(Guid userId)
+    public async Task<int> HealingUserPokemons(Guid userId)
     {
         var pokemons = await GetUserPokemons(userId);
         return await _pokemonService.HealingPokemons(pokemons);

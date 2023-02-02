@@ -14,14 +14,21 @@ public class PokemonService : IPokemonService
         _context = context;
     }
 
-    public async Task<bool> HealingPokemons(ICollection<Pokemon> pokemons)
+    public async Task<int> HealingPokemons(ICollection<Pokemon> pokemons)
     {
+        int deltaHP = 0;
         foreach (var pokemon in pokemons)
         {
-            pokemon.CurrentHealth = await MaxPokemonHP(pokemon.PokemonRecordId, pokemon.Level);
+            deltaHP += (pokemon.MaxHealth - pokemon.CurrentHealth);
+            pokemon.CurrentHealth = pokemon.MaxHealth;
+            pokemon.CurrentDamage = pokemon.MaxDamage;
+            pokemon.CurrentDefence = pokemon.MaxDefence;
+            _context.Update(pokemon);
         }
 
-        return await Task.FromResult(true);
+        
+        await _context.SaveChangesAsync();
+        return await Task.FromResult(deltaHP);
     }
     
     public async Task<int> GetDamage(int pokedexId, int level)
