@@ -9,6 +9,7 @@ namespace PokemonWEB.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class PokemonController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -28,16 +29,15 @@ public class PokemonController : ControllerBase
             return NotFound();
         }
         
-        var pokemon = _mapper.Map<PokemonDto>(_pokemonRepository.GetPokemon(Id));
+        var pokemon = _pokemonRepository.GetPokemon(Id);
 
         return Ok(pokemon);
     }
 
     [HttpGet("get-pokemons")]
-    [Authorize]
     public IActionResult GetPokemons([FromQuery] int countPokemons)
     {
-        var pokemons = _mapper.Map<List<PokemonDto>>(_pokemonRepository.GetPokemons(countPokemons));
+        var pokemons = _pokemonRepository.GetPokemons(countPokemons);
         return Ok(pokemons);
     }
 
@@ -56,7 +56,7 @@ public class PokemonController : ControllerBase
 
     [HttpPost("create-pokemon")]
     public async Task<IActionResult> CreatePokemon([FromQuery] int categoryId, [FromQuery] Guid userId,
-        [FromBody] PokemonDto pokemonCreate)
+        [FromBody]Pokemon? pokemonCreate)
     {
         if (pokemonCreate == null)
         {
@@ -79,7 +79,7 @@ public class PokemonController : ControllerBase
     
     [HttpPut("update-pokemon")]
     public IActionResult UpdatePokemon([FromQuery] Guid pokemonId, [FromQuery] int pokedexId, [FromQuery] Guid ownerId,
-        [FromQuery] int categoryId, [FromBody]PokemonDto updatedPokemon)
+        [FromQuery] int categoryId, [FromBody]Pokemon? updatedPokemon)
     {
         if (updatedPokemon == null)
             return BadRequest(ModelState);

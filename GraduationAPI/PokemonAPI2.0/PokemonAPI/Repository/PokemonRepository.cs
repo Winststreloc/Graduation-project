@@ -40,9 +40,11 @@ public class PokemonRepository : IPokemonRepository
     }
     public async Task<ICollection<Pokemon>> GetUserPokemons(Guid userId)
     {
-        return await _context.Pokemons.Where(p => p.UserId == userId).ToListAsync();
+        return await _context.Pokemons
+            .Where(p => p.UserId == userId)
+            .Include(p => p.PokemonRecord)
+            .ToListAsync();
     }
-
 
     public async Task<bool> HealingUserPokemons(Guid userId)
     {

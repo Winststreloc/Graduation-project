@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PokemonWEB.Data;
 
@@ -11,9 +12,10 @@ using PokemonWEB.Data;
 namespace PokemonAPI.Migrations
 {
     [DbContext(typeof(PokemonDbContext))]
-    partial class PokemonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230202145217_changeModel")]
+    partial class changeModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,8 +150,6 @@ namespace PokemonAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BattleId");
-
-                    b.HasIndex("PokemonRecordId");
 
                     b.HasIndex("UserId");
 
@@ -290,12 +290,6 @@ namespace PokemonAPI.Migrations
                         .WithMany()
                         .HasForeignKey("BattleId");
 
-                    b.HasOne("PokemonWEB.Models.PokemonRecord", "PokemonRecord")
-                        .WithMany()
-                        .HasForeignKey("PokemonRecordId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PokemonWEB.Models.User", "User")
                         .WithMany("Pokemons")
                         .HasForeignKey("UserId")
@@ -303,8 +297,6 @@ namespace PokemonAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Battle");
-
-                    b.Navigation("PokemonRecord");
 
                     b.Navigation("User");
                 });

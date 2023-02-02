@@ -30,7 +30,7 @@ public class CategoryController : ControllerBase
             return NotFound();
         }
         
-        var category = _mapper.Map<CategoryDto>(_categoryRepository.GetCategory(categoryId));
+        var category = _categoryRepository.GetCategory(categoryId);
         return Ok(category);
     }
     
@@ -43,28 +43,28 @@ public class CategoryController : ControllerBase
             return NotFound();
         }
         
-        var category = _mapper.Map<CategoryDto>(_categoryRepository.GetCategory(name));
+        var category = _categoryRepository.GetCategory(name);
         return Ok(category);
     }
 
 
     [HttpPost("create-category")]
-    public IActionResult CreateCategory([FromBody]CategoryDto? categoryDto)
+    public IActionResult CreateCategory([FromBody]Category? category)
     {
-        if (categoryDto == null)
+        if (category is null)
         {
             return BadRequest(ModelState);
         }
 
-        _categoryRepository.CreateCategory(_mapper.Map<Category>(categoryDto));
+        _categoryRepository.CreateCategory(_mapper.Map<Category>(category));
         
         return Ok("Category created");
     }
 
     [HttpPut("update-category")]
-    public IActionResult UpdateCategory([FromQuery]int categoryId, [FromBody]CategoryDto? categoryDto)
+    public IActionResult UpdateCategory([FromQuery]int categoryId, [FromBody]Category? category)
     {
-        if (categoryDto == null)
+        if (category is null)
         {
             return BadRequest(ModelState);
         }
@@ -74,7 +74,7 @@ public class CategoryController : ControllerBase
             return NotFound();
         }
 
-        _categoryRepository.UpdateCategory(_mapper.Map<Category>(categoryDto));
+        _categoryRepository.UpdateCategory(category);
         return NoContent();
     }
 

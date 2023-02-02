@@ -28,22 +28,22 @@ public class PokedexController : ControllerBase
             return NotFound();
         }
         
-        var pokemon = _mapper.Map<PokedexDto>(_pokedexRepository.GetPokemon(id));
+        var pokemon = _pokedexRepository.GetPokemon(id);
         return Ok(pokemon);
     }
 
     [HttpGet("get-pokemons-from-pokedex")]
     public IActionResult GetPokemons()
     {
-        var pokemons = _mapper.Map<List<PokedexDto>>(_pokedexRepository.GetPokemons());
+        var pokemons = _pokedexRepository.GetPokemons();
         return Ok(pokemons);
     }
 
-    [HttpPost("create-pokedex-pokemon")]
+    [HttpPost("create-pokedex-pokemon-record")]
     [Authorize]
-    public IActionResult CreatePokemon([FromBody] PokedexDto pokemon)
+    public IActionResult CreatePokemonRecord([FromBody] PokemonRecord pokemonRecord)
     {
-        if (pokemon == null)
+        if (pokemonRecord == null)
         {
             return BadRequest();
         }
@@ -53,22 +53,22 @@ public class PokedexController : ControllerBase
             return BadRequest(ModelState);
         }
         
-        _pokedexRepository.CreatePokemon(_mapper.Map<PokemonRecord>(pokemon));
+        _pokedexRepository.CreatePokemon(_mapper.Map<PokemonRecord>(pokemonRecord));
 
         return Ok("Created");
     }
 
     [HttpPut("update-pokedex-pokemon")]
     [Authorize]
-    public IActionResult UpdatePokemon([FromBody]PokedexDto updatedPokemon)
+    public IActionResult UpdatePokemon([FromBody]PokemonRecord? pokemonRecord)
     {
-        if (updatedPokemon == null)
+        if (pokemonRecord == null)
             return BadRequest(ModelState);
 
         if (!ModelState.IsValid)
             return BadRequest();
         
-        _pokedexRepository.UpdatePokemon(_mapper.Map<PokemonRecord>(updatedPokemon));
+        _pokedexRepository.UpdatePokemon(_mapper.Map<PokemonRecord>(pokemonRecord));
         
         return NoContent();
     }

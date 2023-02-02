@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using PokemonAPI.Models.Enums;
-using PokemonWEB.Models;
+﻿using PokemonAPI.Models.Enums;
 
 namespace PokemonAPI.Models;
 

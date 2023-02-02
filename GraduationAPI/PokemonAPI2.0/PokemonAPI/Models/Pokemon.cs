@@ -7,6 +7,7 @@ public class Pokemon
 {
     public Guid Id { get; set; }
     public int PokemonRecordId { get; set; }
+    public PokemonRecord? PokemonRecord { get; set; }
     public Guid UserId { get; set; }
     public User? User { get; set; }
     public Guid? BattleId { get; set; }
@@ -18,9 +19,10 @@ public class Pokemon
     public int CurrentDamage { get; set; }
     public int CurrentDefence { get; set; }
     
+    
     public int Level => GetLevel();
-    public ICollection<PokemonAbility> PokemonAbilities { get; set; }
-    public ICollection<PokemonCategory>? PokemonCategories { get; set; } //TODO
+    public List<PokemonAbility> PokemonAbilities { get; set; }
+    public IEnumerable<PokemonCategory>? PokemonCategories { get; set; } //TODO
     
     private int GetLevel()
     {
