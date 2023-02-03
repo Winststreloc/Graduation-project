@@ -96,7 +96,7 @@ public class BattleService : IBattleService
             CurrentDamage = pokeRecord.BaseDamage,
             CurrentDefence = pokeRecord.BaseDefense,
             CurrentHealth = pokeRecord.BaseHP,
-            Experience = 0,
+            Experience = 300,
             Gender = true,
             User = computerUser,
             UserId = computerUser.Id

@@ -108,6 +108,22 @@ public class Seed
                     PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/1.gif",
                     PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/2.gif",
                     PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
+                },
+                new PokemonRecord()
+                {
+                    Id = 004,
+                    Name = "Charmander",
+                    BaseDamage = 52,
+                    BaseDefense = 43,
+                    BaseHP = 39,
+                    Weight = 8.5,
+                    Height = 0.6,
+                    Description = "It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail.",
+                    Category = "Fire",
+                    MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png",
+                    PokEvol1 = "https://pokepower.ru/img/pokemons/main/front/normal/004.gif",
+                    PokEvol2 = "https://pokepower.ru/img/pokemons/main/front/normal/005.gif",
+                    PokEvol3 = "https://pokepower.ru/img/pokemons/main/front/normal/006.gif"
                 }
             };
             _pokemonDbContext.AddRange(pokedex);
@@ -165,7 +181,7 @@ public class Seed
                 new Ability()
                 {
                     Name = "Frontal Attack",
-                    Damage = 10,
+                    Damage = 40,
                     Healing = 0,
                     Description = "The Pokémon accelerates and rams the opponent with its body.",
                     ImageUrl = "https://pokepower.ru/img/world/typs/normal.png"
@@ -174,11 +190,25 @@ public class Seed
                 {
                     Name = "Photosynthesis",
                     Damage = 0,
-                    Healing = 15,
+                    Healing = 30,
                     Description =
                         "The Pokémon's body is covered with a bright and brilliant white light that heals wounds ",
                     ImageUrl = "https://pokepower.ru/img/world/typs/grass.png"
                 },
+                new Ability()
+                {
+                    Name = "Vine Whip",
+                    Damage = 45,
+                    Description = "Pokemon whips the opponent with long vines.",
+                    ImageUrl = "https://pokepower.ru/img/world/typs/grass.png"
+                },
+                new Ability()
+                {
+                    Name = "Ember",
+                    Damage = 40,
+                    Description = "The Pokémon fires small bursts of flame at the enemy.",
+                    ImageUrl = "https://pokepower.ru/img/world/typs/fire.png"
+                }
             };
 
             var categoryes = new List<Category>()
@@ -192,6 +222,11 @@ public class Seed
                 {
                     Name = "Eart",
                     ImageUrl = "https://pokepower.ru/img/world/typs/grass.png"
+                },
+                new Category()
+                {
+                    Name = "Fire",
+                    ImageUrl = "https://pokepower.ru/img/world/typs/fire.png"
                 }
             };
             

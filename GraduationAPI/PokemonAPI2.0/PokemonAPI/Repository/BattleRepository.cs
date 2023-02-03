@@ -66,7 +66,7 @@ public class BattleRepository : IBattleRepository
 
         if (await _pokemonRepository.IsComputerPokemon(battle.Queue == Queue.FirstPokemon ? attackPokemon : defendingPokemon))
         {
-            battleResponceDto = await MoveComputerPokemon(battle, attackPokemon, defendingPokemon, battle.Queue, battleResponceDto);
+            battleResponceDto = await MoveComputerPokemon(battle, defendingPokemon, attackPokemon, battle.Queue, battleResponceDto);
         }
 
         _context.Update(battle);
