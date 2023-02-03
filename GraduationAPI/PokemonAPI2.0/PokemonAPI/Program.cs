@@ -96,8 +96,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("Admin", policy => policy.RequireClaim("Admin", "Moder"));
-    options.AddPolicy("User", policy => policy.RequireClaim("User"));
+    options.AddPolicy("Admins", policy => policy.RequireClaim("Roles", "Admin", "Moderator"));
+    options.AddPolicy("Users", policy => policy.RequireClaim("Roles", "User"));
 });
 
 var app = builder.Build();
