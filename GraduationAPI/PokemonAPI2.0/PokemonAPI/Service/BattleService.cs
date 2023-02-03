@@ -114,7 +114,7 @@ public class BattleService : IBattleService
     {
         Random rnd = new Random();
         var abilities = _context.PokemonAbilities
-            .Where(pa => pa.AbilityId == 5 || pa.AbilityId == 6)
+            .Where(pa => pa.AbilityId == 1 || pa.AbilityId == 2)
             .Select(pa => pa.Ability)
             .ToList();
         return abilities.ElementAtOrDefault(rnd.Next(abilities.Count));
@@ -124,7 +124,7 @@ public class BattleService : IBattleService
     {
         Random rnd = new Random();
         var categories = _context.PokemonCategories
-            .Where(c => c.CategoryId == 51 || c.CategoryId == 52)
+            .Where(c => c.CategoryId == 1 || c.CategoryId == 2)
             .Select(pc => pc.Category)
             .ToList();
         return categories.ElementAtOrDefault(rnd.Next(categories.Count));

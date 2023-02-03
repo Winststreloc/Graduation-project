@@ -228,8 +228,9 @@ public class Seed
                     AbilityId = 2,
                     PokemonId = Guid.Parse("dacce0af-f1f9-4aa7-83a8-a49125589491")
                 }
-
             };
+            _pokemonDbContext.AddRange(abilities);
+            _pokemonDbContext.SaveChanges();
         }
         if (!_pokemonDbContext.PokemonCategories.Any())
         {
