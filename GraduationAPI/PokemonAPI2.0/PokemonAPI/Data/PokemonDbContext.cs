@@ -20,6 +20,7 @@ public class PokemonDbContext : DbContext
     public DbSet<PokemonRecord> Pokedex { get; set; }
     public DbSet<PokemonAbility> PokemonAbilities { get; set; }
     public DbSet<PokemonCategory> PokemonCategories { get; set; }
+    public DbSet<PokemonRecordCategory> PokemonRecordCategories { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

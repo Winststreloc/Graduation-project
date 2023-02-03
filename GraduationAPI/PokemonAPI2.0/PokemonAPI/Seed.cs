@@ -65,7 +65,6 @@ public class Seed
                     Height = 0.62,
                     Description =
                         "There is a plant seed on its back right from the day this Pokémon is born. The seed slowly grows larger.",
-                    Category = "Grass",
                     NextEvol = 2,
                     MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png",
                     PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/1.gif",
@@ -83,7 +82,6 @@ public class Seed
                     Height = 0.92,
                     Description =
                         "When the bulb on its back grows large, it appears to lose the ability to stand on its hind legs.",
-                    Category = "Grass",
                     NextEvol = 3,
                     PrevEvol = 1,
                     MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/002.png",
@@ -102,7 +100,6 @@ public class Seed
                     Height = 1.85,
                     Description =
                         "Its plant blooms when it is absorbing solar energy. It stays on the move to seek sunlight.",
-                    Category = "Grass",
                     PrevEvol = 2,
                     MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/003.png",
                     PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/1.gif",
@@ -119,7 +116,6 @@ public class Seed
                     Weight = 8.5,
                     Height = 0.6,
                     Description = "It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail.",
-                    Category = "Fire",
                     MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png",
                     PokEvol1 = "https://pokepower.ru/img/pokemons/main/front/normal/004.gif",
                     PokEvol2 = "https://pokepower.ru/img/pokemons/main/front/normal/005.gif",
@@ -208,7 +204,22 @@ public class Seed
                     Damage = 40,
                     Description = "The Pokémon fires small bursts of flame at the enemy.",
                     ImageUrl = "https://pokepower.ru/img/world/typs/fire.png"
-                }
+                },
+                new Ability()
+                {
+                    Name = "Fire Fang",
+                    Damage = 65,
+                    Description = "The Pokémon bites the opponent hard with its sharp fangs wrapped in hot flames.",
+                    ImageUrl = "https://pokepower.ru/img/world/typs/fire.png"
+                },
+                new Ability()
+                {
+                    Name = "Fire Spin",
+                    Damage = 35,
+                    Description = "The Pokémon unleashes a raging blast of fire at the enemy, which encases the target in a searing fire trap.",
+                    ImageUrl = "https://pokepower.ru/img/world/typs/fire.png"
+                },
+                
             };
 
             var categoryes = new List<Category>()
@@ -227,7 +238,33 @@ public class Seed
                 {
                     Name = "Fire",
                     ImageUrl = "https://pokepower.ru/img/world/typs/fire.png"
+                },
+                new Category()
+                {
+                    Name = "Poison",
+                    ImageUrl = "https://pokepower.ru/img/world/typs/poison.png"
+                },
+                new Category()
+                {
+                    Name = "Dragon",
+                    ImageUrl = "https://pokepower.ru/img/world/typs/fly.png"
+                },
+                new Category()
+                {
+                    Name = "Water",
+                    ImageUrl = "https://pokepower.ru/img/world/typs/water.png"
+                },
+                new Category()
+                {
+                    Name = "Bug",
+                    ImageUrl = "https://pokepower.ru/img/world/typs/bug.png"
+                },
+                new Category()
+                {
+                    Name = "Electric",
+                    ImageUrl = "https://pokepower.ru/img/world/typs/electric.png"
                 }
+
             };
             
             _pokemonDbContext.AddRange(abilities);
@@ -298,6 +335,20 @@ public class Seed
                 }
             };
             _pokemonDbContext.AddRange(categories);
+            _pokemonDbContext.SaveChanges();
+        }
+
+        if (!_pokemonDbContext.PokemonRecordCategories.Any())
+        {
+            var pokRecordCategory = new List<PokemonRecordCategory>()
+            {
+                new PokemonRecordCategory()
+                {
+
+                }
+            };
+            
+            _pokemonDbContext.AddRange(pokRecordCategory);
             _pokemonDbContext.SaveChanges();
         }
         
