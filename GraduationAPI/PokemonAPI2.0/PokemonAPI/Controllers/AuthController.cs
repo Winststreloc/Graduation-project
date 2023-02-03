@@ -74,7 +74,7 @@ public class AuthController : Controller
         return _responce;
     }
     
-    [HttpGet]
+    [HttpGet("refresh-token")]
     [Authorize]
     public async Task<ResponceAuthDto> RefreshToken(string refreshToken)
     {

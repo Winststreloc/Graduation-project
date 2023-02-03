@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PokemonAPI.Dto;
 using PokemonWEB.Dto;
 using PokemonWEB.Interfaces;
 using PokemonWEB.Models;
@@ -22,16 +23,9 @@ public class PokemonController : ControllerBase
     }
 
     [HttpGet("get-pokemon")]
-    public IActionResult GetPokemon([FromQuery] Guid Id)
+    public async Task<Pokemon> GetPokemon([FromQuery]Guid id)
     {
-        if (!_pokemonRepository.PokemonExists(Id))
-        {
-            return NotFound();
-        }
-        
-        var pokemon = _pokemonRepository.GetPokemon(Id);
-
-        return Ok(pokemon);
+        return await _pokemonRepository.GetPokemon(id);
     }
 
     [HttpGet("get-pokemons")]
@@ -42,9 +36,15 @@ public class PokemonController : ControllerBase
     }
 
     [HttpGet("get-user-pokemons")]
-    public async Task<ICollection<Pokemon>> GetUserPokemons([FromQuery] Guid userId)
+    public async Task<ICollection<Pokemon>> GetUserPokemons([FromQuery]Guid userId)
     {
         return await _pokemonRepository.GetUserPokemons(userId);
+    }
+
+    [HttpGet("get-pokemon-ability-and-category")]
+    public async Task<PokemonAbilityCategoryDto> GetPokemonAbilityCategory([FromQuery]Guid id)
+    {
+        return await _pokemonRepository.GetPokemonAbilityCategory(id);
     }
 
     [HttpPut("healing-user-pokemons")]
@@ -100,14 +100,14 @@ public class PokemonController : ControllerBase
     }
 
     [HttpDelete("delete-pokemon")]
-    public IActionResult DeletePokemon([FromQuery]Guid pokemonId)
+    public async Task<IActionResult> DeletePokemon([FromQuery]Guid pokemonId)
     {
         if (!_pokemonRepository.PokemonExists(pokemonId))
         {
             return NotFound();
         }
         
-        var pokemonToDelete = _pokemonRepository.GetPokemon(pokemonId);
+        var pokemonToDelete = await _pokemonRepository.GetPokemon(pokemonId);
 
         if (!ModelState.IsValid)
             return BadRequest(ModelState);

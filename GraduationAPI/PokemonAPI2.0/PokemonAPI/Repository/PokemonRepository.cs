@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PokemonAPI.Dto;
 using PokemonAPI.Helpers;
 using PokemonAPI.Interfaces;
 using PokemonWEB.Data;
@@ -13,16 +14,17 @@ public class PokemonRepository : IPokemonRepository
     private readonly PokemonDbContext _context;
     private readonly IPokemonService _pokemonService;
     private const string ComputerNickName = "ashKetchum";
-    
+    private const int maxCountAbilities = 4;
+
     public PokemonRepository(PokemonDbContext context, IPokemonService pokemonService)
     {
         _context = context;
         _pokemonService = pokemonService;
     }
 
-    public Pokemon GetPokemon(Guid Id)
+    public async Task<Pokemon> GetPokemon(Guid Id)
     {
-        return _context.Pokemons.FirstOrDefault(p => p.Id == Id);
+        return await _context.Pokemons.FirstOrDefaultAsync(p => p.Id == Id);
     }
 
     public ICollection<Pokemon> GetPokemons(int count)
@@ -30,21 +32,52 @@ public class PokemonRepository : IPokemonRepository
         return _context.Pokemons.Take(count).OrderBy(p => p.PokemonRecordId).ToList();
     }
 
-    public IQueryable<Ability> GetPokemonAbilities(Guid pokemonId)
+    public ICollection<Ability> GetPokemonAbilities(Guid pokemonId)
     {
         var pokemon = _context.Pokemons.SingleOrDefault(p => p.Id == pokemonId);
         var abilities = _context.PokemonAbilities
             .Where(pa => pa.PokemonId == pokemon.Id)
-            .Select(p => p.Ability).Take(4);
+            .Select(p => p.Ability)
+            .Take(maxCountAbilities)
+            .ToList();
         return abilities;
     }
+
     public async Task<ICollection<Pokemon>> GetUserPokemons(Guid userId)
     {
         return await _context.Pokemons
             .Where(p => p.UserId == userId)
-            .Include(p => p.PokemonRecord)
             .ToListAsync();
     }
+
+    public async Task<PokemonAbilityCategoryDto> GetPokemonAbilityCategory(Guid pokemonId)
+    {
+        var pokemon = await _context.Pokemons.SingleOrDefaultAsync(p => p.Id == pokemonId);
+
+        if (pokemon == null)
+        {
+            return null;
+        }
+
+        var abilities = await _context.PokemonAbilities
+            .Where(pa => pa.PokemonId == pokemonId)
+            .Select(p => p.Ability)
+            .Take(maxCountAbilities)
+            .ToListAsync();
+
+        var categories = await _context.PokemonCategories
+            .Where(pa => pa.PokemonId == pokemonId)
+            .Select(p => p.Category)
+            .ToListAsync();
+
+        return new PokemonAbilityCategoryDto()
+        {
+            Abilities = abilities,
+            Categories = categories,
+            Pokemon = pokemon
+        };
+    }
+
 
     public async Task<int> HealingUserPokemons(Guid userId)
     {
@@ -72,8 +105,8 @@ public class PokemonRepository : IPokemonRepository
 
     public async Task<bool> CreatePokemon(Guid userId, int categoryId, Pokemon pokemon)
     {
-        var pokemonOwnerEntity =  await _context.Users.SingleOrDefaultAsync(o => o.Id == userId);
-        var categoryEntity =  await _context.Categories.SingleOrDefaultAsync(o => o.Id == categoryId);
+        var pokemonOwnerEntity = await _context.Users.SingleOrDefaultAsync(o => o.Id == userId);
+        var categoryEntity = await _context.Categories.SingleOrDefaultAsync(o => o.Id == categoryId);
         var pokemonCategory = new PokemonCategory
         {
             Category = categoryEntity,
@@ -92,7 +125,8 @@ public class PokemonRepository : IPokemonRepository
     public bool UpdatePokemon(Guid ownerId, int categoryId, Pokemon pokemon)
     {
         var category = _context.Categories.FirstOrDefault(o => o.Id == categoryId);
-        pokemon.User = _context.Users.FirstOrDefault(o => o.Id == ownerId);;
+        pokemon.User = _context.Users.FirstOrDefault(o => o.Id == ownerId);
+        ;
 
         var pokemonCategory = new PokemonCategory
         {
@@ -111,5 +145,4 @@ public class PokemonRepository : IPokemonRepository
         var saved = _context.SaveChanges();
         return saved > 0;
     }
-    
 }

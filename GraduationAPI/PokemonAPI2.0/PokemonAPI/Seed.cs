@@ -1,4 +1,5 @@
-﻿using PokemonAPI.Helpers;
+﻿using Microsoft.EntityFrameworkCore;
+using PokemonAPI.Helpers;
 using PokemonAPI.Interfaces;
 using PokemonAPI.Models;
 using PokemonAPI.Models.Enums;
@@ -32,6 +33,7 @@ public class Seed
             };
             var bulbasaur = new PokemonRecord()
             {
+                Id = 1,
                 Name = "Bulbasaur",
                 BaseDamage = 49,
                 BaseDefense = 49,
@@ -49,6 +51,7 @@ public class Seed
             };
             var ivysaur = new PokemonRecord()
             {
+                Id = 2,
                 Name = "Ivysaur",
                 BaseDamage = 62,
                 BaseDefense = 63,
@@ -67,6 +70,7 @@ public class Seed
             };
             var venusaur = new PokemonRecord()
             {
+                Id = 3,
                 Name = "Venusaur",
                 BaseDamage = 82,
                 BaseDefense = 83,
@@ -94,6 +98,7 @@ public class Seed
             };
             var frontalAttack = new Ability()
             {
+                
                 Name = "Frontal Attack",
                 Damage = 10,
                 Healing = 0,
@@ -102,6 +107,7 @@ public class Seed
             };
             var photosintes = new Ability()
             {
+                
                 Name = "Photosynthesis",
                 Damage = 0,
                 Healing = 15,
@@ -123,7 +129,7 @@ public class Seed
                     CurrentDamage = 49,
                     CurrentDefence = 49,
                     User = userMartin,
-                    PokemonRecord = bulbasaur,
+                    //PokemonRecord = bulbasaur,
                     PokemonCategories = new List<PokemonCategory>()
                     {
                         new PokemonCategory()
@@ -152,7 +158,7 @@ public class Seed
                     CurrentDamage = 62,
                     CurrentDefence = 63,
                     User = userMartin,
-                    PokemonRecord = ivysaur,
+                    //PokemonRecord = ivysaur,
                     PokemonCategories = new List<PokemonCategory>()
                     {
                         new PokemonCategory()
@@ -191,7 +197,7 @@ public class Seed
                     CurrentDamage = 82,
                     CurrentDefence = 83,
                     User = userMartin,
-                    PokemonRecord = venusaur,
+                    //PokemonRecord = venusaur,
                     PokemonCategories = new List<PokemonCategory>()
                     {
                         new PokemonCategory()
@@ -220,8 +226,9 @@ public class Seed
                     }
                 },
             };
-
+            
             _pokemonDbContext.Pokemons.AddRange(pokemons);
+            _pokemonDbContext.SaveChangesWithIdentityInsert<PokemonRecord>();
             _pokemonDbContext.SaveChanges();
         }
 

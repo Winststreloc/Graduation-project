@@ -1,13 +1,26 @@
 ﻿using PokemonAPI;
 using PokemonAPI.Models;
+using PokemonWEB.Data;
 
 namespace PokemonWEB.Models;
 
 public class Pokemon
 {
+    private readonly PokemonDbContext _context;
+
+    public Pokemon(PokemonDbContext context)
+    {
+        _context = context;
+    }
+
+    public Pokemon()
+    {
+        
+    }
+
     public Guid Id { get; set; }
     public int PokemonRecordId { get; set; }
-    public PokemonRecord? PokemonRecord { get; set; }
+    public PokemonRecord PokemonRecord => _context.Pokedex.SingleOrDefault(p => p.Id == PokemonRecordId);
     public Guid UserId { get; set; }
     public User? User { get; set; }
     public Guid? BattleId { get; set; }
@@ -16,52 +29,30 @@ public class Pokemon
     public bool? Gender { get; set; }
     public int Experience { get; set; }
     public int CurrentHealth { get; set; }
-    public int MaxHealth => GetMaxHP();
+    public int MaxHealth => CalculateMaxStat(PokemonRecord.BaseDefense);
     public int CurrentDamage { get; set; }
-    public int MaxDamage => GetMaxDamage();
+    public int MaxDamage => CalculateMaxStat(PokemonRecord.BaseDefense);
     public int CurrentDefence { get; set; }
-    public int MaxDefence => GetMaxDefence();
-    
-    
-    public int Level => GetLevel();
+    public int MaxDefence => CalculateMaxStat(PokemonRecord.BaseDefense);
+    public int Level => CalculateLevel();
     public List<PokemonAbility> PokemonAbilities { get; set; }
     public IEnumerable<PokemonCategory>? PokemonCategories { get; set; } //TODO
     
-    private int GetMaxHP()
+    private int CalculateMaxStat(int baseStat)
     {
-        var result = (double)PokemonRecord!.BaseHP * 2 * ((double)Level / 100.0) + 10.0 + (double)Level;
+        var result = (double)baseStat * 2 * ((double)Level / 100.0) + 10.0 + (double)Level;
         return (int)result;
     }
-    private int GetMaxDamage()
-    {
-        var result = (double)PokemonRecord!.BaseDamage * 2.0 * ((double)Level / 100.0) + 10.0 + (double)Level;
-        return (int)result;
-    }
-    private int GetMaxDefence()
-    {
-        var result = (double)PokemonRecord!.BaseDefense * 2.0 * ((double)Level / 100.0) + 10.0 + (double)Level;
-        return (int)result;
-    }
-    private int GetLevel()
+    private int CalculateLevel()
     {
         int currentLevel = 0;
         int remainingXP = Experience;
 
         while (true)
         {
-            int requiredForNextLevel;
-            if (currentLevel <= 16)
-            {
-                requiredForNextLevel = (2 * currentLevel) + 7;
-            }
-            else if (currentLevel >= 17 && currentLevel <= 31)
-            {
-                requiredForNextLevel = (5 * currentLevel) - 38;
-            }
-            else
-            {
-                requiredForNextLevel = (9 * currentLevel) - 158;
-            }
+            int requiredForNextLevel = currentLevel <= 16 ? (2 * currentLevel) + 7 
+                : currentLevel >= 17 && currentLevel <= 31 ? (5 * currentLevel) - 38 
+                : (9 * currentLevel) - 158;
 
             if (remainingXP >= requiredForNextLevel)
             {

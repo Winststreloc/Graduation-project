@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokemonAPI.Dto;
 using PokemonAPI.Models;
@@ -8,6 +9,7 @@ namespace PokemonWEB.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class BattleController : ControllerBase
 {
     private readonly IBattleRepository _battleRepository;

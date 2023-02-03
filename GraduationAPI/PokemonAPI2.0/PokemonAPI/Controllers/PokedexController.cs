@@ -9,6 +9,7 @@ namespace PokemonWEB.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class PokedexController : ControllerBase
 {
     private readonly IMapper _mapper;
