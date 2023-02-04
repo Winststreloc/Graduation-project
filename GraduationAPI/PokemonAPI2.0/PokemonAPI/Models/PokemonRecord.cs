@@ -19,7 +19,6 @@ public class PokemonRecord
     public string MainUrl { get; set; }
     
     public ICollection<PokemonRecordCategory> PokemonRecordCategories { get; set; }
-    public ICollection<string> CategoryUrl { get; set; }
     public int? NextEvol { get; set; }
     public int? PrevEvol { get; set; }
     public string? PokEvol1 { get; set; }

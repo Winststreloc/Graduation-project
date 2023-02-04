@@ -30,5 +30,6 @@ public class PokemonDbContext : DbContext
         modelBuilder.ApplyConfiguration(new PokemonAbilityConfiguration());
         modelBuilder.ApplyConfiguration(new PokemonConfiguration());
         modelBuilder.ApplyConfiguration(new PokemonCategoryConfiguration());
+        modelBuilder.ApplyConfiguration(new PokRecCategoryConfiguration());
     }
 }
