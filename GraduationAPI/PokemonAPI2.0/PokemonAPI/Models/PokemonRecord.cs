@@ -1,4 +1,6 @@
-﻿namespace PokemonWEB.Models;
+﻿using PokemonAPI.Models;
+
+namespace PokemonWEB.Models;
 
 /// <summary>
 /// Pokedex is library with Pokemons, which will be associated using the PokemonID with the Pokemons class for pokemons property
@@ -15,7 +17,8 @@ public class PokemonRecord
     public double Height { get; set; }
     public string? Description { get; set; }
     public string MainUrl { get; set; }
-    public string? Category { get; set; }
+    
+    public ICollection<PokemonRecordCategory> PokemonRecordCategories { get; set; }
     public int? NextEvol { get; set; }
     public int? PrevEvol { get; set; }
     public string? PokEvol1 { get; set; }

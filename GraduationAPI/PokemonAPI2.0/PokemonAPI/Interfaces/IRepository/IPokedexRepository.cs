@@ -5,7 +5,7 @@ namespace PokemonWEB.Interfaces;
 
 public interface IPokedexRepository
 {
-    PokemonRecord GetPokemon(int id);
+    Task<PokemonRecord> GetPokemonRecord(int id);
     ICollection<PokemonRecord> GetPokemons();
     bool CreatePokemon(PokemonRecord pokemon);
     bool UpdatePokemon(PokemonRecord pokemon);

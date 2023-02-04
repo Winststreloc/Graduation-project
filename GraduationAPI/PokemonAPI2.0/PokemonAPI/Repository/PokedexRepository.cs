@@ -17,10 +17,15 @@ public class PokedexRepository : IPokedexRepository
         _context = context;
     }
 
-    public PokemonRecord GetPokemon(int id)
+    public async Task<PokemonRecord> GetPokemonRecord(int id)
     {
-        return _context.Pokedex.FirstOrDefault(p => p.Id == id);
+        return await _context.Pokedex
+            .Where(p => p.Id == id)
+            .Include(p => p.PokemonRecordCategories)
+            .ThenInclude(prc => prc.Category)
+            .SingleOrDefaultAsync();
     }
+
 
     public ICollection<PokemonRecord> GetPokemons()
     {

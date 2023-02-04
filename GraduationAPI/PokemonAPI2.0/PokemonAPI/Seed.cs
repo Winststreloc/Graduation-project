@@ -56,55 +56,57 @@ public class Seed
             {
                 new PokemonRecord()
                 {
-                    Id = 1,
+                    Id = 001,
                     Name = "Bulbasaur",
                     BaseDamage = 49,
                     BaseDefense = 49,
                     BaseHP = 45,
                     Weight = 6.9,
                     Height = 0.62,
+                    PokemonPower = 35,
                     Description =
                         "There is a plant seed on its back right from the day this Pokémon is born. The seed slowly grows larger.",
-                    Category = "Grass",
                     NextEvol = 2,
-                    MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png",
+                    MainUrl = "https://pokepower.ru/img/pokemons/main/front/normal/001.gif",
                     PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/1.gif",
                     PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/2.gif",
                     PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
                 },
                 new PokemonRecord()
                 {
-                    Id = 2,
+                    Id = 002,
                     Name = "Ivysaur",
                     BaseDamage = 62,
                     BaseDefense = 63,
                     BaseHP = 60,
                     Weight = 13,
                     Height = 0.92,
+                    PokemonPower = 35,
                     Description =
-                        "When the bulb on its back grows large, it appears to lose the ability to stand on its hind legs.",
-                    Category = "Grass",
+                        "A huge seed grows on the back of the Ivysaur. To support the weight, the legs and torso become thicker and stronger. " +
+                        "Frequent lying in the sun portends the imminent flowering of the seed into a huge flower.",
                     NextEvol = 3,
                     PrevEvol = 1,
-                    MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/002.png",
+                    MainUrl = "https://custom-doodle.com/wp-content/uploads/doodle/pokemon-ivysaur/pokemon-ivysaur.gif",
                     PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/1.gif",
                     PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/2.gif",
                     PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
                 },
                 new PokemonRecord()
                 {
-                    Id = 3,
+                    Id = 003,
                     Name = "Venusaur",
                     BaseDamage = 82,
                     BaseDefense = 83,
                     BaseHP = 80,
                     Weight = 100,
                     Height = 1.85,
+                    PokemonPower = 35,
                     Description =
-                        "Its plant blooms when it is absorbing solar energy. It stays on the move to seek sunlight.",
-                    Category = "Grass",
+                        "On the back of Venosaurus is a huge flower. By absorbing nutrients and sunlight, " +
+                        "it acquires bright colors. The fragrance of a flower can calm people down.",
                     PrevEvol = 2,
-                    MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/003.png",
+                    MainUrl = "https://i.pinimg.com/originals/bd/f7/63/bdf763ebd5d86133a3a53497f006dab4.gif",
                     PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/1.gif",
                     PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/2.gif",
                     PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
@@ -118,13 +120,111 @@ public class Seed
                     BaseHP = 39,
                     Weight = 8.5,
                     Height = 0.6,
+                    PokemonPower = 35,
+                    Description = "The fire at the tip of the tail shows Charmander's emotions. The swaying flame speaks of the contentment of the Pokémon. " +
+                                  "A fiercely burning flame signifies rage.",
+                    MainUrl = "https://i.pinimg.com/originals/4d/77/85/4d778571dcd0ed1735470b718031fbbf.gif",
+                    PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/4.gif",
+                    PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/5.gif",
+                    PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/6.gif"
+                },
+                new PokemonRecord()
+                {
+                    Id = 005,
+                    Name = "Charmeleon",
+                    BaseDamage = 64,
+                    BaseDefense = 58,
+                    BaseHP = 58,
+                    Weight = 19,
+                    Height = 1.1,
+                    PokemonPower = 35,
+                    Description = "Charmeleon mercilessly exterminates enemies using sharp claws. Strong opponents cause special aggression. " +
+                                  "When enraged, the flame at the tip of the Pokémon's tail glows a bluish-white hue.",
+                    MainUrl = "https://custom-doodle.com/wp-content/uploads/doodle/pokemon-charmeleon/pokemon-charmeleon.gif",
+                    PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/4.gif",
+                    PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/5.gif",
+                    PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/6.gif"
+                },
+                new PokemonRecord()
+                {
+                    Id = 006,
+                    Name = "Charizard",
+                    BaseDamage = 84,
+                    BaseDefense = 78,
+                    BaseHP = 78,
+                    Weight = 90.5,
+                    Height = 1.7,
+                    PokemonPower = 35,
                     Description = "It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail.",
-                    Category = "Fire",
-                    MainUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png",
-                    PokEvol1 = "https://pokepower.ru/img/pokemons/main/front/normal/004.gif",
-                    PokEvol2 = "https://pokepower.ru/img/pokemons/main/front/normal/005.gif",
-                    PokEvol3 = "https://pokepower.ru/img/pokemons/main/front/normal/006.gif"
-                }
+                    MainUrl = "https://custom-doodle.com/wp-content/uploads/doodle/pokemon-charizard/pokemon-charizard-doodle.gif",
+                    PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/4.gif",
+                    PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/5.gif",
+                    PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/6.gif"
+                },
+                new PokemonRecord()
+                {
+                    Id = 007,
+                    Name = "Squirtle",
+                    BaseDamage = 48,
+                    BaseDefense = 65,
+                    BaseHP = 44,
+                    Weight = 9.0,
+                    Height = 0.5,
+                    PokemonPower = 35,
+                    Description = "It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail.",
+                    MainUrl = "https://custom-doodle.com/wp-content/uploads/doodle/pokemon-squirtle-swag/pokemon-squirtle-swag-doodle.gif",
+                    PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/7.gif",
+                    PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/8.gif",
+                    PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/8.gif"
+                },
+                new PokemonRecord()
+                {
+                    Id = 008,
+                    Name = "Wartortle",
+                    BaseDamage = 63,
+                    BaseDefense = 80,
+                    BaseHP = 59,
+                    Weight = 22.5,
+                    Height = 1.0,
+                    PokemonPower = 35,
+                    Description = "It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail.",
+                    MainUrl = "https://custom-doodle.com/wp-content/uploads/doodle/pokemon-wartortle/pokemon-wartortle-doodle.gif",
+                    PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/7.gif",
+                    PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/8.gif",
+                    PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/9.gif"
+                },
+                new PokemonRecord()
+                {
+                    Id = 009,
+                    Name = "Blastoise",
+                    BaseDamage = 83,
+                    BaseDefense = 100,
+                    BaseHP = 79,
+                    Weight = 90.5,
+                    Height = 1.7,
+                    PokemonPower = 35,
+                    Description = "It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail.",
+                    MainUrl = "https://i.pinimg.com/originals/17/91/82/179182cf1b483d60ccc6106db3bb252c.gif",
+                    PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/7.gif",
+                    PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/8.gif",
+                    PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/9.gif"
+                },
+                new PokemonRecord()
+                {
+                    Id = 010,
+                    Name = "Caterpie",
+                    BaseDamage = 30,
+                    BaseDefense = 35,
+                    BaseHP = 45,
+                    Weight = 2.9,
+                    Height = 0.3,
+                    PokemonPower = 35,
+                    Description = "It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail.",
+                    MainUrl = "https://openseauserdata.com/files/526c636e4528d02975b8b7e88fdd0462.gif",
+                    PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/10.gif",
+                    PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/11.gif",
+                    PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/12.gif"
+                },
             };
             _pokemonDbContext.AddRange(pokedex);
             _pokemonDbContext.SaveChangesWithIdentityInsert<PokemonRecord>();
@@ -169,6 +269,19 @@ public class Seed
                     CurrentDefence = 83,
                     UserId = Guid.Parse("4ec95354-9532-4c2c-9bff-2dc8fff4fb73")
                 },
+                new Pokemon()
+                {
+                    Id = new Guid("775cf4e1878d4b23b731ec26090eb9f5"),
+                    Name = "Charmander",
+                    Gender = true,
+                    PokemonRecordId = 4,
+                    Experience = 300,
+                    CurrentHealth = 39,
+                    CurrentDamage = 52,
+                    CurrentDefence = 43,
+                    UserId = Guid.Parse("4ec95354-9532-4c2c-9bff-2dc8fff4fb73")
+                },
+                
             };
             
             _pokemonDbContext.Pokemons.AddRange(pokemons);
@@ -208,7 +321,22 @@ public class Seed
                     Damage = 40,
                     Description = "The Pokémon fires small bursts of flame at the enemy.",
                     ImageUrl = "https://pokepower.ru/img/world/typs/fire.png"
-                }
+                },
+                new Ability()
+                {
+                    Name = "Fire Fang",
+                    Damage = 65,
+                    Description = "The Pokémon bites the opponent hard with its sharp fangs wrapped in hot flames.",
+                    ImageUrl = "https://pokepower.ru/img/world/typs/fire.png"
+                },
+                new Ability()
+                {
+                    Name = "Fire Spin",
+                    Damage = 35,
+                    Description = "The Pokémon unleashes a raging blast of fire at the enemy, which encases the target in a searing fire trap.",
+                    ImageUrl = "https://pokepower.ru/img/world/typs/fire.png"
+                },
+                
             };
 
             var categoryes = new List<Category>()
@@ -220,14 +348,40 @@ public class Seed
                 },
                 new Category()
                 {
-                    Name = "Eart",
+                    Name = "Earth",
                     ImageUrl = "https://pokepower.ru/img/world/typs/grass.png"
                 },
                 new Category()
                 {
                     Name = "Fire",
                     ImageUrl = "https://pokepower.ru/img/world/typs/fire.png"
+                },
+                new Category()
+                {
+                    Name = "Poison",
+                    ImageUrl = "https://pokepower.ru/img/world/typs/poison.png"
+                },
+                new Category()
+                {
+                    Name = "Dragon",
+                    ImageUrl = "https://pokepower.ru/img/world/typs/fly.png"
+                },
+                new Category()
+                {
+                    Name = "Water",
+                    ImageUrl = "https://pokepower.ru/img/world/typs/water.png"
+                },
+                new Category()
+                {
+                    Name = "Bug",
+                    ImageUrl = "https://pokepower.ru/img/world/typs/bug.png"
+                },
+                new Category()
+                {
+                    Name = "Electric",
+                    ImageUrl = "https://pokepower.ru/img/world/typs/electric.png"
                 }
+
             };
             
             _pokemonDbContext.AddRange(abilities);
@@ -262,6 +416,16 @@ public class Seed
                 {
                     AbilityId = 2,
                     PokemonId = Guid.Parse("dacce0af-f1f9-4aa7-83a8-a49125589491")
+                },
+                new PokemonAbility()
+                {
+                    AbilityId = 3,
+                    PokemonId = Guid.Parse("775cf4e1878d4b23b731ec26090eb9f5")
+                },
+                new PokemonAbility()
+                {
+                AbilityId = 4,
+                PokemonId = Guid.Parse("775cf4e1878d4b23b731ec26090eb9f5")
                 }
             };
             _pokemonDbContext.AddRange(abilities);
@@ -278,13 +442,18 @@ public class Seed
                 },
                 new PokemonCategory()
                 {
+                    PokemonId = Guid.Parse("28de668a-4d83-4e14-adc1-b83ac929a272"),
+                    CategoryId = 4
+                },
+                new PokemonCategory()
+                {
                     PokemonId = Guid.Parse("692c9ef3-8483-44dd-ae01-08d80107551d"),
                     CategoryId = 1
                 },
                 new PokemonCategory()
                 {
                     PokemonId = Guid.Parse("692c9ef3-8483-44dd-ae01-08d80107551d"),
-                    CategoryId = 2
+                    CategoryId = 4
                 },
                 new PokemonCategory()
                 {
@@ -294,10 +463,89 @@ public class Seed
                 new PokemonCategory()
                 {
                     PokemonId = Guid.Parse("dacce0af-f1f9-4aa7-83a8-a49125589491"),
-                    CategoryId = 2
+                    CategoryId = 4
+                },
+                new PokemonCategory()
+                {
+                    CategoryId = 4,
+                    PokemonId = Guid.Parse("775cf4e1878d4b23b731ec26090eb9f5")
                 }
             };
             _pokemonDbContext.AddRange(categories);
+            _pokemonDbContext.SaveChanges();
+        }
+        if (!_pokemonDbContext.PokemonRecordCategories.Any())
+        {
+            var pokRecordCategory = new List<PokemonRecordCategory>()
+            {
+                new PokemonRecordCategory()
+                {
+                    PokemonRecordId = 1,
+                    CategoryId = 1
+                },
+                new PokemonRecordCategory()
+                {
+                    PokemonRecordId = 1,
+                    CategoryId = 4
+                },
+                new PokemonRecordCategory()
+                {
+                    PokemonRecordId = 2,
+                    CategoryId = 1
+                },
+                new PokemonRecordCategory()
+                {
+                    PokemonRecordId = 2,
+                    CategoryId = 4
+                },
+                new PokemonRecordCategory()
+                {
+                    PokemonRecordId = 3,
+                    CategoryId = 1
+                },
+                new PokemonRecordCategory()
+                {
+                    PokemonRecordId = 3,
+                    CategoryId = 4
+                },
+                new PokemonRecordCategory()
+                {
+                    PokemonRecordId = 4,
+                    CategoryId = 3
+                },
+                new PokemonRecordCategory()
+                {
+                    PokemonRecordId = 5,
+                    CategoryId = 3
+                },
+                new PokemonRecordCategory()
+                {
+                    PokemonRecordId = 6,
+                    CategoryId = 5
+                },
+                new PokemonRecordCategory()
+                {
+                    PokemonRecordId = 7,
+                    CategoryId = 6
+                },
+                new PokemonRecordCategory()
+                {
+                    PokemonRecordId = 8,
+                    CategoryId = 6
+                },
+                new PokemonRecordCategory()
+                {
+                    PokemonRecordId = 9,
+                    CategoryId = 6
+                },
+                new PokemonRecordCategory()
+                {
+                    PokemonRecordId = 10,
+                    CategoryId = 7
+                }
+                
+            };
+            _pokemonDbContext.AddRange(pokRecordCategory);
             _pokemonDbContext.SaveChanges();
         }
         
