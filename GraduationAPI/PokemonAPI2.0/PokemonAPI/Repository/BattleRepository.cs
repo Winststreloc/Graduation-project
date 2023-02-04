@@ -61,32 +61,19 @@ public class BattleRepository : IBattleRepository
         var battle = await GetValidBattle(battleMoveDto.BattleId);
         var move = await GetValidMove(battleMoveDto.AbilityId);
         var (attackPokemon, defendingPokemon) = await GetBattlingPokemons(battle);
-        var battleResponceDto = _battleService.MovePokemon(attackPokemon, defendingPokemon, move);
+        var battleResponceDto = await _battleService.MovePokemon(attackPokemon, defendingPokemon, move);
         await ChangeQueue(battle);
-
-        if (await _pokemonRepository.IsComputerPokemon(battle.Queue == Queue.FirstPokemon ? attackPokemon : defendingPokemon))
-        {
-            battleResponceDto = await MoveComputerPokemon(battle, defendingPokemon, attackPokemon, battle.Queue, battleResponceDto);
-        }
-
+        battle.BattleEnded = battleResponceDto.BattleEnded;
         _context.Update(battle);
-        _context.Update(defendingPokemon);
+        if (battle.BattleEnded)
+        {
+            _context.Remove(defendingPokemon);
+        }
+        
         await _context.SaveChangesAsync();
 
         return battleResponceDto;
     }
-
-    private async Task<BattleResponceDto> MoveComputerPokemon(Battle battle, Pokemon attackPokemon, Pokemon defendingPokemon,
-        Queue currentQueue, BattleResponceDto battleResponceDto)
-    {
-        var computerPokemonId = battle.Queue == Queue.FirstPokemon ? attackPokemon.Id : defendingPokemon.Id;
-        battleResponceDto = _battleService.MovePokemon(currentQueue == Queue.FirstPokemon ? attackPokemon : defendingPokemon,
-            currentQueue == Queue.FirstPokemon ? defendingPokemon : attackPokemon,
-            await _battleService.GetRandomPokemonAbility(computerPokemonId));
-        battle.Queue = currentQueue == Queue.FirstPokemon ? Queue.SecondPokemon : Queue.FirstPokemon;
-        return battleResponceDto;
-    }
-    
     private async Task<Battle> GetValidBattle(Guid battleId)
     {
         var battle = await _context.Battles.SingleOrDefaultAsync(b => b.Id == battleId);

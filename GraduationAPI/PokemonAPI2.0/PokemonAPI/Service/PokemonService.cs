@@ -30,7 +30,18 @@ public class PokemonService : IPokemonService
         await _context.SaveChangesAsync();
         return await Task.FromResult(deltaHP);
     }
-    
+
+    public async Task<int> HealingPokemon(Pokemon pokemon)
+    {
+        var deltaHP = pokemon.MaxHealth - pokemon.CurrentHealth;
+        pokemon.CurrentHealth = pokemon.MaxHealth;
+        pokemon.CurrentHealth = pokemon.MaxHealth;
+        pokemon.CurrentDamage = pokemon.MaxDamage;
+        pokemon.CurrentDefence = pokemon.MaxDefence;
+        _context.Update(pokemon);
+        return await Task.FromResult(deltaHP);
+    }
+
     public async Task<int> GetDamage(int pokedexId, int level)
     {
         var pokedex = await _context.Pokedex.FirstOrDefaultAsync(p => p.Id == pokedexId);

@@ -85,6 +85,13 @@ public class PokemonRepository : IPokemonRepository
         return await _pokemonService.HealingPokemons(pokemons);
     }
 
+    public async Task<int> HealingPokemon(Guid pokemonId)
+    {
+        var pokemon = await _context.Pokemons.SingleOrDefaultAsync(p => p.Id == pokemonId);
+        return await _pokemonService.HealingPokemon(pokemon);
+    }
+
+
     public async Task<bool> IsComputerPokemon(Pokemon? pokemon)
     {
         var computer = await _context.Users.SingleOrDefaultAsync(u => u.NickName == ComputerNickName);
@@ -144,5 +151,12 @@ public class PokemonRepository : IPokemonRepository
     {
         var saved = _context.SaveChanges();
         return saved > 0;
+    }
+
+    public async Task<int> UpdateAllPokemons()
+    {
+        var pokemons = await _context.Pokemons.Select(p => p).ToListAsync();
+        var result = await _pokemonService.HealingPokemons(pokemons);
+        return result;
     }
 }
