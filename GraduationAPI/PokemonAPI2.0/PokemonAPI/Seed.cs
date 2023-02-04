@@ -87,7 +87,7 @@ public class Seed
                         "Frequent lying in the sun portends the imminent flowering of the seed into a huge flower.",
                     NextEvol = 3,
                     PrevEvol = 1,
-                    MainUrl = "https://pokepower.ru/img/pokemons/main/front/normal/002.gif",
+                    MainUrl = "https://custom-doodle.com/wp-content/uploads/doodle/pokemon-ivysaur/pokemon-ivysaur.gif",
                     PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/1.gif",
                     PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/2.gif",
                     PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
@@ -106,7 +106,7 @@ public class Seed
                         "On the back of Venosaurus is a huge flower. By absorbing nutrients and sunlight, " +
                         "it acquires bright colors. The fragrance of a flower can calm people down.",
                     PrevEvol = 2,
-                    MainUrl = "https://pokepower.ru/img/pokemons/main/front/normal/003.gif",
+                    MainUrl = "https://i.pinimg.com/originals/bd/f7/63/bdf763ebd5d86133a3a53497f006dab4.gif",
                     PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/1.gif",
                     PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/2.gif",
                     PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
@@ -123,7 +123,7 @@ public class Seed
                     PokemonPower = 35,
                     Description = "The fire at the tip of the tail shows Charmander's emotions. The swaying flame speaks of the contentment of the Pokémon. " +
                                   "A fiercely burning flame signifies rage.",
-                    MainUrl = "https://pokepower.ru/img/pokemons/main/front/normal/004.gif",
+                    MainUrl = "https://i.pinimg.com/originals/4d/77/85/4d778571dcd0ed1735470b718031fbbf.gif",
                     PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/4.gif",
                     PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/5.gif",
                     PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/6.gif"
@@ -140,7 +140,7 @@ public class Seed
                     PokemonPower = 35,
                     Description = "Charmeleon mercilessly exterminates enemies using sharp claws. Strong opponents cause special aggression. " +
                                   "When enraged, the flame at the tip of the Pokémon's tail glows a bluish-white hue.",
-                    MainUrl = "https://pokepower.ru/img/pokemons/main/front/normal/005.gif",
+                    MainUrl = "https://custom-doodle.com/wp-content/uploads/doodle/pokemon-charmeleon/pokemon-charmeleon.gif",
                     PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/4.gif",
                     PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/5.gif",
                     PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/6.gif"
@@ -148,7 +148,7 @@ public class Seed
                 new PokemonRecord()
                 {
                     Id = 006,
-                    Name = "Charmeleon",
+                    Name = "Charizard",
                     BaseDamage = 84,
                     BaseDefense = 78,
                     BaseHP = 78,
@@ -156,7 +156,7 @@ public class Seed
                     Height = 1.7,
                     PokemonPower = 35,
                     Description = "It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail.",
-                    MainUrl = "https://pokepower.ru/img/pokemons/main/front/normal/006.gif",
+                    MainUrl = "https://custom-doodle.com/wp-content/uploads/doodle/pokemon-charizard/pokemon-charizard-doodle.gif",
                     PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/4.gif",
                     PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/5.gif",
                     PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/6.gif"
@@ -172,7 +172,7 @@ public class Seed
                     Height = 0.5,
                     PokemonPower = 35,
                     Description = "It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail.",
-                    MainUrl = "https://pokepower.ru/img/pokemons/main/front/normal/007.gif",
+                    MainUrl = "https://custom-doodle.com/wp-content/uploads/doodle/pokemon-squirtle-swag/pokemon-squirtle-swag-doodle.gif",
                     PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/7.gif",
                     PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/8.gif",
                     PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/8.gif"
@@ -188,7 +188,7 @@ public class Seed
                     Height = 1.0,
                     PokemonPower = 35,
                     Description = "It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail.",
-                    MainUrl = "https://pokepower.ru/img/pokemons/main/front/normal/008.gif",
+                    MainUrl = "https://custom-doodle.com/wp-content/uploads/doodle/pokemon-wartortle/pokemon-wartortle-doodle.gif",
                     PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/7.gif",
                     PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/8.gif",
                     PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/9.gif"
@@ -204,7 +204,7 @@ public class Seed
                     Height = 1.7,
                     PokemonPower = 35,
                     Description = "It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail.",
-                    MainUrl = "https://pokepower.ru/img/pokemons/main/front/normal/009.gif",
+                    MainUrl = "https://i.pinimg.com/originals/17/91/82/179182cf1b483d60ccc6106db3bb252c.gif",
                     PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/7.gif",
                     PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/8.gif",
                     PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/9.gif"
@@ -220,7 +220,7 @@ public class Seed
                     Height = 0.3,
                     PokemonPower = 35,
                     Description = "It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail.",
-                    MainUrl = "https://pokepower.ru/img/pokemons/main/front/normal/010.gif",
+                    MainUrl = "https://openseauserdata.com/files/526c636e4528d02975b8b7e88fdd0462.gif",
                     PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/10.gif",
                     PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/11.gif",
                     PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/12.gif"
@@ -271,7 +271,7 @@ public class Seed
                 },
                 new Pokemon()
                 {
-                    Id = new Guid("dacce0af-f1f9-4aa7-83a8-a49125589491"),
+                    Id = new Guid("775cf4e1878d4b23b731ec26090eb9f5"),
                     Name = "Charmander",
                     Gender = true,
                     PokemonRecordId = 4,
@@ -416,6 +416,16 @@ public class Seed
                 {
                     AbilityId = 2,
                     PokemonId = Guid.Parse("dacce0af-f1f9-4aa7-83a8-a49125589491")
+                },
+                new PokemonAbility()
+                {
+                    AbilityId = 3,
+                    PokemonId = Guid.Parse("775cf4e1878d4b23b731ec26090eb9f5")
+                },
+                new PokemonAbility()
+                {
+                AbilityId = 4,
+                PokemonId = Guid.Parse("775cf4e1878d4b23b731ec26090eb9f5")
                 }
             };
             _pokemonDbContext.AddRange(abilities);
@@ -454,6 +464,11 @@ public class Seed
                 {
                     PokemonId = Guid.Parse("dacce0af-f1f9-4aa7-83a8-a49125589491"),
                     CategoryId = 4
+                },
+                new PokemonCategory()
+                {
+                    CategoryId = 4,
+                    PokemonId = Guid.Parse("775cf4e1878d4b23b731ec26090eb9f5")
                 }
             };
             _pokemonDbContext.AddRange(categories);

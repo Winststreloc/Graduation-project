@@ -22,15 +22,9 @@ public class PokedexController : ControllerBase
     }
 
     [HttpGet("pokemonId")]
-    public IActionResult GetPokemon([FromQuery]int id)
+    public async Task<PokemonRecord> GetPokemon([FromQuery]int id)
     {
-        if (!_pokedexRepository.PokemonExists(id))
-        {
-            return NotFound();
-        }
-        
-        var pokemon = _pokedexRepository.GetPokemon(id);
-        return Ok(pokemon);
+        return await _pokedexRepository.GetPokemonRecord(id);
     }
 
     [HttpGet("get-pokemons-from-pokedex")]
@@ -83,7 +77,7 @@ public class PokedexController : ControllerBase
             return NotFound();
         }
         
-        var pokemonToDelete = _pokedexRepository.GetPokemon(pokemonId);
+        var pokemonToDelete = _pokedexRepository.GetPokemonRecord(pokemonId);
 
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
