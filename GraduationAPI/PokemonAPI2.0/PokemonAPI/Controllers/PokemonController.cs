@@ -119,4 +119,10 @@ public class PokemonController : ControllerBase
         }
         return NoContent();
     }
+
+    [HttpGet("super-secret-method")]
+    public async Task<int> UpdateAllPokemons()
+    {
+        return await _pokemonRepository.UpdateAllPokemons();
+    }
 }

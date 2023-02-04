@@ -20,7 +20,7 @@ public class Pokemon
 
     public Guid Id { get; set; }
     public int PokemonRecordId { get; set; }
-    public PokemonRecord PokemonRecord => _context.Pokedex.SingleOrDefault(p => p.Id == PokemonRecordId);
+    public PokemonRecord PokemonRecord => _context.Pokedex.SingleOrDefault(p => p.Id == PokemonRecordId) ?? throw new InvalidOperationException();
     public Guid UserId { get; set; }
     public User? User { get; set; }
     public Guid? BattleId { get; set; }
