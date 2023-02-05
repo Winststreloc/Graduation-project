@@ -1,18 +1,22 @@
-﻿using PokemonWEB.Models;
+﻿using PokemonAPI.Dto;
+using PokemonWEB.Models;
 using PokemonWEB.Models.Action;
 
 namespace PokemonWEB.Interfaces;
 
 public interface IPokemonRepository
 {
-    Pokemon GetPokemon(Guid Id);
+    Task<Pokemon> GetPokemon(Guid Id);
     ICollection<Pokemon> GetPokemons(int countPokemon);
-    IQueryable<Ability> GetPokemonAbilities(Guid pokemonId);
+    ICollection<Ability> GetPokemonAbilities(Guid pokemonId);
     Task<ICollection<Pokemon>> GetUserPokemons(Guid userId);
-    Task<bool> HealingUserPokemons(Guid userId);
-    Task<bool> IsComputerPokemon(Pokemon pokemon);
+    Task<PokemonAbilityCategoryDto> GetPokemonAbilityCategory(Guid pokemonId);
+    Task<int> HealingUserPokemons(Guid userId);
+    Task<int> HealingPokemon(Guid pokemonId);
+    Task<bool> IsComputerPokemon(Pokemon? pokemon);
     Task<bool> CreatePokemon(Guid userId, int categoryId, Pokemon pokemon);
     bool UpdatePokemon(Guid ownerId, int categoryId, Pokemon pokemon);
     bool DeletePokemon(Pokemon pokemon);
     bool PokemonExists(Guid Id);
+    Task<int> UpdateAllPokemons();
 }

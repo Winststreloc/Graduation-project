@@ -28,8 +28,14 @@ namespace PokemonAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("AttackPokemon")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("BattleEnded")
                         .HasColumnType("bit");
+
+                    b.Property<Guid>("DefendingPokemon")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Queue")
                         .HasColumnType("int");
@@ -37,6 +43,21 @@ namespace PokemonAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Battles");
+                });
+
+            modelBuilder.Entity("PokemonAPI.Models.PokemonRecordCategory", b =>
+                {
+                    b.Property<int>("PokemonRecordId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PokemonRecordId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("PokemonRecordCategories");
                 });
 
             modelBuilder.Entity("PokemonAPI.PokemonAbility", b =>
@@ -68,8 +89,12 @@ namespace PokemonAPI.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Healing")
+                    b.Property<int?>("Healing")
                         .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -87,6 +112,10 @@ namespace PokemonAPI.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -135,8 +164,6 @@ namespace PokemonAPI.Migrations
 
                     b.HasIndex("BattleId");
 
-                    b.HasIndex("PokemonRecordId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Pokemons");
@@ -173,9 +200,6 @@ namespace PokemonAPI.Migrations
 
                     b.Property<int>("BaseHP")
                         .HasColumnType("int");
-
-                    b.Property<string>("Category")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -251,6 +275,25 @@ namespace PokemonAPI.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("PokemonAPI.Models.PokemonRecordCategory", b =>
+                {
+                    b.HasOne("PokemonWEB.Models.Category", "Category")
+                        .WithMany("PokemonRecordCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PokemonWEB.Models.PokemonRecord", "PokemonRecord")
+                        .WithMany("PokemonRecordCategories")
+                        .HasForeignKey("PokemonRecordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("PokemonRecord");
+                });
+
             modelBuilder.Entity("PokemonAPI.PokemonAbility", b =>
                 {
                     b.HasOne("PokemonWEB.Models.Action.Ability", "Ability")
@@ -273,14 +316,8 @@ namespace PokemonAPI.Migrations
             modelBuilder.Entity("PokemonWEB.Models.Pokemon", b =>
                 {
                     b.HasOne("PokemonAPI.Models.Battle", "Battle")
-                        .WithMany("Pokemons")
+                        .WithMany()
                         .HasForeignKey("BattleId");
-
-                    b.HasOne("PokemonWEB.Models.PokemonRecord", "PokemonRecord")
-                        .WithMany("Pokemons")
-                        .HasForeignKey("PokemonRecordId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.HasOne("PokemonWEB.Models.User", "User")
                         .WithMany("Pokemons")
@@ -289,8 +326,6 @@ namespace PokemonAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Battle");
-
-                    b.Navigation("PokemonRecord");
 
                     b.Navigation("User");
                 });
@@ -314,11 +349,6 @@ namespace PokemonAPI.Migrations
                     b.Navigation("Pokemon");
                 });
 
-            modelBuilder.Entity("PokemonAPI.Models.Battle", b =>
-                {
-                    b.Navigation("Pokemons");
-                });
-
             modelBuilder.Entity("PokemonWEB.Models.Action.Ability", b =>
                 {
                     b.Navigation("PokemonAbilities");
@@ -327,6 +357,8 @@ namespace PokemonAPI.Migrations
             modelBuilder.Entity("PokemonWEB.Models.Category", b =>
                 {
                     b.Navigation("PokemonCategories");
+
+                    b.Navigation("PokemonRecordCategories");
                 });
 
             modelBuilder.Entity("PokemonWEB.Models.Pokemon", b =>
@@ -338,7 +370,7 @@ namespace PokemonAPI.Migrations
 
             modelBuilder.Entity("PokemonWEB.Models.PokemonRecord", b =>
                 {
-                    b.Navigation("Pokemons");
+                    b.Navigation("PokemonRecordCategories");
                 });
 
             modelBuilder.Entity("PokemonWEB.Models.User", b =>

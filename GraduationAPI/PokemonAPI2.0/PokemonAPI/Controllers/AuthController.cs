@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokemonAPI.Interfaces;
 using PokemonAPI.Models;
-using PokemonWEB.Dto;
 
 namespace PokemonWEB.Controllers;
 
@@ -13,16 +12,14 @@ namespace PokemonWEB.Controllers;
 public class AuthController : Controller
 {
     private ResponceAuthDto? _responce;
-    private readonly IMapper _mapper;
     private readonly IUserRepository _userRepository;
     private readonly ITokenService _token;
     private readonly IPasswordHashingService _passwordHashing;
 
 
-    public AuthController(IMapper mapper, IUserRepository userRepository, IPasswordHashingService passwordHashing,
+    public AuthController(IUserRepository userRepository, IPasswordHashingService passwordHashing,
         ITokenService token)
     {
-        _mapper = mapper;
         _userRepository = userRepository;
         _passwordHashing = passwordHashing;
         _token = token;
@@ -74,7 +71,7 @@ public class AuthController : Controller
         return _responce;
     }
     
-    [HttpGet]
+    [HttpGet("refresh-token")]
     [Authorize]
     public async Task<ResponceAuthDto> RefreshToken(string refreshToken)
     {
@@ -91,5 +88,11 @@ public class AuthController : Controller
         _responce.IsSuccess = false;
         _responce.ErrorMessages = new List<string> { "Invalid refresh_token" };
         return _responce;
+    }
+    
+    [HttpPost("logout")]
+    public IActionResult Logout() //TODO
+    {
+        return Ok();
     }
 }

@@ -7,7 +7,6 @@ using PokemonWEB.Data;
 using PokemonAPI;
 using PokemonAPI.Middleware;
 using PokemonAPI.Hubs;
-using Swashbuckle.AspNetCore.Filters;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -77,12 +76,28 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
             ValidateIssuerSigningKey = true,
         };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+ 
+                // если запрос направлен хабу
+                var path = context.HttpContext.Request.Path;
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/chat"))
+                {
+                    // получаем токен из строки запроса
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            }
+        };
     });
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("Admin", policy => policy.RequireClaim("Admin", "Moder"));
-    options.AddPolicy("User", policy => policy.RequireClaim("User"));
+    options.AddPolicy("Admins", policy => policy.RequireClaim("Roles", "Admin", "Moderator"));
+    options.AddPolicy("Users", policy => policy.RequireClaim("Roles", "User"));
 });
 
 var app = builder.Build();
@@ -116,10 +131,12 @@ app.UseCors("ClientPermission");
 
 app.UseMiddleware<ExceptionMiddleware>();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 app.MapHub<ChatHub>("/chat");
+app.MapHub<BattleHub>("/battleHub");
 
 Task.Run(() =>
 {

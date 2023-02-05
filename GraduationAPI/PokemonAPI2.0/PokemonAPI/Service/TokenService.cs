@@ -35,18 +35,19 @@ public class TokenService : ITokenService
 
     public IEnumerable<Claim> GetUserClaims(User candidateForTokens)
     {
-        var claims = new List<Claim>();
-        claims.Add(new Claim("Id", candidateForTokens.Id.ToString()));
-        claims.Add(new Claim("NickName", candidateForTokens.NickName));
-        claims.Add(new Claim(ClaimTypes.Role, candidateForTokens.Roles.ToString()));
+        var claims = new List<Claim>
+        {
+            new Claim("Id", candidateForTokens.Id.ToString()),
+            new Claim("NickName", candidateForTokens.NickName),
+            new Claim(ClaimTypes.Role, candidateForTokens.Roles.ToString())
+        };
+        if (candidateForTokens.Roles == Roles.Admin || candidateForTokens.Roles == Roles.Moderator)
+        {
+            claims.Add(new Claim(ClaimTypes.Role, Roles.User.ToString()));
+        }
         return claims;
-        // return new List<Claim>()
-        // {
-        //     new Claim("Id", candidateForTokens.Id.ToString()),
-        //     new Claim( "Role", candidateForTokens.Roles.ToString()),
-        //     new Claim("NickName", candidateForTokens.NickName),
-        // };
     }
+
 
     public string GenerateAccessToken(IEnumerable<Claim> userClaims)
     {

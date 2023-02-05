@@ -6,6 +6,7 @@ using PokemonAPI.Models.Enums;
 using PokemonWEB.Data;
 using PokemonWEB.Interfaces;
 using PokemonWEB.Models;
+using PokemonWEB.Models.Action;
 
 namespace PokemonWEB.Repository;
 
@@ -25,15 +26,10 @@ public class BattleRepository : IBattleRepository
 
     public async Task<Guid> CreateBattle(BattleCreateDto battleCreateDto)
     {
-        var attackPokemon = await _context.Pokemons.SingleOrDefaultAsync(p => p.Id ==battleCreateDto.AttackPokemon);
-        var defendingPokemon = await _context.Pokemons.SingleOrDefaultAsync(p => p.Id ==battleCreateDto.DefendingPokemon);
         var battle = new Battle()
         {
-            Pokemons = new List<Pokemon>()
-            {
-                attackPokemon!,
-                defendingPokemon!
-            },
+            AttackPokemon = battleCreateDto.AttackPokemon,
+            DefendingPokemon = battleCreateDto.DefendingPokemon,
             BattleEnded = false,
             Queue = Queue.FirstPokemon
         };
@@ -43,16 +39,13 @@ public class BattleRepository : IBattleRepository
         return battle.Id;
     }
 
-    public async Task<Battle> CreateLocalBattle(Guid pokemonId)
+    public async Task<Battle> CreateLocalBattle(Guid attackPokemonId)
     {
-        var attackPokemon = await _context.Pokemons.SingleOrDefaultAsync(p => p.Id == pokemonId);
+        var defendingPokemonId = await _battleService.GenerateRandomPokemon();
         var battle = new Battle()
         {
-            Pokemons = new List<Pokemon>()
-            {
-                attackPokemon!,
-                await _battleService.GenerateRandomPokemon()
-            },
+            AttackPokemon = attackPokemonId,
+            DefendingPokemon = defendingPokemonId,
             BattleEnded = false,
             Queue = Queue.FirstPokemon
         };
@@ -65,60 +58,54 @@ public class BattleRepository : IBattleRepository
 
     public async Task<BattleResponceDto> MovePokemon(BattleMoveDto battleMoveDto)
     {
-        var battle = await _context.Battles.SingleOrDefaultAsync(b => b.Id == battleMoveDto.BattleId);
-        var battleQueue = battle.Queue;
+        var battle = await GetValidBattle(battleMoveDto.BattleId);
+        var move = await GetValidMove(battleMoveDto.AbilityId);
+        var (attackPokemon, defendingPokemon) = await GetBattlingPokemons(battle);
+        var battleResponceDto = await _battleService.MovePokemon(attackPokemon, defendingPokemon, move);
+        battle.Queue = ChangeQueue(battle);
+        battle.BattleEnded = battleResponceDto.BattleEnded;
+        _context.Update(battle);
+        if (battle.BattleEnded)
+        {
+            _context.Remove(defendingPokemon);
+            _context.Remove(battle);
+        }
+        
+        await _context.SaveChangesAsync();
+
+        return battleResponceDto;
+    }
+    private async Task<Battle> GetValidBattle(Guid battleId)
+    {
+        var battle = await _context.Battles.SingleOrDefaultAsync(b => b.Id == battleId);
         if (battle == null || battle.BattleEnded)
         {
             throw new Exception("Battle not found or ended");
         }
-        
-        var move = await _context.Abilities.SingleOrDefaultAsync(a => a.Id == battleMoveDto.AbilityId);
+        return battle;
+    }
+    
+    private async Task<Ability> GetValidMove(int abilityId)
+    {
+        var move = await _context.Abilities.SingleOrDefaultAsync(a => a.Id == abilityId);
         if (move == null)
         {
             throw new ArgumentNullException("Move not found", nameof(move));
         }
-
-        var attackPokemon = battle.Queue == Queue.FirstPokemon ? battle.Pokemons.First() : battle.Pokemons.Last();
-        var defendingPokemon = battle.Queue == Queue.FirstPokemon ? battle.Pokemons.Last() : battle.Pokemons.First();
-
-        var battleResponceDto = _battleService.MovePokemon(attackPokemon, defendingPokemon, move);
-        
-        await ChangeQueue(battle);
-        
-
-        if (await _pokemonRepository.IsComputerPokemon(battle.Queue == Queue.FirstPokemon ? battle.Pokemons.First() : battle.Pokemons.Last()))
-        {
-            battleResponceDto = await MoveComputerPokemon(battle, attackPokemon, defendingPokemon, battleQueue, battleResponceDto);
-        }
-
-        _context.Update(battle);
-        _context.Update(defendingPokemon);
-
-        // if (battle.BattleEnded) //TODO 
-        // {
-        //     _context.Remove(battle);
-        // }
-
-        await _context.SaveChangesAsync();
-
-        return battleResponceDto;
+        return move;
     }
-
-    private async Task<BattleResponceDto> MoveComputerPokemon(Battle battle, Pokemon pokemon1, Pokemon pokemon2,
-        Queue currentQueue, BattleResponceDto battleResponceDto)
+    private async Task<(Pokemon, Pokemon)> GetBattlingPokemons(Battle battle)
     {
-        var computerPokemonId = battle.Queue == Queue.FirstPokemon ? pokemon1.Id : pokemon2.Id;
-        battleResponceDto = _battleService.MovePokemon(currentQueue == Queue.FirstPokemon ? pokemon1 : pokemon2,
-            currentQueue == Queue.FirstPokemon ? pokemon2 : pokemon1,
-            await _battleService.GetRandomPokemonAbility(computerPokemonId));
-        battle.Queue = currentQueue == Queue.FirstPokemon ? Queue.SecondPokemon : Queue.FirstPokemon;
-        return battleResponceDto;
+        var attackPokemonId = battle.Queue == Queue.FirstPokemon ? battle.AttackPokemon : battle.DefendingPokemon;
+        var attackPokemon = await _context.Pokemons.SingleOrDefaultAsync(p => p.Id == attackPokemonId);
+        var defendingPokemonId = battle.Queue == Queue.FirstPokemon ? battle.DefendingPokemon : battle.AttackPokemon;
+        var defendingPokemon = await _context.Pokemons.SingleOrDefaultAsync(p => p.Id == defendingPokemonId);
+        return (attackPokemon, defendingPokemon);
     }
+    
 
-    private async Task ChangeQueue(Battle battle)
+    private Queue ChangeQueue(Battle battle)
     {
-        battle.Queue = battle.Queue == Queue.FirstPokemon ? Queue.SecondPokemon : Queue.FirstPokemon;
-        _context.Battles.Update(battle);
-        await _context.SaveChangesAsync();
+        return battle.Queue == Queue.FirstPokemon ? Queue.SecondPokemon : Queue.FirstPokemon;
     }
 }

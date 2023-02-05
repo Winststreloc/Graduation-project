@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PokemonAPI.Dto;
 using PokemonWEB.Dto;
 using PokemonWEB.Interfaces;
 using PokemonWEB.Models;
@@ -9,6 +10,7 @@ namespace PokemonWEB.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class PokemonController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -20,43 +22,40 @@ public class PokemonController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet("pokemonId")]
-    public IActionResult GetPokemon([FromQuery] Guid Id)
+    [HttpGet("get-pokemon")]
+    public async Task<Pokemon> GetPokemon([FromQuery]Guid id)
     {
-        if (!_pokemonRepository.PokemonExists(Id))
-        {
-            return NotFound();
-        }
-        
-        var pokemon = _mapper.Map<PokemonDto>(_pokemonRepository.GetPokemon(Id));
-
-        return Ok(pokemon);
+        return await _pokemonRepository.GetPokemon(id);
     }
 
     [HttpGet("get-pokemons")]
-    [Authorize]
     public IActionResult GetPokemons([FromQuery] int countPokemons)
     {
-        var pokemons = _mapper.Map<List<PokemonDto>>(_pokemonRepository.GetPokemons(countPokemons));
+        var pokemons = _pokemonRepository.GetPokemons(countPokemons);
         return Ok(pokemons);
     }
 
     [HttpGet("get-user-pokemons")]
-    public async Task<ICollection<Pokemon>> GetUserPokemons([FromQuery] Guid userId)
+    public async Task<ICollection<Pokemon>> GetUserPokemons([FromQuery]Guid userId)
     {
         return await _pokemonRepository.GetUserPokemons(userId);
     }
 
-    [HttpPut("healing-user-pokemons")]
-    public async Task<IActionResult> HealingUserPokemons([FromQuery] Guid userId)
+    [HttpGet("get-pokemon-ability-and-category")]
+    public async Task<PokemonAbilityCategoryDto> GetPokemonAbilityCategory([FromQuery]Guid id)
     {
-        var result = await _pokemonRepository.HealingUserPokemons(userId);
-        return result ? Ok() : NoContent();
+        return await _pokemonRepository.GetPokemonAbilityCategory(id);
+    }
+
+    [HttpPut("healing-user-pokemons")]
+    public async Task<int> HealingUserPokemons([FromQuery] Guid userId)
+    {
+        return await _pokemonRepository.HealingUserPokemons(userId);;
     }
 
     [HttpPost("create-pokemon")]
     public async Task<IActionResult> CreatePokemon([FromQuery] int categoryId, [FromQuery] Guid userId,
-        [FromBody] PokemonDto pokemonCreate)
+        [FromBody]Pokemon? pokemonCreate)
     {
         if (pokemonCreate == null)
         {
@@ -79,7 +78,7 @@ public class PokemonController : ControllerBase
     
     [HttpPut("update-pokemon")]
     public IActionResult UpdatePokemon([FromQuery] Guid pokemonId, [FromQuery] int pokedexId, [FromQuery] Guid ownerId,
-        [FromQuery] int categoryId, [FromBody]PokemonDto updatedPokemon)
+        [FromQuery] int categoryId, [FromBody]Pokemon? updatedPokemon)
     {
         if (updatedPokemon == null)
             return BadRequest(ModelState);
@@ -101,14 +100,14 @@ public class PokemonController : ControllerBase
     }
 
     [HttpDelete("delete-pokemon")]
-    public IActionResult DeletePokemon([FromQuery]Guid pokemonId)
+    public async Task<IActionResult> DeletePokemon([FromQuery]Guid pokemonId)
     {
         if (!_pokemonRepository.PokemonExists(pokemonId))
         {
             return NotFound();
         }
         
-        var pokemonToDelete = _pokemonRepository.GetPokemon(pokemonId);
+        var pokemonToDelete = await _pokemonRepository.GetPokemon(pokemonId);
 
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -119,5 +118,11 @@ public class PokemonController : ControllerBase
             ModelState.AddModelError("", "Something went wrong deleting owner");
         }
         return NoContent();
+    }
+
+    [HttpGet("super-secret-method")]
+    public async Task<int> UpdateAllPokemons()
+    {
+        return await _pokemonRepository.UpdateAllPokemons();
     }
 }

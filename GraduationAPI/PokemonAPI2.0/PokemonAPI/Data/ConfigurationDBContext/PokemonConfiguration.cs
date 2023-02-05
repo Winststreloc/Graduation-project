@@ -13,13 +13,5 @@ public class PokemonConfiguration : IEntityTypeConfiguration<Pokemon>
             .HasOne(p => p.User)
             .WithMany(c => c.Pokemons)
             .HasForeignKey(p => p.UserId);
-        builder
-            .HasOne(p => p.PokemonRecord)
-            .WithMany(pr => pr.Pokemons)
-            .HasForeignKey(p => p.PokemonRecordId);
-        builder
-            .HasOne(p => p.Battle)
-            .WithMany(b => b.Pokemons)
-            .HasForeignKey(p => p.BattleId);
     }
 }

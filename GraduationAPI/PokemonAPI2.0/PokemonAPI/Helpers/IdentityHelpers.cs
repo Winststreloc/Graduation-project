@@ -25,4 +25,15 @@ public static class IdentityHelpers
         transaction.Commit();
         return save;
     }
+    public static int SaveChangesWithIdentityInsert<T, K>(this DbContext context)
+    {
+        using var transaction = context.Database.BeginTransaction();
+        context.EnableIdentityInsert<T>();
+        context.EnableIdentityInsert<K>();
+        var save = context.SaveChanges();
+        context.DisableIdentityInsert<T>();
+        context.DisableIdentityInsert<K>();
+        transaction.Commit();
+        return save;
+    }
 }

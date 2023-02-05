@@ -1,13 +1,26 @@
 ﻿using PokemonAPI;
 using PokemonAPI.Models;
+using PokemonWEB.Data;
 
 namespace PokemonWEB.Models;
 
 public class Pokemon
 {
+    private readonly PokemonDbContext _context;
+
+    public Pokemon(PokemonDbContext context)
+    {
+        _context = context;
+    }
+
+    public Pokemon()
+    {
+        
+    }
+
     public Guid Id { get; set; }
     public int PokemonRecordId { get; set; }
-    public PokemonRecord? PokemonRecord { get; set; }
+    public PokemonRecord PokemonRecord => _context.Pokedex.SingleOrDefault(p => p.Id == PokemonRecordId);
     public Guid UserId { get; set; }
     public User? User { get; set; }
     public Guid? BattleId { get; set; }
@@ -18,40 +31,18 @@ public class Pokemon
     public int CurrentHealth { get; set; }
     public int CurrentDamage { get; set; }
     public int CurrentDefence { get; set; }
+    public int MaxDamage => CalculateMaxStat(PokemonRecord.BaseDefense);
+    public int MaxHealth => CalculateMaxStat(PokemonRecord.BaseDefense);
+    public int MaxDefence => CalculateMaxStat(PokemonRecord.BaseDefense);
+    public int CurrentLevel => new Level().GetCurrentLevel(Experience);
+
+    public int ExperianceToNextLevel => new Level().GetExperienceToNextLevel(Experience);
+    public List<PokemonAbility> PokemonAbilities { get; set; }
+    public IEnumerable<PokemonCategory>? PokemonCategories { get; set; } //TODO
     
-    public int Level => GetLevel();
-    public ICollection<PokemonAbility> PokemonAbilities { get; set; }
-    public ICollection<PokemonCategory>? PokemonCategories { get; set; } //TODO
-    
-    private int GetLevel()
+    private int CalculateMaxStat(int baseStat)
     {
-        int currentLevel = 0;
-        int remainingXP = Experience;
-
-        while (true)
-        {
-            int requiredForNextLevel;
-            if (currentLevel <= 16)
-            {
-                requiredForNextLevel = (2 * currentLevel) + 7;
-            }
-            else if (currentLevel >= 17 && currentLevel <= 31)
-            {
-                requiredForNextLevel = (5 * currentLevel) - 38;
-            }
-            else
-            {
-                requiredForNextLevel = (9 * currentLevel) - 158;
-            }
-
-            if (remainingXP >= requiredForNextLevel)
-            {
-                remainingXP -= requiredForNextLevel;
-                currentLevel++;
-            }
-            else break;
-        }
-
-        return currentLevel;
+        var result = baseStat + CurrentLevel;
+        return result;
     }
 }

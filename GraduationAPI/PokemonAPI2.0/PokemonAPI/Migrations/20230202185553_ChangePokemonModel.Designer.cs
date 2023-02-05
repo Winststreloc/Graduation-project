@@ -12,8 +12,8 @@ using PokemonWEB.Data;
 namespace PokemonAPI.Migrations
 {
     [DbContext(typeof(PokemonDbContext))]
-    [Migration("20230129215522_changePokemon")]
-    partial class changePokemon
+    [Migration("20230202185553_ChangePokemonModel")]
+    partial class ChangePokemonModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,13 +30,13 @@ namespace PokemonAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("AttackPokemon")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("BattleEnded")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("Pokemon1")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Pokemon2")
+                    b.Property<Guid>("DefendingPokemon")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Queue")
@@ -79,6 +79,10 @@ namespace PokemonAPI.Migrations
                     b.Property<int>("Healing")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -96,6 +100,10 @@ namespace PokemonAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -109,6 +117,9 @@ namespace PokemonAPI.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("BattleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CurrentDamage")
@@ -138,6 +149,8 @@ namespace PokemonAPI.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BattleId");
+
                     b.HasIndex("PokemonRecordId");
 
                     b.HasIndex("UserId");
@@ -162,11 +175,11 @@ namespace PokemonAPI.Migrations
 
             modelBuilder.Entity("PokemonWEB.Models.PokemonRecord", b =>
                 {
-                    b.Property<int>("PokedexId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PokedexId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("BaseDamage")
                         .HasColumnType("int");
@@ -215,7 +228,7 @@ namespace PokemonAPI.Migrations
                     b.Property<double>("Weight")
                         .HasColumnType("float");
 
-                    b.HasKey("PokedexId");
+                    b.HasKey("Id");
 
                     b.ToTable("Pokedex");
                 });
@@ -275,8 +288,12 @@ namespace PokemonAPI.Migrations
 
             modelBuilder.Entity("PokemonWEB.Models.Pokemon", b =>
                 {
+                    b.HasOne("PokemonAPI.Models.Battle", "Battle")
+                        .WithMany()
+                        .HasForeignKey("BattleId");
+
                     b.HasOne("PokemonWEB.Models.PokemonRecord", "PokemonRecord")
-                        .WithMany("Pokemons")
+                        .WithMany()
                         .HasForeignKey("PokemonRecordId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -286,6 +303,8 @@ namespace PokemonAPI.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Battle");
 
                     b.Navigation("PokemonRecord");
 
@@ -326,11 +345,6 @@ namespace PokemonAPI.Migrations
                     b.Navigation("PokemonAbilities");
 
                     b.Navigation("PokemonCategories");
-                });
-
-            modelBuilder.Entity("PokemonWEB.Models.PokemonRecord", b =>
-                {
-                    b.Navigation("Pokemons");
                 });
 
             modelBuilder.Entity("PokemonWEB.Models.User", b =>
