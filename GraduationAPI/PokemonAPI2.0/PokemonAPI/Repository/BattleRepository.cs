@@ -61,9 +61,8 @@ public class BattleRepository : IBattleRepository
         var battle = await GetValidBattle(battleMoveDto.BattleId);
         var move = await GetValidMove(battleMoveDto.AbilityId);
         var (attackPokemon, defendingPokemon) = await GetBattlingPokemons(battle);
-        var battleResponceDto = await _battleService.MovePokemon(attackPokemon, defendingPokemon, move);
-        battle.Queue = ChangeQueue(battle);
-        battle.BattleEnded = battleResponceDto.BattleEnded;
+        var (battleResponceDto, responceBattle) = await _battleService.MovePokemon(attackPokemon, defendingPokemon, move, battle);
+        battle = responceBattle;
         _context.Update(battle);
         if (battle.BattleEnded)
         {
@@ -101,11 +100,5 @@ public class BattleRepository : IBattleRepository
         var defendingPokemonId = battle.Queue == Queue.FirstPokemon ? battle.DefendingPokemon : battle.AttackPokemon;
         var defendingPokemon = await _context.Pokemons.SingleOrDefaultAsync(p => p.Id == defendingPokemonId);
         return (attackPokemon, defendingPokemon);
-    }
-    
-
-    private Queue ChangeQueue(Battle battle)
-    {
-        return battle.Queue == Queue.FirstPokemon ? Queue.SecondPokemon : Queue.FirstPokemon;
     }
 }
