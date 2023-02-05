@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PokemonAPI.Dto;
 using PokemonAPI.Interfaces;
+using PokemonAPI.Models;
 using PokemonAPI.Models.Enums;
 using PokemonWEB.Data;
 using PokemonWEB.Interfaces;
@@ -17,7 +18,8 @@ public class BattleService : IBattleService
     
     private static readonly int[] _randomPokemonsIdForLocalBattle = { 1, 4, 7, 10 };
     private static readonly int[] _randomAbilityIdForLocalBattle = { 1, 2, 3 };
-    private const int MaxExperianceForLocalPokemons = 160;
+    private const int MaxExperianceForLocalPokemons = 1001;
+    private const int MinExperianceForLocalPokemons = 100;
     private const string ComputerNickName = "ashKetchum";
     
     public BattleService(PokemonDbContext context, IPokemonRepository pokemonRepository, IPokemonService pokemonService)
@@ -27,10 +29,10 @@ public class BattleService : IBattleService
         _pokemonService = pokemonService;
     }
 
-    public async Task<BattleResponceDto> MovePokemon(Pokemon? attackPokemon, Pokemon? defendingPokemon,  Ability? ability)
+    public async Task<(BattleResponceDto, Battle)> MovePokemon(Pokemon? attackPokemon, Pokemon? defendingPokemon,  Ability? ability, Battle battle)
     {
         var damage = GetDamage(attackPokemon, ability);
-        defendingPokemon!.CurrentHealth = GetDefence(defendingPokemon) - damage;
+        defendingPokemon!.CurrentHealth -= damage;
         bool battleEnded = defendingPokemon.CurrentHealth <= 0;
         
         var battleResponce = new BattleResponceDto()
@@ -41,20 +43,22 @@ public class BattleService : IBattleService
             AtackPokemon = attackPokemon,
             DefendingPokemon = defendingPokemon
         };
+        ChangeQueue(battle);
         
         if (await _pokemonRepository.IsComputerPokemon(defendingPokemon) && !battleEnded)
         {
             damage = GetDamage(defendingPokemon, GetRandomAbility());
-            attackPokemon!.CurrentHealth = GetDefence(attackPokemon) - damage;
+            attackPokemon.CurrentHealth -= damage;
             battleResponce.BattleEnded = defendingPokemon.CurrentHealth <= 0;
             battleResponce.AtackPokemon = attackPokemon;
-            battleResponce.DamageSecondPokemon = GetDamage(defendingPokemon, GetRandomAbility());
+            battleResponce.DamageSecondPokemon = damage;
             _context.Update(attackPokemon);
+            ChangeQueue(battle);
         }
 
         _context.Update(defendingPokemon);
 
-        return battleResponce;
+        return (battleResponce, battle);
     }
     public async Task<Ability?> GetRandomPokemonAbility(Guid pokemonId)
     {
@@ -65,7 +69,7 @@ public class BattleService : IBattleService
         var result = existAbilities.ElementAtOrDefault(rnd.Next(existAbilities.Count));
         return result;
     }
-    
+
     public async Task<Guid> GenerateRandomPokemon()
     {
         var randomId = GetRandomPokemonId();
@@ -83,10 +87,15 @@ public class BattleService : IBattleService
         _context.Add(pokemon);
         _context.SaveChanges();
         
-        _pokemonService.HealingPokemon(pokemon);
+        //_pokemonService.HealingPokemon(pokemon);
         // await _context.SaveChangesAsync();
         
         return pokemon.Id;
+    }
+    
+    private Queue ChangeQueue(Battle battle)
+    {
+        return battle.Queue == Queue.FirstPokemon ? Queue.SecondPokemon : Queue.FirstPokemon;
     }
 
     private PokemonCategory CreatePokemonCategory(Pokemon pokemon, Category rndCategory)
@@ -119,7 +128,7 @@ public class BattleService : IBattleService
             CurrentDamage = pokeRecord.BaseDamage,
             CurrentDefence = pokeRecord.BaseDefense,
             CurrentHealth = pokeRecord.BaseHP,
-            Experience = rnd.Next(MaxExperianceForLocalPokemons) + 30,
+            Experience = rnd.Next(MinExperianceForLocalPokemons, MaxExperianceForLocalPokemons),
             Gender = true,
             User = computerUser,
             UserId = computerUser.Id
@@ -155,11 +164,12 @@ public class BattleService : IBattleService
 
     private int GetDamage(Pokemon? pokemon, Ability? move)
     {
-        return (pokemon.CurrentDamage / 2) + move.Damage;
-    }
+        var damage = (pokemon.CurrentDamage) + move.Damage - pokemon.CurrentDefence;
+        if (damage < 0)
+        {
+            damage = 1;
+        }
 
-    private int GetDefence(Pokemon? pokemon)
-    {
-        return pokemon.CurrentHealth + (pokemon.CurrentDefence);
+        return damage;
     }
 }

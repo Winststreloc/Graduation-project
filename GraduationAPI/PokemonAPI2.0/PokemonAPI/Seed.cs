@@ -67,7 +67,7 @@ public class Seed
                     Description =
                         "There is a plant seed on its back right from the day this Pokémon is born. The seed slowly grows larger.",
                     NextEvol = 2,
-                    MainUrl = "https://pokepower.ru/img/pokemons/main/front/normal/001.gif",
+                    MainUrl = "https://custom-doodle.com/wp-content/uploads/doodle/pokemon-bulbasaur/pokemon-bulbasaur-doodle.gif",
                     PokEvol1 = "https://pokepower.ru/img/pokemons/anim/normal/1.gif",
                     PokEvol2 = "https://pokepower.ru/img/pokemons/anim/normal/2.gif",
                     PokEvol3 = "https://pokepower.ru/img/pokemons/anim/normal/3.gif"
