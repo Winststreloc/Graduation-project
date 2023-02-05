@@ -14,12 +14,7 @@ public class BattleHub : Hub
     {
         _battleRepository = battleRepository;
     }
-
-    public async Task ChallengePlayer(string connectionIdEnemyUser)
-    {
-        await Clients.Client(connectionIdEnemyUser).SendAsync("Challenge");
-    }
-
+    
     public async Task ConnectPlayers(string userName, string groupName)
     {
         await Groups.AddToGroupAsync(Context.ConnectionId, groupName);

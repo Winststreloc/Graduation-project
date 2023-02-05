@@ -28,4 +28,9 @@ public class ChatHub : Hub
         _connectedUsers.Remove(userId);
         return Clients.All.SendAsync("AllUsers", _connectedUsers);
     }
+    
+    public async Task ChallengePlayer(string connectionIdEnemyUser)
+    {
+        await Clients.Client(connectionIdEnemyUser).SendAsync("Challenge");
+    }
 }
