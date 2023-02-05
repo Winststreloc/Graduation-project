@@ -62,12 +62,13 @@ public class BattleRepository : IBattleRepository
         var move = await GetValidMove(battleMoveDto.AbilityId);
         var (attackPokemon, defendingPokemon) = await GetBattlingPokemons(battle);
         var battleResponceDto = await _battleService.MovePokemon(attackPokemon, defendingPokemon, move);
-        await ChangeQueue(battle);
+        battle.Queue = ChangeQueue(battle);
         battle.BattleEnded = battleResponceDto.BattleEnded;
         _context.Update(battle);
         if (battle.BattleEnded)
         {
             _context.Remove(defendingPokemon);
+            _context.Remove(battle);
         }
         
         await _context.SaveChangesAsync();
@@ -103,10 +104,8 @@ public class BattleRepository : IBattleRepository
     }
     
 
-    private async Task ChangeQueue(Battle battle)
+    private Queue ChangeQueue(Battle battle)
     {
-        battle.Queue = battle.Queue == Queue.FirstPokemon ? Queue.SecondPokemon : Queue.FirstPokemon;
-        _context.Battles.Update(battle);
-        await _context.SaveChangesAsync();
+        return battle.Queue == Queue.FirstPokemon ? Queue.SecondPokemon : Queue.FirstPokemon;
     }
 }

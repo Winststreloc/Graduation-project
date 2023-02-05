@@ -88,7 +88,7 @@ public class PokemonRepository : IPokemonRepository
     public async Task<int> HealingPokemon(Guid pokemonId)
     {
         var pokemon = await _context.Pokemons.SingleOrDefaultAsync(p => p.Id == pokemonId);
-        return await _pokemonService.HealingPokemon(pokemon);
+        return _pokemonService.HealingPokemon(pokemon);
     }
 
 

@@ -15,7 +15,7 @@ public class BattleService : IBattleService
     private readonly IPokemonRepository _pokemonRepository;
     private readonly IPokemonService _pokemonService;
     
-    private static readonly int[] _randomPokemonsIdForLocalBattle = { 1, 2, 3 };
+    private static readonly int[] _randomPokemonsIdForLocalBattle = { 1, 4, 7, 10 };
     private static readonly int[] _randomAbilityIdForLocalBattle = { 1, 2, 3 };
     private const int MaxExperianceForLocalPokemons = 160;
     private const string ComputerNickName = "ashKetchum";
@@ -42,7 +42,7 @@ public class BattleService : IBattleService
             DefendingPokemon = defendingPokemon
         };
         
-        if (await _pokemonRepository.IsComputerPokemon(defendingPokemon))
+        if (await _pokemonRepository.IsComputerPokemon(defendingPokemon) && !battleEnded)
         {
             damage = GetDamage(defendingPokemon, GetRandomAbility());
             attackPokemon!.CurrentHealth = GetDefence(attackPokemon) - damage;
@@ -81,9 +81,9 @@ public class BattleService : IBattleService
         _context.Add(pokemonAbility);
         _context.Add(pokemonCategory);
         _context.Add(pokemon);
-        await _context.SaveChangesAsync();
+        _context.SaveChanges();
         
-        // await _pokemonService.HealingPokemon(pokemon);
+        _pokemonService.HealingPokemon(pokemon);
         // await _context.SaveChangesAsync();
         
         return pokemon.Id;
@@ -119,7 +119,7 @@ public class BattleService : IBattleService
             CurrentDamage = pokeRecord.BaseDamage,
             CurrentDefence = pokeRecord.BaseDefense,
             CurrentHealth = pokeRecord.BaseHP,
-            Experience = rnd.Next(MaxExperianceForLocalPokemons),
+            Experience = rnd.Next(MaxExperianceForLocalPokemons) + 30,
             Gender = true,
             User = computerUser,
             UserId = computerUser.Id
@@ -130,7 +130,7 @@ public class BattleService : IBattleService
     private int GetRandomPokemonId()
     {
         Random rnd = new Random();
-        return _randomPokemonsIdForLocalBattle[rnd.Next(_randomPokemonsIdForLocalBattle.Length - 1)];
+        return _randomPokemonsIdForLocalBattle[rnd.Next(_randomPokemonsIdForLocalBattle.Length)];
     }
 
     private Ability GetRandomAbility()
