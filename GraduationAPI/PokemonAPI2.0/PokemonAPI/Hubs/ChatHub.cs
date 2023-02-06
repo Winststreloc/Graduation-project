@@ -10,12 +10,15 @@ namespace PokemonAPI.Hubs;
 [Authorize]
 public class ChatHub : Hub
 {
-    private static readonly List<string> _connectedUsers = new List<string>();
+    //private static readonly List<string> _connectedUsers = new List<string>();
+    private static readonly List<UserOnline?> _connectedUsers = new List<UserOnline?>();
     private readonly IBattleRepository _battleRepository;
+    private readonly IPokemonRepository _pokemonRepository;
 
-    public ChatHub(IBattleRepository battleRepository)
+    public ChatHub(IBattleRepository battleRepository, IPokemonRepository pokemonRepository)
     {
         _battleRepository = battleRepository;
+        _pokemonRepository = pokemonRepository;
     }
     
     public async Task SendMessage(ChatMessage message)
@@ -23,35 +26,46 @@ public class ChatHub : Hub
         await Clients.All.SendAsync("ReceiveMessage", message);
     }
     
-    public async Task OnConnected()
+    public async Task OnConnected(string userName, string userId)
     {
-        var userName = Context.ConnectionId;
-        _connectedUsers.Add(userName);
+        _connectedUsers.Add(new UserOnline()
+        {
+            ConnectionId = Context.ConnectionId,
+            UserName = userName,
+            UserId = Guid.Parse(userId)
+        });
         await Clients.All.SendAsync("AllUsers", _connectedUsers);
     }
     
     public override Task OnDisconnectedAsync(Exception exception)
     {
-        var userId = Context.ConnectionId;
-        _connectedUsers.Remove(userId);
+        var connecterUser = _connectedUsers.SingleOrDefault(cu => cu.ConnectionId == Context.ConnectionId);
+        _connectedUsers.Remove(connecterUser);
         return Clients.All.SendAsync("AllUsers", _connectedUsers);
     }
     
-    public async Task ChallengePlayer(string sendingUserId, string connectionIdEnemyUser)
+    public async Task ChallengePlayer(string connectionIdEnemyUser)
     {
-        await Clients.Client(connectionIdEnemyUser).SendAsync("Challenge");
+        await Clients.Client(connectionIdEnemyUser).SendAsync("Challenge", Context.ConnectionId);
     }
     
     public async Task ConnectPlayers(string connectionIdSecondPlayer)
     {
-        var battle = await _battleRepository.CreateBattle(new BattleCreateDto()
-        {
-            AttackPokemon = Guid.Parse("B89FBA95-8C1B-413B-D359-08DB07B10A0B"),
-            DefendingPokemon = Guid.Parse("692C9EF3-8483-44DD-AE01-08D80107551D")
-        });
-        await Groups.AddToGroupAsync(Context.ConnectionId, battle.ToString());
-        await Groups.AddToGroupAsync(connectionIdSecondPlayer, battle.ToString());
+        var attackUser = _connectedUsers.SingleOrDefault(cu => cu.ConnectionId == Context.ConnectionId);
+        var defendingUser = _connectedUsers.SingleOrDefault(cu => cu.ConnectionId == connectionIdSecondPlayer);
 
-        await Clients.Group(battle.ToString()).SendAsync("StartBattle", "battleCreated");
+        var attackPokemons = await _pokemonRepository.GetUserPokemons(attackUser.UserId);
+        var defendingPokemons = await _pokemonRepository.GetUserPokemons(defendingUser.UserId);
+        
+        var battleId = await _battleRepository.CreateBattle(new BattleCreateDto()
+        {
+            AttackPokemon = attackPokemons.First().Id,
+            DefendingPokemon = defendingPokemons.First().Id
+        });
+        
+        await Groups.AddToGroupAsync(Context.ConnectionId, battleId.ToString());
+        await Groups.AddToGroupAsync(connectionIdSecondPlayer, battleId.ToString());
+
+        await Clients.Group(battleId.ToString()).SendAsync("StartBattle", battleId.ToString());
     }
 }

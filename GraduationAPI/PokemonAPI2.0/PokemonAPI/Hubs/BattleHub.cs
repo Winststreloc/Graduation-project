@@ -15,16 +15,8 @@ public class BattleHub : Hub
         _battleRepository = battleRepository;
     }
     
-    public async Task BattleMove(Guid battleId, int abilityId)
+    public async Task BattleMove(BattleResponceDto battleResponceDto, string battleId)
     {
-        var responceDto = await _battleRepository.MovePokemon
-        (
-            new BattleMoveDto()
-            {
-                BattleId = battleId, 
-                AbilityId = abilityId
-            }
-        );
-        await Clients.Group(battleId.ToString()).SendAsync("UpdateBattle", responceDto);
+        await Clients.All.SendAsync("UpdateBattle", battleResponceDto);
     }
 }

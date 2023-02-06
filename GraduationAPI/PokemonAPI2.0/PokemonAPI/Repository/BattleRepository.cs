@@ -15,6 +15,7 @@ public class BattleRepository : IBattleRepository
     private readonly PokemonDbContext _context;
     private readonly IBattleService _battleService;
     private readonly IPokemonRepository _pokemonRepository;
+    private const int MaxCountAbilities = 4;
 
     public BattleRepository(PokemonDbContext context, IBattleService battleService,
         IPokemonRepository pokemonRepository)
@@ -39,7 +40,7 @@ public class BattleRepository : IBattleRepository
         return battle.Id;
     }
 
-    public async Task<Battle> CreateLocalBattle(Guid attackPokemonId)
+    public async Task<Battle?> CreateLocalBattle(Guid attackPokemonId)
     {
         var defendingPokemonId = await _battleService.GenerateRandomPokemon();
         var battle = new Battle()
@@ -74,6 +75,25 @@ public class BattleRepository : IBattleRepository
 
         return battleResponceDto;
     }
+
+    public async Task<BattleInfoDto?> GetBattleInfo(Guid battleId)
+    {
+        var battle = await _context.Battles.SingleOrDefaultAsync(b => b.Id == battleId);
+        var attakPokemon = await _context.Pokemons.SingleOrDefaultAsync(p => p.Id == battle.AttackPokemon);
+        var defendingPokemon = await _context.Pokemons.SingleOrDefaultAsync(p => p.Id == battle.DefendingPokemon);
+        var abilities = await _context.PokemonAbilities
+            .Where(pa => pa.PokemonId == attakPokemon.Id)
+            .Select(p => p.Ability)
+            .Take(MaxCountAbilities)
+            .ToListAsync();
+        return new BattleInfoDto()
+        {
+            Abilities = abilities,
+            AttackPokemon = attakPokemon,
+            DefendingPokemon = defendingPokemon
+        };
+    }
+
     private async Task<Battle> GetValidBattle(Guid battleId)
     {
         var battle = await _context.Battles.SingleOrDefaultAsync(b => b.Id == battleId);

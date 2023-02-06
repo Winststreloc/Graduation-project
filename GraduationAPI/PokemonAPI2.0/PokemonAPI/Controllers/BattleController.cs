@@ -21,6 +21,12 @@ public class BattleController : ControllerBase
         _battleRepository = battleRepository;
     }
 
+    [HttpGet("get-battle-info")]
+    public async Task<BattleInfoDto?> GetBattleInfo([FromQuery] Guid battleId)
+    {
+        return await _battleRepository.GetBattleInfo(battleId);
+    }
+
     [HttpPost("create-battle")]
     public async Task<Guid> CreateBattle([FromBody] BattleCreateDto battle)
     {
@@ -28,7 +34,7 @@ public class BattleController : ControllerBase
     }
 
     [HttpPost("create-local-battle")]
-    public async Task<Battle> CreateLocalBattle([FromQuery]Guid pokemonId)
+    public async Task<Battle?> CreateLocalBattle([FromQuery]Guid pokemonId)
     {
         return await _battleRepository.CreateLocalBattle(pokemonId);
     }
