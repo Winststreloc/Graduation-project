@@ -136,7 +136,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapHub<ChatHub>("/chat");
-app.MapHub<BattleHub>("/battleHub");
+app.MapHub<BattleHub>("/battle");
 
 Task.Run(() =>
 {
