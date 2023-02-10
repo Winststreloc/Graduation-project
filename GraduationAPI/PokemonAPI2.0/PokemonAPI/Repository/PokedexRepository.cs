@@ -17,7 +17,7 @@ public class PokedexRepository : IPokedexRepository
         _context = context;
     }
 
-    public async Task<PokemonRecord> GetPokemonRecord(int id)
+    public async Task<PokemonRecord?> GetPokemonRecord(int id)
     {
         return await _context.Pokedex
             .Where(p => p.Id == id)

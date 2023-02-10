@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PokemonAPI;
+using PokemonAPI.Hubs;
 using PokemonAPI.Models;
 using PokemonWEB.Models;
 using PokemonWEB.Models.Action;
@@ -17,7 +18,7 @@ public class PokemonDbContext : DbContext
     public DbSet<Category> Categories { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Pokemon> Pokemons { get; set; }
-    public DbSet<PokemonRecord> Pokedex { get; set; }
+    public DbSet<PokemonRecord?> Pokedex { get; set; }
     public DbSet<PokemonAbility> PokemonAbilities { get; set; }
     public DbSet<PokemonCategory> PokemonCategories { get; set; }
     public DbSet<PokemonRecordCategory> PokemonRecordCategories { get; set; }

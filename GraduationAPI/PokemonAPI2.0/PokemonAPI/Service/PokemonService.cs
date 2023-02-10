@@ -19,17 +19,15 @@ public class PokemonService : IPokemonService
         int deltaHP = 0;
         foreach (var pokemon in pokemons)
         {
-            deltaHP += (pokemon.MaxHealth - pokemon.CurrentHealth);
-            pokemon.CurrentHealth = pokemon.MaxHealth;
-            pokemon.CurrentDamage = pokemon.MaxDamage;
-            pokemon.CurrentDefence = pokemon.MaxDefence;
-            _context.Update(pokemon);
+            deltaHP += pokemon.MaxHealth - pokemon.CurrentHealth;
+            ResetPokemon(pokemon);
         }
 
-        
         await _context.SaveChangesAsync();
         return await Task.FromResult(deltaHP);
     }
+    
+
 
     public int HealingPokemon(Pokemon pokemon)
     {
@@ -40,6 +38,13 @@ public class PokemonService : IPokemonService
         pokemon.CurrentDefence = pokemon.MaxDefence;
         _context.Update(pokemon);
         return deltaHP;
+    }
+    private void ResetPokemon(Pokemon pokemon)
+    {
+        pokemon.CurrentHealth = pokemon.MaxHealth;
+        pokemon.CurrentDamage = pokemon.MaxDamage;
+        pokemon.CurrentDefence = pokemon.MaxDefence;
+        _context.Update(pokemon);
     }
 
     public async Task<int> GetDamage(int pokedexId, int level)

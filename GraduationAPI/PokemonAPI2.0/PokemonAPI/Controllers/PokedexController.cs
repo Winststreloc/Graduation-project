@@ -21,7 +21,7 @@ public class PokedexController : ControllerBase
     }
 
     [HttpGet("pokemonId")]
-    public async Task<PokemonRecord> GetPokemon([FromQuery]int id)
+    public async Task<PokemonRecord?> GetPokemon([FromQuery]int id)
     {
         return await _pokedexRepository.GetPokemonRecord(id);
     }

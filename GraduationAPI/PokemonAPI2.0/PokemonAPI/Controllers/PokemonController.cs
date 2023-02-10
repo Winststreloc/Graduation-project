@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokemonAPI.Dto;
-using PokemonWEB.Dto;
 using PokemonWEB.Interfaces;
 using PokemonWEB.Models;
 

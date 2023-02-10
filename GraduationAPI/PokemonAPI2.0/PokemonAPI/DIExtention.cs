@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using PokemonAPI.Interfaces;
+﻿using PokemonAPI.Interfaces;
 using PokemonAPI.Middleware;
 using PokemonAPI.Service;
 using PokemonWEB.Interfaces;

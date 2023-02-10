@@ -12,7 +12,7 @@ namespace PokemonAPI.Service;
 
 public class TokenService : ITokenService
 {
-    private const int _accessTokenExpiresMinutes = 60;
+    private const int _accessTokenExpiresMinutes = 5;
     private const int _refreshTokenExpiresDays = 30;
 
     public Token GenerateTokens(User candidateForTokens)

@@ -31,14 +31,14 @@ public class AuthController : Controller
     {
         if (!ModelState.IsValid)
         {
-            _responce.ErrorMessages = new List<string>{"Invalid username or password."};
+            _responce.ErrorMessages = new List<string> { "Invalid username or password." };
             _responce.IsSuccess = false;
             return _responce;
         }
 
         if (await _userRepository.UserNameOrEmailExists(registrationModelDto.NickName, registrationModelDto.Email))
         {
-            _responce.ErrorMessages = new List<string> {"NickName or email is exists."};
+            _responce.ErrorMessages = new List<string> { "NickName or email is exists." };
             _responce.IsSuccess = false;
             return _responce;
         }
@@ -70,7 +70,7 @@ public class AuthController : Controller
         _responce.IsSuccess = false;
         return _responce;
     }
-    
+
     [HttpGet("refresh-token")]
     [Authorize]
     public async Task<ResponceAuthDto> RefreshToken(string refreshToken)
@@ -89,7 +89,7 @@ public class AuthController : Controller
         _responce.ErrorMessages = new List<string> { "Invalid refresh_token" };
         return _responce;
     }
-    
+
     [HttpPost("logout")]
     public IActionResult Logout() //TODO
     {

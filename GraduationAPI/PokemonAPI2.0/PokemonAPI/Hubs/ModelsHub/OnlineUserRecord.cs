@@ -1,6 +1,6 @@
 ﻿namespace PokemonAPI.Hubs;
 
-public class UserOnline
+public class OnlineUserRecord
 {
     public string ConnectionId { get; set; }
     public Guid UserId { get; set; }
