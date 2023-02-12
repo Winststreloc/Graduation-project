@@ -22,19 +22,29 @@ public class PokemonRepository : IPokemonRepository
         _pokemonService = pokemonService;
     }
 
-    public async Task<Pokemon> GetPokemon(Guid Id)
+    public async Task<Pokemon?> GetPokemon(Guid Id)
     {
-        return await _context.Pokemons.FirstOrDefaultAsync(p => p.Id == Id);
+        return await _context.Pokemons
+            .Where(p => p.Id == Id)
+            .Include(p => p.PokemonRecord)
+            .FirstOrDefaultAsync();
     }
 
     public ICollection<Pokemon> GetPokemons(int count)
     {
-        return _context.Pokemons.Take(count).OrderBy(p => p.PokemonRecordId).ToList();
+        return _context.Pokemons
+            .Take(count)
+            .OrderBy(p => p.PokemonRecordId)
+            .Include(p => p.PokemonRecord)
+            .ToList();
     }
 
     public ICollection<Ability> GetPokemonAbilities(Guid pokemonId)
     {
-        var pokemon = _context.Pokemons.SingleOrDefault(p => p.Id == pokemonId);
+        var pokemon = _context.Pokemons
+            .Where(p => p.Id == pokemonId)
+            .Include(p => p.PokemonRecord)
+            .SingleOrDefault();
         var abilities = _context.PokemonAbilities
             .Where(pa => pa.PokemonId == pokemon.Id)
             .Select(p => p.Ability)
@@ -43,16 +53,19 @@ public class PokemonRepository : IPokemonRepository
         return abilities;
     }
 
-    public async Task<ICollection<Pokemon>> GetUserPokemons(Guid userId)
+    public async Task<ICollection<Pokemon?>> GetUserPokemons(Guid userId)
     {
         return await _context.Pokemons
             .Where(p => p.UserId == userId)
+            .Include(p => p.PokemonRecord)
             .ToListAsync();
     }
 
     public async Task<PokemonAbilityCategoryDto> GetPokemonAbilityCategory(Guid pokemonId)
     {
-        var pokemon = await _context.Pokemons.SingleOrDefaultAsync(p => p.Id == pokemonId);
+        var pokemon = await _context.Pokemons
+            .Include(p => p.PokemonRecord)
+            .SingleOrDefaultAsync(p => p.Id == pokemonId);
 
         if (pokemon == null)
         {
@@ -95,7 +108,10 @@ public class PokemonRepository : IPokemonRepository
     public async Task<bool> IsComputerPokemon(Pokemon? pokemon)
     {
         var computer = await _context.Users.SingleOrDefaultAsync(u => u.NickName == ComputerNickName);
-        var computerPokemons = await _context.Pokemons.Where(p => p.UserId == computer.Id).ToListAsync();
+        var computerPokemons = await _context.Pokemons
+            .Where(p => p.UserId == computer.Id)
+            .Include(p => p.PokemonRecord)
+            .ToListAsync();
         return computerPokemons.Any(p => p == pokemon);
     }
 
@@ -104,7 +120,7 @@ public class PokemonRepository : IPokemonRepository
         return _context.Pokemons.Any(p => p.Id == Id);
     }
 
-    public bool DeletePokemon(Pokemon pokemon)
+    public bool DeletePokemon(Pokemon? pokemon)
     {
         _context.Remove(pokemon);
         return Save();
@@ -133,7 +149,7 @@ public class PokemonRepository : IPokemonRepository
     {
         var category = _context.Categories.FirstOrDefault(o => o.Id == categoryId);
         pokemon.User = _context.Users.FirstOrDefault(o => o.Id == ownerId);
-        ;
+        
 
         var pokemonCategory = new PokemonCategory
         {
@@ -155,7 +171,10 @@ public class PokemonRepository : IPokemonRepository
 
     public async Task<int> UpdateAllPokemons()
     {
-        var pokemons = await _context.Pokemons.Select(p => p).ToListAsync();
+        var pokemons = await _context.Pokemons
+            .Include(p => p.PokemonRecord)
+            .Select(p => p)
+            .ToListAsync();
         var result = await _pokemonService.HealingPokemons(pokemons);
         return result;
     }

@@ -14,7 +14,7 @@ public class PokemonService : IPokemonService
         _context = context;
     }
 
-    public async Task<int> HealingPokemons(ICollection<Pokemon> pokemons)
+    public async Task<int> HealingPokemons(ICollection<Pokemon?> pokemons)
     {
         int deltaHP = 0;
         foreach (var pokemon in pokemons)
@@ -39,7 +39,7 @@ public class PokemonService : IPokemonService
         _context.Update(pokemon);
         return deltaHP;
     }
-    private void ResetPokemon(Pokemon pokemon)
+    private void ResetPokemon(Pokemon? pokemon)
     {
         pokemon.CurrentHealth = pokemon.MaxHealth;
         pokemon.CurrentDamage = pokemon.MaxDamage;

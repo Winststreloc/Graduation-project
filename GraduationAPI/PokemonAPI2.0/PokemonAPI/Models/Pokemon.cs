@@ -6,21 +6,9 @@ namespace PokemonWEB.Models;
 
 public class Pokemon
 {
-    private readonly PokemonDbContext _context;
-
-    public Pokemon(PokemonDbContext context)
-    {
-        _context = context;
-    }
-
-    public Pokemon()
-    {
-        
-    }
-
     public Guid Id { get; set; }
     public int PokemonRecordId { get; set; }
-    public PokemonRecord PokemonRecord => _context.Pokedex.SingleOrDefault(p => p.Id == PokemonRecordId);
+    public PokemonRecord PokemonRecord { get; set; }
     public Guid UserId { get; set; }
     public User? User { get; set; }
     public Guid? BattleId { get; set; }
@@ -38,7 +26,7 @@ public class Pokemon
 
     public int ExperianceToNextLevel => new Level().GetExperienceToNextLevel(Experience);
     public List<PokemonAbility> PokemonAbilities { get; set; }
-    public IEnumerable<PokemonCategory>? PokemonCategories { get; set; } //TODO
+    public IEnumerable<PokemonCategory>? PokemonCategories { get; set; }
     
     private int CalculateMaxStat(int baseStat)
     {

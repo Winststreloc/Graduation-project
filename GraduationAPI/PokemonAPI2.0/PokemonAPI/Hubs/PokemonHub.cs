@@ -2,6 +2,7 @@
 using PokemonAPI.Dto;
 using PokemonAPI.Models;
 using PokemonWEB.Interfaces;
+using PokemonWEB.Models;
 
 namespace PokemonAPI.Hubs;
 
@@ -22,22 +23,15 @@ public class PokemonHub : Hub
         await Clients.All.SendAsync("ReceiveMessage", message);
     }
 
-    public async Task OnConnected(string userName, string userId)
+    public async Task OnConnected(string userName, Guid userId)
     {
-        if (UserExists(userName))
+        _collection.Add(new OnlineUserRecord()
         {
-           // await Clients.Client(Context.ConnectionId).SendAsync("UserExist", userName);
-        }
-        else
-        {
-            _collection.Add(new OnlineUserRecord()
-            {
-                ConnectionId = Context.ConnectionId,
-                UserName = userName,
-                UserId = Guid.Parse(userId)
-            });
-            await Clients.All.SendAsync("AllUsers", _collection);
-        }
+            ConnectionId = Context.ConnectionId,
+            UserName = userName,
+            UserId = userId
+        });
+        await Clients.All.SendAsync("AllUsers", _collection);
     }
 
     public override Task OnDisconnectedAsync(Exception exception)

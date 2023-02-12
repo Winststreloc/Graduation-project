@@ -22,7 +22,7 @@ public class PokemonController : ControllerBase
     }
 
     [HttpGet("get-pokemon")]
-    public async Task<Pokemon> GetPokemon([FromQuery]Guid id)
+    public async Task<Pokemon?> GetPokemon([FromQuery]Guid id)
     {
         return await _pokemonRepository.GetPokemon(id);
     }
@@ -35,7 +35,7 @@ public class PokemonController : ControllerBase
     }
 
     [HttpGet("get-user-pokemons")]
-    public async Task<ICollection<Pokemon>> GetUserPokemons([FromQuery]Guid userId)
+    public async Task<ICollection<Pokemon?>> GetUserPokemons([FromQuery]Guid userId)
     {
         return await _pokemonRepository.GetUserPokemons(userId);
     }

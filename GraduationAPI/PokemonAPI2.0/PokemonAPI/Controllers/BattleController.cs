@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokemonAPI.Dto;
+using PokemonAPI.Interfaces;
 using PokemonAPI.Models;
 using PokemonWEB.Interfaces;
 
@@ -13,11 +14,13 @@ namespace PokemonWEB.Controllers;
 public class BattleController : ControllerBase
 {
     private readonly IBattleRepository _battleRepository;
+    private readonly IBattleService _battleService;
     private readonly IMapper _mapper;
 
-    public BattleController(IBattleRepository battleRepository, IMapper mapper)
+    public BattleController(IBattleRepository battleRepository, IMapper mapper, IBattleService battleService)
     {
         _mapper = mapper;
+        _battleService = battleService;
         _battleRepository = battleRepository;
     }
 
@@ -36,12 +39,12 @@ public class BattleController : ControllerBase
     [HttpPost("create-local-battle")]
     public async Task<Battle?> CreateLocalBattle([FromQuery]Guid pokemonId)
     {
-        return await _battleRepository.CreateLocalBattle(pokemonId);
+        return await _battleService.CreateLocalBattle(pokemonId);
     }
 
     [HttpPost("update-battle")]
     public async Task<BattleResponceDto> MovePokemon(BattleMoveDto battleUpdateDto)
     {
-        return await _battleRepository.MovePokemon(battleUpdateDto);
+        return await _battleService.UpdatePokemon(battleUpdateDto);
     }
 }
