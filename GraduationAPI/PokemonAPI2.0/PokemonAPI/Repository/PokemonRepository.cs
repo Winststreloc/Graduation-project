@@ -143,8 +143,23 @@ public class PokemonRepository : IPokemonRepository
 
         return await _context.SaveChangesAsync() > 0;
     }
-
-
+    
+    public async Task<bool> CreateStartPokemon(int pokedexId, Guid userId)
+    {
+        var pokemonRecord = await _context.Pokedex.SingleOrDefaultAsync(p => p.Id == pokedexId);
+        var pokemon = new Pokemon()
+        {
+            CurrentDamage = pokemonRecord.BaseDamage,
+            CurrentDefence = pokemonRecord.BaseDefense,
+            CurrentHealth = pokemonRecord.BaseHP,
+            Experience = 100,
+            Gender = true,
+            Name = pokemonRecord.Name,
+            UserId = userId
+        };
+        await _context.AddAsync(pokemon);
+        return await _context.SaveChangesAsync() > 0;
+    }
     public bool UpdatePokemon(Guid ownerId, int categoryId, Pokemon pokemon)
     {
         var category = _context.Categories.FirstOrDefault(o => o.Id == categoryId);

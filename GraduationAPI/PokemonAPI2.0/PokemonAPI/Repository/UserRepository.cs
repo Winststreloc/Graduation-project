@@ -3,7 +3,7 @@ using PokemonAPI.Interfaces;
 using PokemonAPI.Models;
 using PokemonAPI.Models.Enums;
 using PokemonWEB.Data;
-using PokemonWEB.Dto;
+using PokemonWEB.Interfaces;
 using PokemonWEB.Models;
 
 namespace PokemonWEB.Repository;
@@ -12,13 +12,15 @@ public class UserRepository : IUserRepository
 {
     private readonly PokemonDbContext _context;
     private readonly IPasswordHashingService _passwordHashing;
+    private readonly IPokemonRepository _pokemonRepository;
     private readonly ITokenService _tokenService;
     
-    public UserRepository(PokemonDbContext context, IPasswordHashingService passwordHashing, ITokenService tokenService)
+    public UserRepository(PokemonDbContext context, IPasswordHashingService passwordHashing, ITokenService tokenService, IPokemonRepository pokemonRepository)
     {
         _context = context;
         _passwordHashing = passwordHashing;
         _tokenService = tokenService;
+        _pokemonRepository = pokemonRepository;
     }
 
     public async Task<User?> CredentialsIdentification(string email, string passwordHash)
@@ -53,6 +55,8 @@ public class UserRepository : IUserRepository
         };
         await _context.Users.AddAsync(user);
         await Save();
+        await _pokemonRepository.CreateStartPokemon(1, user.Id);
+        
 
         var userTokens = _tokenService.GenerateTokens(user);
         

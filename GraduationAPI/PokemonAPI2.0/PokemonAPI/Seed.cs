@@ -44,8 +44,16 @@ public class Seed
                     Email = "martin@gmail.com",
                     Roles = Roles.Admin,
                     PasswordHash = _passwordHashing.HashingPassword("martin"),
+                }, 
+                new User()
+                {
+                    Id = new Guid("05aa81f0-fb93-46e6-8737-107efa3f1f26"),
+                    NickName = "Pavel",
+                    Email = "pavellox@lox.com",
+                    Roles = Roles.Admin,
+                    PasswordHash = _passwordHashing.HashingPassword("pavel")
                 }
-                
+
             };
             _pokemonDbContext.AddRange(users);
             _pokemonDbContext.SaveChanges();
@@ -281,6 +289,18 @@ public class Seed
                     CurrentDefence = 43,
                     UserId = Guid.Parse("4ec95354-9532-4c2c-9bff-2dc8fff4fb73")
                 },
+                new Pokemon()
+                {
+                    Id = new Guid("8b1b5d39-78e8-4297-908f-03ca8b842d3c"),
+                    Name = "Charmeleon",
+                    UserId = Guid.Parse("05aa81f0-fb93-46e6-8737-107efa3f1f26"),
+                    PokemonRecordId = 5,
+                    Experience = 567,
+                    CurrentDamage = 55,
+                    CurrentDefence = 56,
+                    CurrentHealth = 57,
+                    Gender = true
+                }
                 
             };
             
@@ -426,6 +446,16 @@ public class Seed
                 {
                 AbilityId = 4,
                 PokemonId = Guid.Parse("775cf4e1878d4b23b731ec26090eb9f5")
+                }, 
+                new PokemonAbility()
+                {
+                    AbilityId = 4,
+                    PokemonId = Guid.Parse("8b1b5d39-78e8-4297-908f-03ca8b842d3c")
+                },
+                new PokemonAbility()
+                {
+                    AbilityId = 3,
+                    PokemonId = Guid.Parse("8b1b5d39-78e8-4297-908f-03ca8b842d3c")
                 }
             };
             _pokemonDbContext.AddRange(abilities);

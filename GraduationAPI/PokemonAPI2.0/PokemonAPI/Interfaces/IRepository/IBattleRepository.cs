@@ -7,7 +7,7 @@ namespace PokemonWEB.Interfaces;
 public interface IBattleRepository
 {
     Task<Guid> CreateBattle(BattleCreateDto battleCreateDto);
-    Task<BattleInfoDto?> GetBattleInfo(Guid battleId);
+    Task<BattleInfoDto?> GetBattleInfo(Guid battleId, Guid userId);
     Task<Battle> GetValidBattle(Guid battleId);
     Task UpdateBattle(Battle battle);
     Task DeleteBattle(Battle battle);

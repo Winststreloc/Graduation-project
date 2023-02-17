@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   react:
-    image: ${DOCKER_REGISTRY-}pokemonreact
+    image: ${DOCKER_REGISTRY-}pokemonapp
     build:
       context: .
       dockerfile: Pokemon-API/Dockerfile
@@ -12,7 +12,7 @@ services:
       context: .
       dockerfile: PokemonAPI/Dockerfile
     environment:
-      - ConnectionStrings__DefaultConnection=Server=db;Database=PokemonWEB;User Id=sa;Password=mypassword;
+      - ConnectionStrings__DefaultConnection=Server=db;Database=PokemonWEB;User Id=sa;Password=secretPassword;
     ports:
       - "8080:80"
     depends_on:
@@ -21,6 +21,6 @@ services:
     image: "mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04"
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=mypassword
+      - SA_PASSWORD=secretPassword
     ports:
       - "1433:1433"

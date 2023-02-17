@@ -25,9 +25,9 @@ public class BattleController : ControllerBase
     }
 
     [HttpGet("get-battle-info")]
-    public async Task<BattleInfoDto?> GetBattleInfo([FromQuery] Guid battleId)
+    public async Task<BattleInfoDto?> GetBattleInfo([FromQuery] Guid battleId, [FromQuery]Guid userId)
     {
-        return await _battleRepository.GetBattleInfo(battleId);
+        return await _battleRepository.GetBattleInfo(battleId, userId);
     }
 
     [HttpPost("create-battle")]

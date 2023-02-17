@@ -26,9 +26,6 @@ public class PokemonService : IPokemonService
         await _context.SaveChangesAsync();
         return await Task.FromResult(deltaHP);
     }
-    
-
-
     public int HealingPokemon(Pokemon pokemon)
     {
         var deltaHP = pokemon.MaxHealth - pokemon.CurrentHealth;

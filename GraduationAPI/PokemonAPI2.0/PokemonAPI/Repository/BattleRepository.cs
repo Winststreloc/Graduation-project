@@ -38,27 +38,35 @@ public class BattleRepository : IBattleRepository
         await _context.SaveChangesAsync();
     }
     
-    public async Task<BattleInfoDto?> GetBattleInfo(Guid battleId)
+    public async Task<BattleInfoDto?> GetBattleInfo(Guid battleId, Guid userId)
     {
         var battle = await _context.Battles.SingleOrDefaultAsync(b => b.Id == battleId);
-        var attakPokemon = await _context.Pokemons
+
+        var userAndEnemyPokemons = await _context.Pokemons
+            .Where(p => p.Id == battle.AttackPokemon || p.Id == battle.DefendingPokemon)
             .Include(p => p.PokemonRecord)
-            .SingleOrDefaultAsync(p => p.Id == battle.AttackPokemon);
-        var defendingPokemon = await _context.Pokemons
-            .Include(p => p.PokemonRecord)
-            .SingleOrDefaultAsync(p => p.Id == battle.DefendingPokemon);
+            .ToListAsync();
+
+        var userPokemon = userAndEnemyPokemons.FirstOrDefault(p => p.UserId == userId);
+        var enemyPokemon = userAndEnemyPokemons.FirstOrDefault(p => p.UserId != userId);
+        bool queue = !(userPokemon.Id != battle.AttackPokemon);
+
+
         var abilities = await _context.PokemonAbilities
-            .Where(pa => pa.PokemonId == attakPokemon.Id)
+            .Where(pa => pa.PokemonId == userPokemon.Id)
             .Select(p => p.Ability)
             .Take(MaxCountAbilities)
             .ToListAsync();
+
         return new BattleInfoDto()
         {
-            Abilities = abilities,
-            AttackPokemon = attakPokemon,
-            DefendingPokemon = defendingPokemon
+            UserPokemonAbilities = abilities,
+            UserPokemon = userPokemon,
+            EnemyPokemon = enemyPokemon,
+            Queue = queue
         };
     }
+
 
     public async Task<Battle> GetValidBattle(Guid battleId)
     {

@@ -2,7 +2,6 @@
 using PokemonAPI.Dto;
 using PokemonAPI.Models;
 using PokemonWEB.Interfaces;
-using PokemonWEB.Models;
 
 namespace PokemonAPI.Hubs;
 
@@ -10,7 +9,7 @@ public class PokemonHub : Hub
 {
     private readonly IBattleRepository _battleRepository;
     private readonly IPokemonRepository _pokemonRepository;
-    private static readonly List<OnlineUserRecord> _collection = new List<OnlineUserRecord>();
+    private static readonly List<OnlineUserRecord> Collection = new List<OnlineUserRecord>();
 
     public PokemonHub(IBattleRepository battleRepository, IPokemonRepository pokemonRepository)
     {
@@ -25,19 +24,25 @@ public class PokemonHub : Hub
 
     public async Task OnConnected(string userName, Guid userId)
     {
-        _collection.Add(new OnlineUserRecord()
+        if (Collection.Any(col => col.UserName == userName))
+        {
+            Collection.Remove(GetRecord(Context.ConnectionId));
+            await Clients.All.SendAsync("AllUsers", Collection);
+        }
+        Collection.Add(new OnlineUserRecord()
         {
             ConnectionId = Context.ConnectionId,
             UserName = userName,
             UserId = userId
         });
-        await Clients.All.SendAsync("AllUsers", _collection);
+        await Clients.All.SendAsync("AllUsers", Collection);
+        
     }
 
     public override Task OnDisconnectedAsync(Exception exception)
     {
-        _collection.Remove(GetRecord(Context.ConnectionId));
-        return Clients.All.SendAsync("AllUsers", _collection);
+        Collection.Remove(GetRecord(Context.ConnectionId));
+        return Clients.All.SendAsync("AllUsers", Collection);
     }
 
     public async Task ChallengePlayer(string connectionIdEnemyUser)
@@ -47,8 +52,8 @@ public class PokemonHub : Hub
 
     public async Task ConnectPlayers(string connectionIdSecondPlayer)
     {
-        var attackUser = _collection.SingleOrDefault(c => c.ConnectionId == connectionIdSecondPlayer);
-        var defendingUser = _collection.SingleOrDefault(c => c.ConnectionId == Context.ConnectionId);
+        var attackUser = Collection.SingleOrDefault(c => c.ConnectionId == connectionIdSecondPlayer);
+        var defendingUser = Collection.SingleOrDefault(c => c.ConnectionId == Context.ConnectionId);
 
         var attackPokemons = await _pokemonRepository.GetUserPokemons(attackUser.UserId);
         var defendingPokemons = await _pokemonRepository.GetUserPokemons(defendingUser.UserId);
@@ -65,18 +70,18 @@ public class PokemonHub : Hub
         await Clients.Group(battleId.ToString()).SendAsync("StartBattle", battleId.ToString());
     }
 
-    public async Task BattleMove(BattleResponceDto battleResponceDto, string battleId)
+    public async Task BattleMove(BattleResponceDto battleResponceDto, string battleId, object pokemon)
     {
-        await Clients.Group(battleId).SendAsync("UpdateBattle", battleResponceDto);
+        await Clients.Group(battleId).SendAsync("UpdateBattle", battleResponceDto, pokemon);
     }
 
     private OnlineUserRecord GetRecord(string connectionId)
     {
-        return _collection.SingleOrDefault(c => c.ConnectionId == connectionId);
+        return Collection.SingleOrDefault(c => c.ConnectionId == connectionId);
     }
 
     private bool UserExists(string userName)
     {
-        return _collection.Any(c => c.UserName == userName);
+        return Collection.Any(c => c.UserName == userName);
     }
 }

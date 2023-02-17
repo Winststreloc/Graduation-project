@@ -15,6 +15,7 @@ public interface IPokemonRepository
     Task<int> HealingPokemon(Guid pokemonId);
     Task<bool> IsComputerPokemon(Pokemon? pokemon);
     Task<bool> CreatePokemon(Guid userId, int categoryId, Pokemon pokemon);
+    Task<bool> CreateStartPokemon(int pokedexId, Guid userId);
     bool UpdatePokemon(Guid ownerId, int categoryId, Pokemon pokemon);
     bool DeletePokemon(Pokemon? pokemon);
     bool PokemonExists(Guid Id);

@@ -18,8 +18,8 @@ public class BattleService : IBattleService
     private readonly IBattleRepository _battleRepository;
     private readonly IAbilityRepository _abilityRepository;
     
-    private static readonly int[] _randomPokemonsIdForLocalBattle = { 1, 4, 7, 10 };
-    private static readonly int[] _randomAbilityIdForLocalBattle = { 1, 2, 3 };
+    private static readonly int[] RandomPokemonsIdForLocalBattle = { 1, 4, 7, 10 };
+    private static readonly int[] RandomAbilityIdForLocalBattle = { 1, 2, 3 };
     private const int MaxExperianceForLocalPokemons = 1001;
     private const int MinExperianceForLocalPokemons = 100;
     private const string ComputerNickName = "ashKetchum";
@@ -38,7 +38,7 @@ public class BattleService : IBattleService
         var move = await _abilityRepository.GetValidMove(battleMoveDto.AbilityId);
         var (attackPokemon, defendingPokemon) = await GetBattlingPokemons(battle);
         var battleResponceDto = await MovePokemon(attackPokemon, defendingPokemon, move);
-        ChangeQueue(battle);
+        await ChangeQueue(battle);
         
         if (battle.BattleEnded)
         {
@@ -57,6 +57,7 @@ public class BattleService : IBattleService
         var battleResponce = new BattleResponceDto()
         {
             BattleEnded = battleEnded,
+            NameAbilityFirstPokemon = ability.Name,
             DescriptionFirstPokemon = ability.Description,
             DamageFirstPokemon = damage,
             AtackPokemon = attackPokemon,
@@ -65,15 +66,19 @@ public class BattleService : IBattleService
 
         if (await _pokemonRepository.IsComputerPokemon(defendingPokemon))
         {
-            damage = GetDamage(defendingPokemon, GetRandomAbility());
+            ability = GetRandomAbility();
+            damage = GetDamage(defendingPokemon, ability);
             attackPokemon.CurrentHealth -= damage;
             battleResponce.BattleEnded = defendingPokemon.CurrentHealth <= 0;
             battleResponce.AtackPokemon = attackPokemon;
             battleResponce.DamageSecondPokemon = damage;
+            battleResponce.DescriptionSecondPokemon = ability.Description;
+            battleResponce.NameAbilitySecondPokemon = ability.Name;
             _context.Update(attackPokemon);
         }
 
         _context.Update(defendingPokemon);
+        await _context.SaveChangesAsync();
 
         return battleResponce;
     }
@@ -187,7 +192,7 @@ public class BattleService : IBattleService
     private int GetRandomPokemonId()
     {
         Random rnd = new Random();
-        return _randomPokemonsIdForLocalBattle[rnd.Next(_randomPokemonsIdForLocalBattle.Length)];
+        return RandomPokemonsIdForLocalBattle[rnd.Next(RandomPokemonsIdForLocalBattle.Length)];
     }
 
     private Ability GetRandomAbility()
