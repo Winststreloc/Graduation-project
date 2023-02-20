@@ -14,7 +14,7 @@ services:
     environment:
       - ConnectionStrings__DefaultConnection=Server=db;Database=PokemonWEB;User Id=sa;Password=secretPassword;
     ports:
-      - "8080:80"
+      - "44337:44337"
     depends_on:
       - db
   db:

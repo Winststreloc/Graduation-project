@@ -30,13 +30,13 @@ public class PokemonRepository : IPokemonRepository
             .FirstOrDefaultAsync();
     }
 
-    public ICollection<Pokemon> GetPokemons(int count)
+    public async Task<ICollection<Pokemon>> GetPokemons(int count)
     {
-        return _context.Pokemons
+        return await _context.Pokemons
             .Take(count)
             .OrderBy(p => p.PokemonRecordId)
             .Include(p => p.PokemonRecord)
-            .ToList();
+            .ToListAsync();
     }
 
     public ICollection<Ability> GetPokemonAbilities(Guid pokemonId)

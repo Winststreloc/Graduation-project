@@ -13,4 +13,5 @@ public interface ICategoryRepository
     bool CreateCategory(Category category);
     bool UpdateCategory(Category? category);
     bool DeleteCategory(Category category);
+    PokemonCategory CreatePokemonCategory(Pokemon pokemon, Category rndCategory);
 }

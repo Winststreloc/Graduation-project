@@ -17,19 +17,21 @@ public class BattleService : IBattleService
     private readonly IPokemonRepository _pokemonRepository;
     private readonly IBattleRepository _battleRepository;
     private readonly IAbilityRepository _abilityRepository;
+    private readonly IPokemonService _pokemonService;
+    private readonly ICategoryRepository _categoryRepository;
     
     private static readonly int[] RandomPokemonsIdForLocalBattle = { 1, 4, 7, 10 };
     private static readonly int[] RandomAbilityIdForLocalBattle = { 1, 2, 3 };
-    private const int MaxExperianceForLocalPokemons = 1001;
-    private const int MinExperianceForLocalPokemons = 100;
     private const string ComputerNickName = "ashKetchum";
     
-    public BattleService(PokemonDbContext context, IPokemonRepository pokemonRepository, IBattleRepository battleRepository, IAbilityRepository abilityRepository)
+    public BattleService(PokemonDbContext context, IPokemonRepository pokemonRepository, IBattleRepository battleRepository, IAbilityRepository abilityRepository, IPokemonService pokemonService, ICategoryRepository categoryRepository)
     {
         _context = context;
         _pokemonRepository = pokemonRepository;
         _battleRepository = battleRepository;
         _abilityRepository = abilityRepository;
+        _pokemonService = pokemonService;
+        _categoryRepository = categoryRepository;
     }
 
     public async Task<BattleResponceDto> UpdatePokemon(BattleMoveDto battleMoveDto)
@@ -100,9 +102,9 @@ public class BattleService : IBattleService
         var rndCategory = GetRandomCategory();
         var computerUser =  await _context.Users.SingleOrDefaultAsync(u => u.NickName == ComputerNickName);
 
-        var pokemon = await CreatePokemon(pokeRecord, computerUser);
-        var pokemonAbility = CreatePokemonAbility(pokemon, rndAbility);
-        var pokemonCategory = CreatePokemonCategory(pokemon, rndCategory);
+        var pokemon = await _pokemonService.CreatePokemon(pokeRecord, computerUser);
+        var pokemonAbility = _abilityRepository.CreatePokemonAbility(pokemon, rndAbility);
+        var pokemonCategory = _categoryRepository.CreatePokemonCategory(pokemon, rndCategory);
 
         _context.Add(pokemonAbility);
         _context.Add(pokemonCategory);
@@ -150,45 +152,7 @@ public class BattleService : IBattleService
         }
         await _battleRepository.UpdateBattle(battle);
     }
-
-    private PokemonCategory CreatePokemonCategory(Pokemon pokemon, Category rndCategory)
-    {
-        var pokemonCategory = new PokemonCategory()
-        {
-            Category = rndCategory,
-            Pokemon = pokemon
-        };
-        return pokemonCategory;
-    }
-
-    private PokemonAbility CreatePokemonAbility(Pokemon pokemon, Ability rndAbility)
-    {
-        var pokemonAbility = new PokemonAbility()
-        {
-            Ability = rndAbility,
-            Pokemon = pokemon
-        };
-        return pokemonAbility;
-    }
-
-    private async Task<Pokemon> CreatePokemon(PokemonRecord pokeRecord, User computerUser)
-    {
-        Random rnd = new Random();
-        var pokemon = new Pokemon()
-        {
-            Name = pokeRecord.Name,
-            PokemonRecordId = pokeRecord.Id,
-            CurrentDamage = pokeRecord.BaseDamage,
-            CurrentDefence = pokeRecord.BaseDefense,
-            CurrentHealth = pokeRecord.BaseHP,
-            Experience = rnd.Next(MinExperianceForLocalPokemons, MaxExperianceForLocalPokemons),
-            Gender = true,
-            User = computerUser,
-            UserId = computerUser.Id
-        };
-        return pokemon;
-    }
-
+    
     private int GetRandomPokemonId()
     {
         Random rnd = new Random();
@@ -222,7 +186,6 @@ public class BattleService : IBattleService
         {
             damage = 1;
         }
-
         return damage;
     }
 }

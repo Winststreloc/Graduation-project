@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PokemonWEB.Dto;
 using PokemonWEB.Interfaces;
 using PokemonWEB.Models;
 

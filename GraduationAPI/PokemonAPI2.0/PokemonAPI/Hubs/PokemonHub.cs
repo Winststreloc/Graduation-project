@@ -26,8 +26,8 @@ public class PokemonHub : Hub
     {
         if (Collection.Any(col => col.UserName == userName))
         {
-            Collection.Remove(GetRecord(Context.ConnectionId));
-            await Clients.All.SendAsync("AllUsers", Collection);
+            //await Clients.Client(Context.ConnectionId).SendAsync("userLogged");
+            return;
         }
         Collection.Add(new OnlineUserRecord()
         {

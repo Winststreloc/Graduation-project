@@ -63,6 +63,17 @@ public class CategoryRepository : ICategoryRepository
         return Save();
     }
 
+    public PokemonCategory CreatePokemonCategory(Pokemon pokemon, Category rndCategory)
+    {
+        var pokemonCategory = new PokemonCategory()
+        {
+            Category = rndCategory,
+            Pokemon = pokemon
+        };
+        return pokemonCategory;
+    }
+
+
     public bool Save()
     {
         var saved = _context.SaveChanges();

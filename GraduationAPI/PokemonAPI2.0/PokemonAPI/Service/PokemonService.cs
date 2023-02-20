@@ -8,10 +8,30 @@ namespace PokemonAPI.Service;
 public class PokemonService : IPokemonService
 {
     private readonly PokemonDbContext _context;
+    
+    private const int MaxExperianceForLocalPokemons = 1001;
+    private const int MinExperianceForLocalPokemons = 100;
 
     public PokemonService(PokemonDbContext context)
     {
         _context = context;
+    }
+    public async Task<Pokemon> CreatePokemon(PokemonRecord pokeRecord, User computerUser)
+    {
+        Random rnd = new Random();
+        var pokemon = new Pokemon()
+        {
+            Name = pokeRecord.Name,
+            PokemonRecordId = pokeRecord.Id,
+            CurrentDamage = pokeRecord.BaseDamage,
+            CurrentDefence = pokeRecord.BaseDefense,
+            CurrentHealth = pokeRecord.BaseHP,
+            Experience = rnd.Next(MinExperianceForLocalPokemons, MaxExperianceForLocalPokemons),
+            Gender = true,
+            User = computerUser,
+            UserId = computerUser.Id
+        };
+        return pokemon;
     }
 
     public async Task<int> HealingPokemons(ICollection<Pokemon?> pokemons)

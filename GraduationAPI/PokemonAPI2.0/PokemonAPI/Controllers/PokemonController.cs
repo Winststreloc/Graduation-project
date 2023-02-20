@@ -28,10 +28,10 @@ public class PokemonController : ControllerBase
     }
 
     [HttpGet("get-pokemons")]
-    public IActionResult GetPokemons([FromQuery] int countPokemons)
+    public async Task<ICollection<Pokemon>> GetPokemons([FromQuery] int countPokemons)
     {
-        var pokemons = _pokemonRepository.GetPokemons(countPokemons);
-        return Ok(pokemons);
+        var pokemons = await _pokemonRepository.GetPokemons(countPokemons);
+        return pokemons;
     }
 
     [HttpGet("get-user-pokemons")]

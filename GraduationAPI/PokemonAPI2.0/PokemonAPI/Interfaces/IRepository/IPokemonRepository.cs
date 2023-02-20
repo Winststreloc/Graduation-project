@@ -7,7 +7,7 @@ namespace PokemonWEB.Interfaces;
 public interface IPokemonRepository
 {
     Task<Pokemon?> GetPokemon(Guid Id);
-    ICollection<Pokemon> GetPokemons(int countPokemon);
+    Task<ICollection<Pokemon>> GetPokemons(int countPokemon);
     ICollection<Ability> GetPokemonAbilities(Guid pokemonId);
     Task<ICollection<Pokemon?>> GetUserPokemons(Guid userId);
     Task<PokemonAbilityCategoryDto> GetPokemonAbilityCategory(Guid pokemonId);

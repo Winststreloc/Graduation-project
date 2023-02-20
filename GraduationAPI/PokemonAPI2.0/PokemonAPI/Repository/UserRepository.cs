@@ -56,7 +56,6 @@ public class UserRepository : IUserRepository
         await _context.Users.AddAsync(user);
         await Save();
         await _pokemonRepository.CreateStartPokemon(1, user.Id);
-        
 
         var userTokens = _tokenService.GenerateTokens(user);
         
@@ -67,7 +66,7 @@ public class UserRepository : IUserRepository
     {
         var existEmail = await _context.Users.AnyAsync(u => u.Email == email);
         var existUser = await _context.Users.AnyAsync(u => u.NickName == userName);
-        return existEmail != false || existUser != false;
+        return existEmail || existUser;
     }
 
     public async Task<bool> Save()

@@ -81,8 +81,8 @@ public class TokenService : ITokenService
         var tokenHandler = new JwtSecurityTokenHandler();
         var validationParameters = new TokenValidationParameters()
         {
-            ValidateLifetime = false, // Because there is no expiration in the generated token
-            ValidateAudience = false, // Because there is no audiance in the generated token
+            ValidateLifetime = false,
+            ValidateAudience = false,
             ValidateIssuer = false,
             ValidIssuer = AuthOptions.ISSUER,
             IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),

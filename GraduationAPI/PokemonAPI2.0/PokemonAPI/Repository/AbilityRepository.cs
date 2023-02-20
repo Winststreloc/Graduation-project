@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PokemonAPI;
 using PokemonAPI.Interfaces.IRepository;
 using PokemonWEB.Data;
+using PokemonWEB.Models;
 using PokemonWEB.Models.Action;
 
 namespace PokemonWEB.Repository;
@@ -22,5 +24,15 @@ public class AbilityRepository : IAbilityRepository
             throw new ArgumentNullException("Move not found", nameof(move));
         }
         return move;
+    }
+
+    public PokemonAbility CreatePokemonAbility(Pokemon pokemon, Ability rndAbility)
+    {
+        var pokemonAbility = new PokemonAbility()
+        {
+            Ability = rndAbility,
+            Pokemon = pokemon
+        };
+        return pokemonAbility;
     }
 }
