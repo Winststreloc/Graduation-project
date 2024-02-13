@@ -2,8 +2,11 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PokemonAPI;
 using PokemonAPI.Interfaces;
 using PokemonAPI.Models;
+using PokemonAPI.Service;
+using PokemonWEB.Data;
 
 namespace PokemonWEB.Controllers;
 
@@ -25,6 +28,7 @@ public class AuthController : Controller
         _token = token;
         _responce = new ResponceAuthDto();
     }
+    
 
     [HttpPost("register")]
     public async Task<ResponceAuthDto?> Register(RegistrationModelDto registrationModelDto)

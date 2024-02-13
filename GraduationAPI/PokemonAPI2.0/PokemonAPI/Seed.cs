@@ -20,8 +20,9 @@ public class Seed
         _passwordHashing = passwordHashing;
     }
 
-    public void SeedDataContext()
+    public async Task SeedDataContext()
     {
+        
         if (!_pokemonDbContext.Users.Any())
         {
             var users = new List<User>()
@@ -56,7 +57,7 @@ public class Seed
 
             };
             _pokemonDbContext.AddRange(users);
-            _pokemonDbContext.SaveChanges();
+            await _pokemonDbContext.SaveChangesAsync();
         }
         if (!_pokemonDbContext.Pokedex.Any())
         {
@@ -235,7 +236,7 @@ public class Seed
                 },
             };
             _pokemonDbContext.AddRange(pokedex);
-            _pokemonDbContext.SaveChangesWithIdentityInsert<PokemonRecord>();
+            await _pokemonDbContext.SaveChangesAsync();
         }
         if (!_pokemonDbContext.Pokemons.Any())
         {
@@ -305,7 +306,7 @@ public class Seed
             };
             
             _pokemonDbContext.Pokemons.AddRange(pokemons);
-            _pokemonDbContext.SaveChanges();
+            await _pokemonDbContext.SaveChangesAsync();
         }
         if (!_pokemonDbContext.Abilities.Any())
         {
@@ -406,7 +407,7 @@ public class Seed
             
             _pokemonDbContext.AddRange(abilities);
             _pokemonDbContext.AddRange(categoryes);
-            _pokemonDbContext.SaveChanges();
+            await _pokemonDbContext.SaveChangesAsync();
         }
         if (!_pokemonDbContext.PokemonAbilities.Any())
         {
@@ -459,7 +460,7 @@ public class Seed
                 }
             };
             _pokemonDbContext.AddRange(abilities);
-            _pokemonDbContext.SaveChanges();
+            await _pokemonDbContext.SaveChangesAsync();
         }
         if (!_pokemonDbContext.PokemonCategories.Any())
         {
@@ -502,7 +503,7 @@ public class Seed
                 }
             };
             _pokemonDbContext.AddRange(categories);
-            _pokemonDbContext.SaveChanges();
+            await _pokemonDbContext.SaveChangesAsync();
         }
         if (!_pokemonDbContext.PokemonRecordCategories.Any())
         {
@@ -576,7 +577,7 @@ public class Seed
                 
             };
             _pokemonDbContext.AddRange(pokRecordCategory);
-            _pokemonDbContext.SaveChanges();
+            await _pokemonDbContext.SaveChangesAsync();
         }
         
     }

@@ -57,8 +57,9 @@ builder.Services.AddSwaggerGen(op =>
 });
 builder.Services.AddDbContext<PokemonDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionPSSQL"));
 });
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -108,15 +109,13 @@ if (args.Length == 1 && args[0].ToLower() == "seeddata")
 }
 
 
-void SeedData(IHost app)
+async Task SeedData(IHost app)
 {
     var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
 
-    using (var scope = scopedFactory.CreateScope())
-    {
-        var service = scope.ServiceProvider.GetService<Seed>();
-        service.SeedDataContext();
-    }
+    using var scope = scopedFactory?.CreateScope();
+    var service = scope?.ServiceProvider.GetService<Seed>();
+    await service?.SeedDataContext();
 }
 
 if (app.Environment.IsDevelopment())
@@ -137,23 +136,6 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapHub<PokemonHub>("/pokemonHub");
 
-Task.Run(() =>
-{
-    if (app.Configuration.GetValue("InitDatabase", false))
-    {
-        try
-        {
-            Console.WriteLine($"Initializing database {app.Configuration.GetConnectionString("DefaultConnection")}");
-            using var scope = app.Services.CreateScope();
-            using var context = scope.ServiceProvider.GetService<PokemonDbContext>();
-            context?.Database.EnsureCreated();
-            context?.Database.Migrate();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Unable to initialize database {app.Configuration.GetConnectionString("DefaultConnection")}: {ex}");
-        }
-    }
-});
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 app.Run();
